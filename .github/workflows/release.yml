@@ -1,10 +1,13 @@
 name: Release
 
-# Publishes a GitHub Release when a version tag (v*) is pushed, using the notes
-# in docs/releases/<tag>.md and attaching a zip of the built static site.
+# Version-driven releases: when main's package.json version has release notes in
+# docs/releases/v<version>.md and no release exists yet, build the site, tag the
+# commit and publish a GitHub Release with the built site attached.
+# To release: bump "version" in package.json and add the matching notes file.
 on:
   push:
-    tags: ['v*']
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -14,20 +17,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npx vitest run
-      - run: npm run build
-      - name: Package site
-        run: cd dist && zip -qr "../immca-site-${GITHUB_REF_NAME}.zip" .
-      - name: Create release
+      - name: Decide whether to release
+        id: plan
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          notes="docs/releases/${GITHUB_REF_NAME}.md"
-          test -f "$notes" || { echo "Missing $notes"; exit 1; }
-          gh release create "$GITHUB_REF_NAME" "immca-site-${GITHUB_REF_NAME}.zip" \
-            --title "IMMCA ${GITHUB_REF_NAME}" --notes-file "$notes" --verify-tag
+          version="v$(node -p "require('./package.json').version")"
+          echo "tag=$version" >> "$GITHUB_OUTPUT"
+          if [ ! -f "docs/releases/$version.md" ]; then
+            echo "No notes for $version; nothing to release."; echo "go=false" >> "$GITHUB_OUTPUT"
+          elif gh release view "$version" >/dev/null 2>&1; then
+            echo "$version is already released."; echo "go=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.plan.outputs.go == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - if: steps.plan.outputs.go == 'true'
+        run: npm ci && npx vitest run && npm run build
+      - if: steps.plan.outputs.go == 'true'
+        name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.plan.outputs.tag }}
+        run: |
+          (cd dist && zip -qr "../immca-site-$TAG.zip" .)
+          gh release create "$TAG" "immca-site-$TAG.zip" --target "$GITHUB_SHA" \
+            --title "IMMCA $TAG" --notes-file "docs/releases/$TAG.md" --latest
