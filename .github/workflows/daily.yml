@@ -5,7 +5,8 @@ name: Daily update
 #   2. check every official page a program rule cites, flagging pages that changed;
 #   3. commit real changes (new rounds, changed or unreachable pages, text snapshots);
 #   4. open an issue listing newly changed pages for review;
-#   5. rebuild and redeploy the site, so the "last checked" date is always current.
+#   5. rebuild and redeploy the site, so the "last checked" date is always current
+#      (skipped with a warning, not a failure, if GitHub Pages is not enabled).
 on:
   schedule:
     - cron: '17 11 * * *'
@@ -24,6 +25,8 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
+    outputs:
+      pages: ${{ steps.pages.outputs.enabled }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -65,13 +68,28 @@ jobs:
           fi
 
       - run: npm run build
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - name: Check that GitHub Pages is enabled
+        id: pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          source=$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq .build_type 2>/dev/null || true)
+          if [ "$source" = "workflow" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=Pages not enabled::GitHub Pages is not enabled with 'GitHub Actions' as its source, so the site was built but not deployed. Enable it in Settings → Pages → Source: GitHub Actions, then re-run this workflow."
+          fi
+      - if: steps.pages.outputs.enabled == 'true'
+        uses: actions/configure-pages@v5
+      - if: steps.pages.outputs.enabled == 'true'
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
   deploy:
     needs: update
+    if: needs.update.outputs.pages == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

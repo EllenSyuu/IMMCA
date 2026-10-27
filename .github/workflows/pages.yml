@@ -1,7 +1,9 @@
 name: Deploy site
 
 # Builds the static site and publishes it to GitHub Pages on every push to main.
-# The daily update workflow also redeploys every morning with fresh data.
+# The "Daily update" workflow (daily.yml) also redeploys every morning with fresh data.
+# Both workflows first check that Pages is enabled with GitHub Actions as its source;
+# if it is not, they skip the deploy with a warning instead of failing.
 on:
   push:
     branches: [main]
@@ -19,6 +21,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      pages: ${{ steps.pages.outputs.enabled }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -30,13 +34,28 @@ jobs:
       - run: npm ci
       - run: npx vitest run
       - run: npm run build
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - name: Check that GitHub Pages is enabled
+        id: pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          source=$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq .build_type 2>/dev/null || true)
+          if [ "$source" = "workflow" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=Pages not enabled::GitHub Pages is not enabled with 'GitHub Actions' as its source, so the site was built but not deployed. Enable it in Settings → Pages → Source: GitHub Actions, then re-run this workflow."
+          fi
+      - if: steps.pages.outputs.enabled == 'true'
+        uses: actions/configure-pages@v5
+      - if: steps.pages.outputs.enabled == 'true'
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
   deploy:
     needs: build
+    if: needs.build.outputs.pages == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
