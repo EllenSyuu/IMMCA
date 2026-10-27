@@ -326,3 +326,20 @@ button { font: inherit; color: inherit; cursor: pointer; }
   .route-map__station { animation: none; opacity: 1; }
   .bar span, .route__chevron { transition: none; }
 }
+
+/* ---------------------------------------------------------------- pool strip */
+.pool { margin-top: 18px; display: grid; gap: 6px; }
+.pool h4 { margin: 0 0 4px; }
+.pool__strip { position: relative; display: flex; height: 18px; border-radius: 4px; margin-top: 26px; }
+.pool__band { background: var(--shade); min-width: 1px; }
+.pool__band:first-child { border-radius: 4px 0 0 4px; }
+.pool__band:last-of-type { border-radius: 0 4px 4px 0; }
+.pool__marker { position: absolute; top: -6px; bottom: -6px; width: 3px; margin-left: -1.5px; background: var(--ink); border-radius: 2px; }
+.pool__label {
+  position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%);
+  background: var(--ink); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 1px 7px; border-radius: 999px;
+  font-variant-numeric: tabular-nums;
+}
+.pool__axis { position: relative; height: 1.1rem; font-size: 0.72rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.pool__axis span { position: absolute; transform: translateX(-50%); }
+.pool__axis span::before { content: ''; position: absolute; left: 50%; top: -5px; height: 4px; width: 1px; background: var(--rule-strong); }

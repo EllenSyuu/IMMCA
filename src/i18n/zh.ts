@@ -249,4 +249,7 @@ export const zh: Record<string, string> = {
   'draw.physicians': '医生',
   'draw.researchers': '研究人员',
   'draw.general': '全部项目',
+  'score.pool': '你在候选池中的位置',
+  'score.poolAbove': '候选池中 {total} 名申请人里，约 {pct}% 的分数高于你。',
+  'score.poolAsOf': 'IRCC 候选池分数分布，截至 {date}。',
 };

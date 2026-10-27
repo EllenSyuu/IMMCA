@@ -1,0 +1,48 @@
+import { describe, expect, it } from 'vitest';
+import { DRAWS, familyOf, latestCutoff, shareAbove } from '../src/data/draws';
+// @ts-expect-error — plain ESM script without type declarations
+import { normalize } from '../scripts/refresh-draws.mjs';
+
+describe('Express Entry rounds data', () => {
+  it('has rounds newest first and a pool distribution that adds up', () => {
+    const dates = DRAWS.rounds.map((r) => r.date);
+    expect([...dates].sort().reverse()).toEqual(dates);
+    expect(DRAWS.pool.bands.reduce((s, b) => s + b.count, 0)).toBe(DRAWS.pool.total);
+  });
+
+  it('classifies round types into draw families', () => {
+    expect(familyOf('Canadian Experience Class')).toBe('cec');
+    expect(familyOf('French language proficiency (2026-Version 2)')).toBe('french');
+    expect(familyOf('Healthcare and social services occupations')).toBe('health');
+    expect(latestCutoff('cec')?.crs).toBe(519);
+  });
+
+  it('places a score within the pool', () => {
+    expect(shareAbove(1200)).toBe(0);
+    expect(shareAbove(0)).toBeGreaterThan(0.99);
+    const mid = shareAbove(450);
+    expect(mid).toBeGreaterThan(0.3);
+    expect(mid).toBeLessThan(0.6);
+  });
+});
+
+describe('refresh script', () => {
+  const round = (n: number) => ({
+    drawNumber: String(n), drawDate: '2026-10-26', drawName: 'Trade occupations (2026-Version 3)', drawSize: '3,500', drawCRS: '476',
+    drawDistributionAsOn: 'October 25, 2026',
+    dd1: '10', dd2: '10', dd4: '10', dd5: '10', dd6: '10', dd7: '10', dd8: '10', dd10: '10', dd11: '10', dd12: '10',
+    dd13: '10', dd14: '10', dd15: '10', dd16: '10', dd17: '10', dd18: '150',
+  });
+
+  it('normalizes the IRCC feed shape', () => {
+    const out = normalize({ rounds: [round(451), round(450)] }, '2026-10-27');
+    expect(out.rounds[0]).toEqual({ number: 451, date: '2026-10-26', type: 'Trade occupations', invited: 3500, crs: 476 });
+    expect(out.pool).toMatchObject({ asOf: '2026-10-25', total: 150 });
+  });
+
+  it('refuses a feed whose shape changed', () => {
+    expect(() => normalize({ rounds: [] }, 'x')).toThrow();
+    expect(() => normalize({ rounds: [{ ...round(1), drawCRS: '' }] }, 'x')).toThrow(/unexpected/);
+    expect(() => normalize({ rounds: [{ ...round(1), dd18: '9999' }] }, 'x')).toThrow(/add up/);
+  });
+});

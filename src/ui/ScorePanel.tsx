@@ -1,11 +1,48 @@
 import { useState } from 'react';
 import { computeCrs, crsLevers, LMI_START } from '../engine/crs';
 import type { Profile } from '../engine/types';
-import { DRAWS, familyOf } from '../data/draws';
+import { DRAWS, familyOf, shareAbove } from '../data/draws';
 import { arrimaScore } from '../data/programs/quebec';
 import { useI18n } from '../i18n';
 
 const TODAY = () => new Date().toISOString().slice(0, 10);
+
+/** The whole Express Entry pool laid out by score, with a marker at yours. */
+function PoolStrip({ score }: { score: number }) {
+  const { t, locale } = useI18n();
+  const { pool } = DRAWS;
+  const ascending = [...pool.bands].sort((a, b) => a.min - b.min);
+  const above = shareAbove(score);
+  const position = (1 - above) * 100;
+  const pct = Math.round(above * 100);
+  const nf = new Intl.NumberFormat(locale === 'zh' ? 'zh-CN' : `${locale}-CA`);
+  const asOf = new Date(`${pool.asOf}T12:00:00`).toLocaleDateString(locale === 'zh' ? 'zh-CN' : `${locale}-CA`, { month: 'long', day: 'numeric' });
+  return (
+    <div className="pool">
+      <h4>{t('score.pool')}</h4>
+      <div className="pool__strip" role="img" aria-label={t('score.poolAbove', { pct, total: nf.format(pool.total) })}>
+        {ascending.map((b, i) => (
+          <span
+            key={b.min}
+            className="pool__band"
+            style={{ flexGrow: b.count, ['--shade' as string]: i % 2 ? '#d5dae3' : '#e6e9ef' }}
+            title={`${b.min}–${b.max}: ${nf.format(b.count)}`}
+          />
+        ))}
+        <span className="pool__marker" style={{ left: `${Math.min(99.5, Math.max(0.5, position))}%` }}>
+          <span className="pool__label">{score}</span>
+        </span>
+      </div>
+      <div className="pool__axis" aria-hidden="true">
+        {[350, 450, 500].map((v) => (
+          <span key={v} style={{ left: `${(1 - shareAbove(v)) * 100}%` }}>{v}</span>
+        ))}
+      </div>
+      <p className="small">{t('score.poolAbove', { pct, total: nf.format(pool.total) })}</p>
+      <p className="muted small">{t('score.poolAsOf', { date: asOf })}</p>
+    </div>
+  );
+}
 
 export function ScorePanel({ profile }: { profile: Profile }) {
   const { t, locale } = useI18n();
@@ -51,6 +88,8 @@ export function ScorePanel({ profile }: { profile: Profile }) {
           ))}
         </ul>
         {crs.labourMarket && <p className="muted small">{t('score.lmi', { value: crs.core.canadianWork })}</p>}
+
+        <PoolStrip score={crs.total} />
 
         <h4>{t('score.levers')}</h4>
         {levers.length ? (

@@ -256,4 +256,7 @@ export const en: Record<string, string> = {
   'draw.physicians': 'Physicians',
   'draw.researchers': 'Researchers',
   'draw.general': 'All programs',
+  'score.pool': 'Where you sit in the pool',
+  'score.poolAbove': 'About {pct}% of the {total} candidates in the pool score higher than you.',
+  'score.poolAsOf': 'IRCC pool distribution as of {date}.',
 };

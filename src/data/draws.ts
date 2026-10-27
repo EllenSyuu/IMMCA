@@ -12,7 +12,32 @@ export interface Round {
   crs: number;
 }
 
-export const DRAWS: { source: string; fetched: string; rounds: Round[] } = raw;
+export interface PoolBand {
+  min: number;
+  max: number;
+  count: number;
+}
+
+export const DRAWS: {
+  source: string;
+  fetched: string;
+  rounds: Round[];
+  /** CRS distribution of every candidate in the Express Entry pool. */
+  pool: { asOf: string; total: number; bands: PoolBand[] };
+} = raw;
+
+/**
+ * Share of the pool scoring above `score`, interpolating linearly inside the
+ * band that contains it (IRCC only publishes banded counts).
+ */
+export function shareAbove(score: number, pool = DRAWS.pool): number {
+  let above = 0;
+  for (const b of pool.bands) {
+    if (b.min > score) above += b.count;
+    else if (b.max > score) above += (b.count * (b.max - score)) / (b.max - b.min + 1);
+  }
+  return above / pool.total;
+}
 
 /** Draw-type keyword each program is compared against. */
 export type DrawFamily = 'cec' | 'french' | 'health' | 'trades' | 'stem' | 'education' | 'transport' | 'pnp' | 'managers' | 'physicians' | 'researchers' | 'general';

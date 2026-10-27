@@ -249,4 +249,7 @@ export const fr: Record<string, string> = {
   'draw.physicians': 'Médecins',
   'draw.researchers': 'Chercheurs',
   'draw.general': 'Tous les programmes',
+  'score.pool': 'Votre place dans le bassin',
+  'score.poolAbove': 'Environ {pct} % des {total} candidats du bassin ont un pointage plus élevé que le vôtre.',
+  'score.poolAsOf': 'Répartition du bassin d’IRCC au {date}.',
 };
