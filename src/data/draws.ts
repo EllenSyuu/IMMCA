@@ -15,7 +15,7 @@ export interface Round {
 export const DRAWS: { source: string; fetched: string; rounds: Round[] } = raw;
 
 /** Draw-type keyword each program is compared against. */
-export type DrawFamily = 'cec' | 'french' | 'health' | 'trades' | 'stem' | 'education' | 'transport' | 'pnp' | 'general';
+export type DrawFamily = 'cec' | 'french' | 'health' | 'trades' | 'stem' | 'education' | 'transport' | 'pnp' | 'managers' | 'physicians' | 'researchers' | 'general';
 
 const FAMILY_PATTERNS: [DrawFamily, RegExp][] = [
   ['cec', /canadian experience/i],
@@ -26,6 +26,9 @@ const FAMILY_PATTERNS: [DrawFamily, RegExp][] = [
   ['education', /education/i],
   ['transport', /transport/i],
   ['pnp', /provincial/i],
+  ['managers', /senior manager/i],
+  ['physicians', /physician/i],
+  ['researchers', /researcher/i],
   ['general', /no program specified|general/i],
 ];
 

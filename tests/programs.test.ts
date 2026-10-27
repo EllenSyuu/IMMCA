@@ -89,3 +89,20 @@ describe('ranking', () => {
     expect(results.some((r) => r.programId === 'on-workforce-priority')).toBe(true);
   });
 });
+
+describe('verdicts', () => {
+  const spec = (n: number, met: number) => ({
+    id: 'x', jurisdiction: 'federal' as const, kind: 'federal-pathway' as const, status: 'open' as const,
+    name: { en: '', fr: '', zh: '' }, summary: { en: '', fr: '', zh: '' }, sources: [],
+    criteria: Array.from({ length: n }, (_, i) => ({ evaluate: () => ({ key: 'k', status: i < met ? 'met' as const : 'unmet' as const }) })),
+  });
+
+  it('calls a route "close" only when most of it is already met', () => {
+    expect(evaluateProgram(spec(4, 3), graduate()).verdict).toBe('close');
+    expect(evaluateProgram(spec(2, 1), graduate()).verdict).toBe('gap');
+    expect(evaluateProgram(spec(2, 0), graduate()).verdict).toBe('gap');
+    expect(evaluateProgram(spec(6, 4), graduate()).verdict).toBe('close');
+    expect(evaluateProgram(spec(5, 3), graduate()).verdict).toBe('gap');
+    expect(evaluateProgram(spec(3, 3), graduate()).verdict).toBe('eligible');
+  });
+});

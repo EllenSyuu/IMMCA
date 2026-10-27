@@ -5,7 +5,8 @@ const UNAVAILABLE = new Set(['paused', 'closed']);
 /** Evaluate one program against a profile. */
 export function evaluateProgram(spec: ProgramSpec, profile: Profile, today = new Date().toISOString().slice(0, 10)): ProgramResult {
   const checks: Check[] = spec.criteria.flatMap((c) => [c.evaluate(profile)].flat());
-  const decided = checks.filter((c) => c.status !== 'unknown');
+  // Group headers ("meets one of N routes") summarise the stations below them, so they aren't counted twice.
+  const decided = checks.filter((c) => c.status !== 'unknown' && !c.group);
   const met = decided.filter((c) => c.status === 'met').length;
   const unmet = decided.length - met;
   const score = decided.length ? met / decided.length : 0;
@@ -13,8 +14,9 @@ export function evaluateProgram(spec: ProgramSpec, profile: Profile, today = new
   let verdict: Verdict;
   const expired = !!spec.closesOn && today > spec.closesOn;
   if (UNAVAILABLE.has(spec.status) || expired) verdict = 'unavailable';
-  else if (unmet === 0) verdict = 'eligible';
-  else if (unmet <= 2) verdict = 'close';
+  else if (unmet === 0 && met > 0) verdict = 'eligible';
+  // "Within reach": most of the line is already travelled — one gap with at least 60% met, or two gaps with four or more met.
+  else if ((unmet === 1 && score >= 0.6) || (unmet === 2 && met >= 4)) verdict = 'close';
   else verdict = 'gap';
 
   return { programId: spec.id, verdict, checks, score, points: spec.points?.(profile) };

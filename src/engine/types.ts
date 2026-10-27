@@ -129,6 +129,8 @@ export interface Check {
   /** Optional note shown on how to close a gap. */
   hintKey?: string;
   hintParams?: Record<string, string | number>;
+  /** A header summarising the stations that follow it; not counted on its own. */
+  group?: boolean;
 }
 
 export type ProgramStatus = 'open' | 'invitation-only' | 'intake-windows' | 'paused' | 'closed';

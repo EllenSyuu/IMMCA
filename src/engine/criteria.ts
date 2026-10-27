@@ -248,7 +248,7 @@ export function anyOf(key: string, ...branches: Criterion[][]): Criterion {
       const scored = evaluated.map((cs) => cs.filter((c) => c.status === 'met').length / Math.max(1, cs.length));
       const pass = evaluated.findIndex((cs) => cs.every((c) => c.status === 'met'));
       const best = pass >= 0 ? pass : scored.indexOf(Math.max(...scored));
-      return [check(key, pass >= 0, { branch: best + 1, of: branches.length }), ...evaluated[best]];
+      return [{ ...check(key, pass >= 0, { branch: best + 1, of: branches.length }), group: true }, ...evaluated[best]];
     },
   };
 }
