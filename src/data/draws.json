@@ -1,0 +1,21 @@
+{
+  "source": "https://www.canada.ca/content/dam/ircc/documents/json/ee_rounds_123_en.json",
+  "fetched": "2026-10-27",
+  "rounds": [
+    { "number": 451, "date": "2026-10-26", "type": "Provincial Nominee Program", "invited": 792, "crs": 761 },
+    { "number": 450, "date": "2026-10-16", "type": "French language proficiency", "invited": 5000, "crs": 435 },
+    { "number": 449, "date": "2026-10-15", "type": "Canadian Experience Class", "invited": 2500, "crs": 519 },
+    { "number": 448, "date": "2026-10-13", "type": "Provincial Nominee Program", "invited": 752, "crs": 772 },
+    { "number": 447, "date": "2026-10-01", "type": "Trade occupations", "invited": 3500, "crs": 476 },
+    { "number": 446, "date": "2026-09-29", "type": "Canadian Experience Class", "invited": 2000, "crs": 518 },
+    { "number": 445, "date": "2026-09-28", "type": "Provincial Nominee Program", "invited": 733, "crs": 725 },
+    { "number": 444, "date": "2026-09-16", "type": "Senior managers with Canadian work experience", "invited": 250, "crs": 389 },
+    { "number": 443, "date": "2026-09-15", "type": "Canadian Experience Class", "invited": 2000, "crs": 519 },
+    { "number": 442, "date": "2026-09-14", "type": "Provincial Nominee Program", "invited": 576, "crs": 734 },
+    { "number": 441, "date": "2026-09-04", "type": "Healthcare and social services occupations", "invited": 3500, "crs": 475 },
+    { "number": 440, "date": "2026-09-03", "type": "Physicians with Canadian work experience", "invited": 229, "crs": 198 },
+    { "number": 439, "date": "2026-09-01", "type": "Canadian Experience Class", "invited": 2000, "crs": 521 },
+    { "number": 438, "date": "2026-08-31", "type": "Provincial Nominee Program", "invited": 562, "crs": 697 },
+    { "number": 437, "date": "2026-08-19", "type": "French language proficiency", "invited": 5000, "crs": 382 }
+  ]
+}

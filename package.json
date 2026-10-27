@@ -1,13 +1,16 @@
 {
-  "name": "app",
+  "name": "immca",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc -b"
   },
   "dependencies": {
     "framer-motion": "^14.7.1",

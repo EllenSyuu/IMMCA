@@ -102,6 +102,11 @@ export interface Profile {
   canadianStudy?: CanadianStudy;
   english?: LanguageResult;
   french?: LanguageResult;
+  /**
+   * French on the Québec scale (1–12), split into oral (listening + speaking)
+   * and written (reading + writing). Derived from NCLC when not given.
+   */
+  quebecFrench?: { oral: number; written: number };
   work: WorkPeriod[];
   jobOffer?: JobOffer;
   spouse?: SpouseInfo;
@@ -181,6 +186,8 @@ export interface ProgramSpec {
   sources: Source[];
   /** Short, rule-relevant facts shown on the detail panel (selection, recent draws, caveats). */
   notes?: L10n[];
+  /** Last day applications are accepted (ISO date); after it the program counts as closed. */
+  closesOn?: string;
   /** Express Entry-linked provincial streams add 600 CRS points. */
   enhanced?: boolean;
   /** Optional numeric scoring (e.g. CRS) shown with the result. */

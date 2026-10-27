@@ -3,7 +3,7 @@ import type { Check, Profile, ProgramResult, ProgramSpec, Verdict } from './type
 const UNAVAILABLE = new Set(['paused', 'closed']);
 
 /** Evaluate one program against a profile. */
-export function evaluateProgram(spec: ProgramSpec, profile: Profile): ProgramResult {
+export function evaluateProgram(spec: ProgramSpec, profile: Profile, today = new Date().toISOString().slice(0, 10)): ProgramResult {
   const checks: Check[] = spec.criteria.flatMap((c) => [c.evaluate(profile)].flat());
   const decided = checks.filter((c) => c.status !== 'unknown');
   const met = decided.filter((c) => c.status === 'met').length;
@@ -11,7 +11,8 @@ export function evaluateProgram(spec: ProgramSpec, profile: Profile): ProgramRes
   const score = decided.length ? met / decided.length : 0;
 
   let verdict: Verdict;
-  if (UNAVAILABLE.has(spec.status)) verdict = 'unavailable';
+  const expired = !!spec.closesOn && today > spec.closesOn;
+  if (UNAVAILABLE.has(spec.status) || expired) verdict = 'unavailable';
   else if (unmet === 0) verdict = 'eligible';
   else if (unmet <= 2) verdict = 'close';
   else verdict = 'gap';
@@ -41,9 +42,9 @@ export function isRelevant(spec: ProgramSpec, p: Profile): boolean {
 }
 
 /** Evaluate and rank every relevant program: eligible first, then by closeness. */
-export function rankPrograms(specs: ProgramSpec[], profile: Profile): ProgramResult[] {
+export function rankPrograms(specs: ProgramSpec[], profile: Profile, today?: string): ProgramResult[] {
   return specs
     .filter((s) => isRelevant(s, profile))
-    .map((s) => evaluateProgram(s, profile))
+    .map((s) => evaluateProgram(s, profile, today))
     .sort((a, b) => VERDICT_RANK[a.verdict] - VERDICT_RANK[b.verdict] || b.score - a.score);
 }

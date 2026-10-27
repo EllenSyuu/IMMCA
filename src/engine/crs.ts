@@ -1,12 +1,56 @@
 /**
  * Comprehensive Ranking System (CRS) calculator for Express Entry.
  *
- * Point tables follow IRCC's published grid (job-offer points were removed on
- * 2025-03-25). Each section is returned separately so the UI can show where a
- * score comes from and which lever moves it most.
+ * Two rule sets, chosen by date:
+ *  - `2025-03-25`: the grid in force until 2026-11-02 (job-offer points repealed).
+ *  - `2026-11-03`: adds the Labour Market Integration factor, which replaces the
+ *    Canadian-work row with the better of (a) Canadian work length + a bonus for
+ *    12 months in high-wage occupations, or (b) a job offer in a high-wage occupation.
+ *
+ * Each section is returned separately so the UI can show where a score comes
+ * from and which lever moves it most.
  */
 import { minOf, firstOfficial, secondOfficial, qualifyingMonths } from './criteria';
+import { highWageTier, type WageTier } from '../data/highWage';
 import type { EducationLevel, LanguageResult, Profile } from './types';
+
+export type CrsRules = '2025-03-25' | '2026-11-03';
+export const LMI_START = '2026-11-03';
+
+export function crsRulesFor(date: string): CrsRules {
+  return date >= LMI_START ? '2026-11-03' : '2025-03-25';
+}
+
+const today = () => new Date().toISOString().slice(0, 10);
+
+const OFFER_POINTS: Record<WageTier, number> = { 2: 100, 1.5: 70, 1.3: 50 };
+const EXPERIENCE_BONUS: Record<WageTier, number> = { 2: 70, 1.5: 40, 1.3: 20 };
+
+/** Months of skilled Canadian work in the last 10 years whose NOC is at or above `tier`. */
+function highWageMonths(p: Profile, tier: WageTier): number {
+  return p.work
+    .filter((w) => w.inCanada && w.teer <= 3 && !w.whileFullTimeStudent && (highWageTier(w.noc) ?? 0) >= tier)
+    .reduce((sum, w) => sum + Math.max(0, Math.min(w.months, 120 - w.endedMonthsAgo)), 0);
+}
+
+export interface LabourMarketIntegration {
+  experienceLength: number;
+  highWageBonus: number;
+  jobOffer: number;
+  /** Which option scored higher. */
+  chosen: 'experience' | 'offer';
+}
+
+function labourMarketIntegration(p: Profile, lengthPoints: number): LabourMarketIntegration {
+  let bonus = 0;
+  for (const tier of [2, 1.5, 1.3] as WageTier[]) {
+    if (highWageMonths(p, tier) >= 12) { bonus = EXPERIENCE_BONUS[tier]; break; }
+  }
+  const offerTier = p.jobOffer?.fullTime ? highWageTier(p.jobOffer.noc) : undefined;
+  const offer = offerTier ? OFFER_POINTS[offerTier] : 0;
+  const experience = lengthPoints + bonus;
+  return { experienceLength: lengthPoints, highWageBonus: bonus, jobOffer: offer, chosen: offer > experience ? 'offer' : 'experience' };
+}
 
 type Pair = readonly [single: number, withSpouse: number];
 
@@ -60,6 +104,9 @@ const abilities = (r?: LanguageResult) =>
   r ? [r.listening, r.reading, r.writing, r.speaking] : [0, 0, 0, 0];
 
 export interface CrsBreakdown {
+  rules: CrsRules;
+  /** Present under the 2026-11-03 rules; `core.canadianWork` then holds its total. */
+  labourMarket?: LabourMarketIntegration;
   core: { age: number; education: number; firstLanguage: number; secondLanguage: number; canadianWork: number };
   spouse: { education: number; language: number; canadianWork: number };
   transferability: { educationLanguage: number; educationWork: number; foreignLanguage: number; foreignCanadian: number; certificate: number; total: number };
@@ -86,7 +133,8 @@ export function foreignWorkYears(p: Profile): number {
 const highEducation = (e: EducationLevel) => e === 'two-or-more' || e === 'master' || e === 'phd';
 const postSecondary = (e: EducationLevel) => !['none', 'secondary'].includes(e);
 
-export function computeCrs(p: Profile): CrsBreakdown {
+export function computeCrs(p: Profile, date: string = today()): CrsBreakdown {
+  const rules = crsRulesFor(date);
   const withSpouse = !!p.spouse && p.spouse.accompanying && !p.spouse.canadianOrPr;
   const col = withSpouse ? 1 : 0;
 
@@ -101,7 +149,11 @@ export function computeCrs(p: Profile): CrsBreakdown {
     abilities(second).reduce((s, c) => s + secondLangPerAbility(c), 0),
   );
   const cdnYears = canadianWorkYears(p);
-  const canadianWork = CDN_WORK[cdnYears][col];
+  const lengthPoints = CDN_WORK[cdnYears][col];
+  const labourMarket = rules === '2026-11-03' ? labourMarketIntegration(p, lengthPoints) : undefined;
+  const canadianWork = labourMarket
+    ? Math.max(labourMarket.experienceLength + labourMarket.highWageBonus, labourMarket.jobOffer)
+    : lengthPoints;
 
   // ---- B. Spouse factors
   const spouse = { education: 0, language: 0, canadianWork: 0 };
@@ -166,12 +218,12 @@ export function computeCrs(p: Profile): CrsBreakdown {
     spouse.education + spouse.language + spouse.canadianWork +
     transfer.total + additional.total;
 
-  return { core, spouse, transferability: transfer, additional, total };
+  return { rules, labourMarket, core, spouse, transferability: transfer, additional, total };
 }
 
 /** How many points a single change would add — the "what moves my score" view. */
-export function crsLevers(p: Profile): { key: string; gain: number }[] {
-  const base = computeCrs(p).total;
+export function crsLevers(p: Profile, date: string = today()): { key: string; gain: number }[] {
+  const base = computeCrs(p, date).total;
   const variants: { key: string; profile: Profile }[] = [];
   const first = firstOfficial(p);
   if (first.result && minOf(first.result) < 10) {
@@ -198,9 +250,15 @@ export function crsLevers(p: Profile): { key: string; gain: number }[] {
       },
     });
   }
+  if (crsRulesFor(date) === '2026-11-03' && !highWageTier(p.jobOffer?.noc)) {
+    variants.push({
+      key: 'lever.highWageOffer',
+      profile: { ...p, jobOffer: { province: p.jobOffer?.province ?? 'ON', teer: 1, noc: '21231', permanent: true, fullTime: true } },
+    });
+  }
   if (!p.provincialNomination) variants.push({ key: 'lever.pnp', profile: { ...p, provincialNomination: true } });
   return variants
-    .map((v) => ({ key: v.key, gain: computeCrs(v.profile).total - base }))
+    .map((v) => ({ key: v.key, gain: computeCrs(v.profile, date).total - base }))
     .filter((v) => v.gain > 0)
     .sort((a, b) => b.gain - a.gain);
 }
