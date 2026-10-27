@@ -294,7 +294,7 @@ export const en: Record<string, string> = {
   'score.details': 'Score breakdown and recent rounds',
   'results.allRoutes': 'All routes',
   'app.lastCheck': 'Official pages last checked automatically on {date} ({n} of {total} reachable).',
-  'form.sumWork': '{months} months of work in Canada · {n} entries',
+  'form.sumWork': 'Work in Canada: {months} months · jobs listed: {n}',
   'form.sumOffer': 'Job offer in {where} (TEER {teer})',
   'form.sumNoOffer': 'No job offer',
   'form.sumFamily': 'Family of {n} · ${funds}',

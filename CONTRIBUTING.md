@@ -1,5 +1,15 @@
 # Updating a rule
 
+## When the daily monitor flags a page
+
+Every morning the daily workflow checks all official pages. When one changes it opens an issue labelled `source-change`, and the site shows *Official page changed* on every program that cites it.
+
+1. Open the latest `data: daily update` commit and read the diff under `monitor/snapshots/` — it is the page's text before and after.
+2. If a rule changed, edit the program spec (steps below). If the change is cosmetic, nothing to edit.
+3. Run `npm run sources:accept -- <url>` (or `-- all`) to accept the new text as the baseline, commit, and close the issue.
+
+## Changing a rule
+
 Immigration programs change often. Keeping IMMCA correct matters more than adding programs, so every change follows the same steps.
 
 1. **Find the official source.** Use the government page itself (canada.ca, quebec.ca, the province's immigration site, the Gazette). News sites and consultants are fine for discovering a change, never as the source of a rule.

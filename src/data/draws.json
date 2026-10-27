@@ -5,7 +5,7 @@
     {
       "number": 452,
       "date": "2026-10-27",
-      "type": "French-Language proficiency 2026-Version 2",
+      "type": "French-Language proficiency",
       "invited": 5000,
       "crs": 407
     },
@@ -19,7 +19,7 @@
     {
       "number": 450,
       "date": "2026-10-16",
-      "type": "French-Language proficiency 2026-Version 2",
+      "type": "French-Language proficiency",
       "invited": 5000,
       "crs": 435
     },
@@ -40,7 +40,7 @@
     {
       "number": 447,
       "date": "2026-10-01",
-      "type": "Trades Occupations, 2026-Version 3",
+      "type": "Trades Occupations,",
       "invited": 3500,
       "crs": 476
     },
@@ -61,7 +61,7 @@
     {
       "number": 444,
       "date": "2026-09-16",
-      "type": "Senior managers with Canadian Work Experience, 2026-Version 1",
+      "type": "Senior managers with Canadian Work Experience,",
       "invited": 250,
       "crs": 389
     },
@@ -82,14 +82,14 @@
     {
       "number": 441,
       "date": "2026-09-04",
-      "type": "Healthcare and Social Services Occupations, 2026-Version 3",
+      "type": "Healthcare and Social Services Occupations,",
       "invited": 3500,
       "crs": 475
     },
     {
       "number": 440,
       "date": "2026-09-03",
-      "type": "Physicians with Canadian Work Experience, 2026-Version 1",
+      "type": "Physicians with Canadian Work Experience,",
       "invited": 229,
       "crs": 198
     },
@@ -110,7 +110,7 @@
     {
       "number": 437,
       "date": "2026-08-19",
-      "type": "French-Language proficiency 2026-Version 2",
+      "type": "French-Language proficiency",
       "invited": 5000,
       "crs": 382
     },
@@ -131,14 +131,14 @@
     {
       "number": 434,
       "date": "2026-08-07",
-      "type": "Transport Occupations, 2026-Version 2",
+      "type": "Transport Occupations,",
       "invited": 300,
       "crs": 470
     },
     {
       "number": 433,
       "date": "2026-08-06",
-      "type": "French-Language proficiency 2026-Version 2",
+      "type": "French-Language proficiency",
       "invited": 5000,
       "crs": 391
     },
@@ -159,14 +159,14 @@
     {
       "number": 430,
       "date": "2026-07-23",
-      "type": "Skilled Military Recruits, 2026-Version 1",
+      "type": "Skilled Military Recruits,",
       "invited": 4,
       "crs": 368
     },
     {
       "number": 429,
       "date": "2026-07-22",
-      "type": "French-Language proficiency 2026-Version 2",
+      "type": "French-Language proficiency",
       "invited": 5000,
       "crs": 399
     },

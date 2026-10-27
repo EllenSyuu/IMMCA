@@ -8,7 +8,7 @@
 
 [![CI](https://github.com/EllenSyuu/IMMCA/actions/workflows/ci.yml/badge.svg)](https://github.com/EllenSyuu/IMMCA/actions/workflows/ci.yml)
 [![Deploy](https://github.com/EllenSyuu/IMMCA/actions/workflows/pages.yml/badge.svg)](https://github.com/EllenSyuu/IMMCA/actions/workflows/pages.yml)
-[![Express Entry data](https://github.com/EllenSyuu/IMMCA/actions/workflows/refresh-draws.yml/badge.svg)](https://github.com/EllenSyuu/IMMCA/actions/workflows/refresh-draws.yml)
+[![Daily update](https://github.com/EllenSyuu/IMMCA/actions/workflows/daily.yml/badge.svg)](https://github.com/EllenSyuu/IMMCA/actions/workflows/daily.yml)
 ![Licence](https://img.shields.io/badge/licence-Apache--2.0-12213d)
 ![Languages](https://img.shields.io/badge/UI-English%20%C2%B7%20Fran%C3%A7ais%20%C2%B7%20%E4%B8%AD%E6%96%87-1d4ed8)
 ![Rules verified](https://img.shields.io/badge/rules%20verified-2026--10--27-0f8b6e)
@@ -26,16 +26,19 @@ IMMCA turns that into one question: *given my studies, languages and work, which
 ## What it does
 
 - **Screens 56 programs** — Express Entry (CEC, FSW, FST and every 2026 category draw), the Atlantic, rural and francophone pilots, Québec's PSTQ and PEQ, and the nominee streams of all twelve provinces and territories that run one.
+- **Answers first.** A short summary names the routes worth pursuing, the single requirement blocking the nearest one, and the dates that matter to you.
+- **Keeps four questions apart** that a single green light would blur: do you *meet the rules*, is the program *open* (or are its 2026 spaces nearly gone), how *competitive* are you where an official cutoff exists, and how *solid is the evidence* behind the rule (verified, approximated, unconfirmed, or the official page changed and is under review).
 - **Shows each program as a transit line.** Every requirement is a station: filled when you meet it, hollow when you don't, dashed when it can't be judged from a form (a community recommendation, a regulator's licence). Open a line to see each station, how to close each gap, and the official sources.
-- **Calculates your CRS under both rule sets** — the grid in force today and the Labour Market Integration factor that starts on 3 November 2026 — and ranks the single changes that would raise it most.
-- **Places your score in the real Express Entry pool** using IRCC's published distribution of 228,724 candidates, refreshed weekly from IRCC's own feed.
+- **Scenario lab.** One change at a time — NCLC 7 in French, another year of Canadian work, a job offer, a nomination — with the CRS effect *and* the routes it would open.
+- **Calculates your CRS under both rule sets** — the grid in force today and the Labour Market Integration factor that starts on 3 November 2026.
+- **Places your score in the real Express Entry pool** using IRCC's published distribution of 228,724 candidates, refreshed daily from IRCC's own feed.
 - **Estimates your Arrima score** for Québec's PSTQ from the ministry's 1,400-point grid.
 - **Converts raw test scores** (IELTS, CELPIP, PTE Core, TEF Canada on both of its scales, TCF Canada) to CLB/NCLC and to the Québec French scale, so people can type what is on their result sheet.
 - **Runs entirely in the browser**, in English, French or Chinese. Nothing anyone types leaves their device.
 
 <table>
 <tr>
-<td width="68%"><img src="docs/images/results.png" alt="Profile form beside the results: an Express Entry score of 493 with breakdown bars, a strip placing the score within the pool, levers that would raise it, and the Canadian Experience Class shown as an open route with its requirements"></td>
+<td width="68%"><img src="docs/images/results.png" alt="Collapsed profile steps beside the results: a 'Where to focus' summary with three routes, a scenario lab, the Express Entry score placed in the pool, and route rows showing eligibility, availability, competitiveness and evidence"></td>
 <td width="32%"><img src="docs/images/mobile-zh.png" alt="The results on a phone, in Chinese"></td>
 </tr>
 </table>
@@ -48,12 +51,15 @@ flowchart LR
     F[Profile form<br/>raw test scores] -->|toProfile| P[Profile]
     P --> E{{Rules engine}}
     R[(Program registry<br/>56 specs · 49 official sources)] --> E
-    E --> V[Ranked results<br/>verdict + stations + hints]
+    E --> V[Results<br/>eligibility · availability ·<br/>competitiveness · evidence]
+    V --> S[Decision summary<br/>+ scenario lab]
+    M[(source-status.json)] --> V
     P --> C[CRS calculator<br/>2 rule sets by date]
     P --> A[Arrima estimate]
     D[(draws.json<br/>rounds + pool distribution)] --> C
   end
-  I[IRCC rounds feed] -->|weekly GitHub Action<br/>validated refresh| D
+  I[IRCC rounds feed] -->|daily GitHub Action<br/>validated refresh| D
+  G[49 official pages] -->|daily GitHub Action<br/>text diff| M
 ```
 
 ### Rules as data
@@ -84,7 +90,10 @@ Immigration rules have dates, so the engine does too:
 
 - **Date-switched scoring.** `computeCrs(profile, date)` applies the 2025-03-25 grid before 3 November 2026 and the Labour Market Integration factor from that day, using IRCC's list of 186 high-wage occupations.
 - **Closing dates.** A program with `closesOn` (the PEQ: 31 October 2026) turns into *closed* by itself the next day. The PEQ's snapshot rule — the diploma must already have existed on 19 November 2025 — is evaluated against the current date.
-- **Weekly data refresh.** [`scripts/refresh-draws.mjs`](scripts/refresh-draws.mjs) pulls IRCC's rounds feed, validates its shape and checks that the pool distribution adds up before writing anything; a changed feed fails loudly instead of shipping bad numbers.
+- **Daily, automatic updates — no push needed.** Every morning [`daily.yml`](.github/workflows/daily.yml) runs on GitHub:
+  - [`scripts/refresh-draws.mjs`](scripts/refresh-draws.mjs) pulls IRCC's rounds feed, validates its shape and checks that the pool distribution adds up before writing anything; a changed feed fails loudly instead of shipping bad numbers.
+  - [`scripts/check-sources.ts`](scripts/check-sources.ts) fetches every official page a rule cites, reduces it to readable text and compares it with the text the rule was verified against. It never rewrites a rule by itself: a changed page marks the program *Official page changed* on the site and opens a GitHub issue, and the commit shows the exact text diff under `monitor/snapshots/`.
+  - The site is rebuilt and redeployed, so the "last checked" date in the footer is always today's.
 
 ### Honest about uncertainty
 
@@ -116,9 +125,10 @@ Nunavut has no nominee program. Business and investor streams are out of scope.
 ```bash
 npm install
 npm run dev            # http://localhost:5173
-npm test               # 52 tests: CRS tables, conversions, time windows, programs, audit regressions, translations
+npm test               # 64 tests: CRS tables, conversions, time windows, programs, audit regressions, monitor, translations
 npm run build          # static site in dist/ — deployed to GitHub Pages on every push to main
 npm run refresh:draws  # pull the latest Express Entry rounds from IRCC
+npm run sources:check  # check every official page for changes
 ```
 
 ```
@@ -127,7 +137,9 @@ src/
   data/
     programs/        federal.ts · quebec.ts · east.ts · west.ts — one spec per program, with sources
     highWage.ts      NOC tiers for the 2026-11-03 CRS factor
-    draws.json       Express Entry rounds and pool distribution (refreshed weekly)
+    insights.ts      the four dimensions, decision summary and scenario lab
+    draws.json       Express Entry rounds and pool distribution (refreshed daily)
+    source-status.json  state of every official page (updated daily)
   i18n/              en · fr · zh dictionaries (a test enforces identical keys and placeholders)
   ui/                React components: profile form, score panel, route cards
 tests/               Vitest suites

@@ -46,3 +46,12 @@ describe('refresh script', () => {
     expect(() => normalize({ rounds: [{ ...round(1), dd18: '9999' }] }, 'x')).toThrow(/add up/);
   });
 });
+
+describe('round names', () => {
+  it('strips the version suffix with or without brackets', () => {
+    const base = { drawNumber: '1', drawDate: '2026-10-27', drawSize: '1', drawCRS: '400', drawDistributionAsOn: 'October 25, 2026',
+      dd1: '1', dd2: '0', dd4: '0', dd5: '0', dd6: '0', dd7: '0', dd8: '0', dd10: '0', dd11: '0', dd12: '0', dd13: '0', dd14: '0', dd15: '0', dd16: '0', dd17: '0', dd18: '1' };
+    expect(normalize({ rounds: [{ ...base, drawName: 'French-Language proficiency 2026-Version 2' }] }, 'x').rounds[0].type).toBe('French-Language proficiency');
+    expect(normalize({ rounds: [{ ...base, drawName: 'Trades (2026-Version 3)' }] }, 'x').rounds[0].type).toBe('Trades');
+  });
+});

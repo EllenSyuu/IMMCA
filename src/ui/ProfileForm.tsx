@@ -109,6 +109,7 @@ export function ProfileForm({ state, set }: { state: FormState; set: Set }) {
             onChange={(currentProvince) => set({ currentProvince })}
           />
           <SelectField
+            wide
             label={t('form.intendedProvince')}
             value={state.intendedProvince}
             options={[{ value: 'any' as const, label: t('form.anywhere') }, ...provinceOptions]}

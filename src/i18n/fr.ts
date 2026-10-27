@@ -287,7 +287,7 @@ export const fr: Record<string, string> = {
   'score.details': 'Détail du pointage et rondes récentes',
   'results.allRoutes': 'Toutes les voies',
   'app.lastCheck': 'Pages officielles vérifiées automatiquement le {date} ({n} sur {total} accessibles).',
-  'form.sumWork': '{months} mois de travail au Canada · {n} entrées',
+  'form.sumWork': 'Travail au Canada : {months} mois · emplois saisis : {n}',
   'form.sumOffer': 'Offre d’emploi : {where} (FEER {teer})',
   'form.sumNoOffer': 'Pas d’offre d’emploi',
   'form.sumFamily': 'Famille de {n} · {funds} $',
