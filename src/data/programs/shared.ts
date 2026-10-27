@@ -17,16 +17,20 @@ export const VERIFIED = '2026-10-27';
  */
 export const FUNDS_TABLE = [15263, 19001, 23360, 28362, 32168, 36280, 40392];
 
+/** CEC language rule: CLB 7 if the qualifying Canadian work includes TEER 0–1, else CLB 5. */
+export function cecLanguageOk(p: Profile): boolean {
+  const teers = p.work.filter((w) => w.inCanada && w.teer <= 3 && !w.whileFullTimeStudent).map((w) => w.teer);
+  const need = teers.length && teers.every((t) => t >= 2) ? 5 : 7;
+  return minOf(firstOfficial(p).result) >= need;
+}
+
 /** Canadian Experience Class minimums. */
 export function meetsCec(p: Profile): boolean {
   const months = qualifyingMonths(p.work, {
     months: 12, teers: [0, 1, 2, 3], inCanada: true, withinMonths: 36,
     excludeStudentWork: true, excludeSelfEmployed: true,
   });
-  const lang = minOf(firstOfficial(p).result);
-  const teers = p.work.filter((w) => w.inCanada).map((w) => w.teer);
-  const need = teers.some((t) => t <= 1) ? 7 : 5;
-  return months >= 12 && lang >= need;
+  return months >= 12 && cecLanguageOk(p);
 }
 
 /** Federal Skilled Worker minimums (the 67-point grid is checked separately). */

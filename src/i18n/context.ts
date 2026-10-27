@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { createContext, useContext } from 'react';
 import { en } from './en';
 import { fr } from './fr';
 import { zh } from './zh';
@@ -31,41 +31,13 @@ export function translate(locale: Locale, key: string, params?: Record<string, s
   });
 }
 
-interface I18n {
+export interface I18n {
   locale: Locale;
   setLocale: (l: Locale) => void;
   t: (key: string, params?: Record<string, string | number>) => string;
 }
 
-const Ctx = createContext<I18n | null>(null);
-
-function initialLocale(): Locale {
-  try {
-    const saved = localStorage.getItem('immca.locale');
-    if (saved === 'en' || saved === 'fr' || saved === 'zh') return saved;
-  } catch {
-    /* storage unavailable */
-  }
-  const nav = typeof navigator !== 'undefined' ? navigator.language.toLowerCase() : 'en';
-  return nav.startsWith('fr') ? 'fr' : nav.startsWith('zh') ? 'zh' : 'en';
-}
-
-export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocale] = useState<Locale>(initialLocale);
-  useEffect(() => {
-    document.documentElement.lang = LOCALES.find((l) => l.id === locale)!.htmlLang;
-    try {
-      localStorage.setItem('immca.locale', locale);
-    } catch {
-      /* storage unavailable */
-    }
-  }, [locale]);
-  const value = useMemo<I18n>(
-    () => ({ locale, setLocale, t: (k, p) => translate(locale, k, p) }),
-    [locale],
-  );
-  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
-}
+export const Ctx = createContext<I18n | null>(null);
 
 export function useI18n(): I18n {
   const v = useContext(Ctx);

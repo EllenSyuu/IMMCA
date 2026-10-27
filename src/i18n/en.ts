@@ -259,4 +259,6 @@ export const en: Record<string, string> = {
   'score.pool': 'Where you sit in the pool',
   'score.poolAbove': 'About {pct}% of the {total} candidates in the pool score higher than you.',
   'score.poolAsOf': 'IRCC pool distribution as of {date}.',
+  'check.cecLanguage': 'CLB {high}+ if your Canadian work is TEER 0–1, CLB {low}+ if it is TEER 2–3',
+  'check.rcipLanguage': 'CLB {high}+ for TEER 0–1 offers, CLB {mid}+ for TEER 2–3, CLB {low}+ for TEER 4–5',
 };

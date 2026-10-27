@@ -252,4 +252,6 @@ export const fr: Record<string, string> = {
   'score.pool': 'Votre place dans le bassin',
   'score.poolAbove': 'Environ {pct} % des {total} candidats du bassin ont un pointage plus élevé que le vôtre.',
   'score.poolAsOf': 'Répartition du bassin d’IRCC au {date}.',
+  'check.cecLanguage': 'CLB {high}+ si votre travail au Canada est de niveau FEER 0–1, CLB {low}+ s’il est FEER 2–3',
+  'check.rcipLanguage': 'CLB {high}+ pour une offre FEER 0–1, CLB {mid}+ pour FEER 2–3, CLB {low}+ pour FEER 4–5',
 };

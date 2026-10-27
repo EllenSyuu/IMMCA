@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use IMMCA or its rule data, please cite it as below."
+title: "IMMCA: an open, source-linked screener for Canadian immigration pathways"
+abstract: >-
+  A browser-only rules engine and trilingual (English, French, Chinese) web app that
+  matches a person's profile against 53 federal, Québec and provincial permanent-residence
+  programs, computes the Express Entry CRS under both the current and the 2026-11-03 rules,
+  and links every requirement to the official government page it was verified against.
+authors:
+  - family-names: Zhou
+    given-names: Ziyi
+version: 0.1.0
+date-released: 2026-10-27
+license: Apache-2.0
+repository-code: "https://github.com/EllenSyuu/IMMCA"
+keywords:
+  - immigration
+  - Canada
+  - Express Entry
+  - rules engine
+  - eligibility screening
+  - i18n

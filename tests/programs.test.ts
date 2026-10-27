@@ -106,3 +106,14 @@ describe('verdicts', () => {
     expect(evaluateProgram(spec(3, 3), graduate()).verdict).toBe('eligible');
   });
 });
+
+describe('Canadian Experience Class language rule', () => {
+  const tech = (teer: 1 | 2) => graduate({
+    intendedProvince: 'ON', english: clb(6),
+    work: [{ inCanada: true, province: 'ON', teer, months: 14, endedMonthsAgo: 0, whileFullTimeStudent: false, selfEmployed: false }],
+  });
+  it('needs CLB 7 for TEER 0–1 work but only CLB 5 for TEER 2–3', () => {
+    expect(evaluateProgram(get('ee-cec'), tech(1)).verdict).not.toBe('eligible');
+    expect(evaluateProgram(get('ee-cec'), tech(2)).verdict).toBe('eligible');
+  });
+});

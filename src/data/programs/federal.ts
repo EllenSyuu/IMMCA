@@ -10,7 +10,7 @@ import {
 import { computeCrs } from '../../engine/crs';
 import type { Criterion, EducationLevel, Profile, ProgramSpec } from '../../engine/types';
 import { latestCutoff, type DrawFamily } from '../draws';
-import { FUNDS_TABLE, L, VERIFIED, expressEntryEligible, meetsCec, meetsFst, meetsFswMinimums } from './shared';
+import { FUNDS_TABLE, L, VERIFIED, cecLanguageOk, expressEntryEligible, meetsFst } from './shared';
 
 const ircc = 'https://www.canada.ca/en/immigration-refugees-citizenship/services';
 const ee = `${ircc}/immigrate-canada/express-entry`;
@@ -92,7 +92,7 @@ export const federalPrograms: ProgramSpec[] = [
     ),
     criteria: [
       workExperience({ months: 12, teers: [0, 1, 2, 3], inCanada: true, withinMonths: 36, excludeStudentWork: true, excludeSelfEmployed: true, key: 'check.cecWork' }),
-      custom('check.clbByTeer', (p) => meetsCec(p) || (minOf(firstOfficial(p).result) >= 7), { high: 7, low: 5 }, 'hint.raiseLanguage'),
+      custom('check.cecLanguage', cecLanguageOk, { high: 7, low: 5 }, 'hint.raiseLanguage'),
     ],
     points: crsPoints('cec'),
     notes: [
@@ -242,11 +242,11 @@ export const federalPrograms: ProgramSpec[] = [
       anyOf('check.oneOf',
         [workExperience({ months: 12, withinMonths: 36, excludeSelfEmployed: true })],
         [canadianGraduate({ withinMonths: 18, minProgramMonths: 24 })]),
-      custom('check.clbByTeer', (p) => {
+      custom('check.rcipLanguage', (p) => {
         const t = p.jobOffer?.teer ?? 5;
         const need = t <= 1 ? 6 : t <= 3 ? 5 : 4;
         return Math.max(minOf(p.english), minOf(p.french)) >= need;
-      }, { high: 6, low: 4 }, 'hint.raiseLanguage'),
+      }, { high: 6, mid: 5, low: 4 }, 'hint.raiseLanguage'),
     ],
     notes: [L(
       'Communities: Pictou County NS; North Bay, Sudbury, Timmins, Sault Ste. Marie, Thunder Bay ON; Steinbach, Altona/Rhineland, Brandon MB; Moose Jaw SK; Claresholm AB; West Kootenay, North Okanagan Shuswap, Peace Liard BC.',
@@ -333,4 +333,3 @@ export const federalPrograms: ProgramSpec[] = [
   },
 ];
 
-void meetsFswMinimums;

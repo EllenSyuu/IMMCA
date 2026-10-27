@@ -44,11 +44,11 @@ export function TextField(props: { label: string; value: string; onChange: (v: s
 }
 
 export function SelectField<T extends string | number>(props: {
-  label: string; value: T; onChange: (v: T) => void; options: { value: T; label: string }[];
+  label: string; value: T; onChange: (v: T) => void; options: { value: T; label: string }[]; wide?: boolean;
 }) {
   const id = useId();
   return (
-    <div className="field">
+    <div className={props.wide ? 'field span-2' : 'field'}>
       <label htmlFor={id}>{props.label}</label>
       <select
         id={id}

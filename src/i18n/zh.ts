@@ -252,4 +252,6 @@ export const zh: Record<string, string> = {
   'score.pool': '你在候选池中的位置',
   'score.poolAbove': '候选池中 {total} 名申请人里，约 {pct}% 的分数高于你。',
   'score.poolAsOf': 'IRCC 候选池分数分布，截至 {date}。',
+  'check.cecLanguage': '加拿大工作经验为 TEER 0–1 需 CLB {high}，为 TEER 2–3 需 CLB {low}',
+  'check.rcipLanguage': 'TEER 0–1 职位需 CLB {high}，TEER 2–3 需 CLB {mid}，TEER 4–5 需 CLB {low}',
 };

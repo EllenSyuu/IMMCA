@@ -66,13 +66,14 @@ export function ProfileForm({ state, set }: { state: FormState; set: Set }) {
     <form className="profile" onSubmit={(e) => e.preventDefault()} aria-label={t('form.title')}>
       <Step n={1} title={t('form.step.you')}>
         <div className="grid-2">
-          <NumberField label={t('form.age')} value={state.age} min={16} max={70} onChange={(age) => set({ age })} />
           <SelectField
+            wide
             label={t('form.status')}
             value={state.status}
             options={(['student', 'graduate-pgwp', 'worker', 'outside'] as const).map((s) => ({ value: s, label: t(`status.${s}`) }))}
             onChange={(status) => set({ status, ...(status === 'outside' ? { currentProvince: 'outside' as const } : {}) })}
           />
+          <NumberField label={t('form.age')} value={state.age} min={16} max={70} onChange={(age) => set({ age })} />
           <SelectField
             label={t('form.currentProvince')}
             value={state.currentProvince}
@@ -93,7 +94,7 @@ export function ProfileForm({ state, set }: { state: FormState; set: Set }) {
         <Toggle label={t('form.canadianStudy')} checked={state.studied} onChange={(studied) => set({ studied })} />
         {state.studied ? (
           <div className="grid-2 nested">
-            <SelectField label={t('form.studyLevel')} value={state.study.level} options={eduOptions.slice(1)} onChange={(level) => set({ study: { ...state.study, level } })} />
+            <SelectField wide label={t('form.studyLevel')} value={state.study.level} options={eduOptions.slice(1)} onChange={(level) => set({ study: { ...state.study, level } })} />
             <SelectField label={t('form.studyProvince')} value={state.study.province} options={provinceOptions} onChange={(province) => set({ study: { ...state.study, province } })} />
             <NumberField label={t('form.programMonths')} value={state.study.programMonths} min={1} max={120} onChange={(programMonths) => set({ study: { ...state.study, programMonths } })} />
             <NumberField label={t('form.monthsSince')} help={t('form.monthsSinceHelp')} value={state.study.monthsSinceGraduation} min={0} max={240} onChange={(monthsSinceGraduation) => set({ study: { ...state.study, monthsSinceGraduation } })} />

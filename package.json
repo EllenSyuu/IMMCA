@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc -b"
+    "typecheck": "tsc -b",
+    "refresh:draws": "node scripts/refresh-draws.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.62.0",
@@ -29,5 +30,12 @@
     "typescript": "~7.0.2",
     "vite": "^8.3.5",
     "vitest": "^5.0.5"
+  },
+  "description": "Browser-only screener for Canadian immigration pathways: federal, Qu\u00e9bec and provincial programs, sourced and trilingual.",
+  "author": "Ziyi Zhou",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EllenSyuu/IMMCA"
   }
 }
