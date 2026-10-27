@@ -98,7 +98,7 @@ export const federalPrograms: ProgramSpec[] = [
     ),
     criteria: [
       workExperience({ months: 12, teers: [0, 1, 2, 3], inCanada: true, withinMonths: 36, excludeStudentWork: true, excludeSelfEmployed: true, key: 'check.cecWork' }),
-      custom('check.cecLanguage', cecLanguageOk, { high: 7, low: 5 }, 'hint.raiseLanguage'),
+      custom('check.cecLanguage', cecLanguageOk, { high: 7, low: 5 }, 'hint.raiseLanguageAny'),
     ],
     points: crsPoints('cec'),
     notes: [
@@ -324,7 +324,7 @@ export const federalPrograms: ProgramSpec[] = [
       custom('check.clbByProgram', (p) => {
         const uni = !!p.canadianStudy && ['bachelor', 'two-or-more', 'master', 'phd'].includes(p.canadianStudy.level);
         return Math.max(minOf(p.english), minOf(p.french)) >= (uni ? 7 : 5);
-      }, { high: 7, low: 5 }, 'hint.raiseLanguage'),
+      }, { high: 7, low: 5 }, 'hint.raiseLanguageAny'),
       inCanadaNow(),
     ],
     notes: [

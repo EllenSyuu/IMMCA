@@ -251,7 +251,7 @@ export const quebecPrograms: ProgramSpec[] = [
       '适合过去 36 个月内在魁北克全职从事技术类工作（TEER 0–3）满 24 个月、且目前仍在职的人。',
     ),
     criteria: [
-      custom('check.peqWorkSnapshot', (p) => peqWorkerMonths(p) >= 24, { months: 24, date: '2025-11-19' }, 'hint.moreWork'),
+      custom('check.peqWorkSnapshot', (p) => peqWorkerMonths(p) >= 24, { months: 24, date: '2025-11-19' }, 'hint.moreWorkAny'),
       custom('check.currentlyEmployed', (p) => p.work.some((w) => w.inCanada && w.province === 'QC' && w.endedMonthsAgo === 0 && w.teer <= 3)),
       qcFrench(7),
       livesIn('QC'),

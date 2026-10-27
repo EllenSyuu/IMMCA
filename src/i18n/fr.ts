@@ -261,4 +261,6 @@ export const fr: Record<string, string> = {
   'check.onRecentGrad': 'Diplômé récent de l’Ontario (programme de 2 ans et plus, certificat postdiplôme, maîtrise ou doctorat depuis moins de 3 ans)',
   'check.monctonCcnb': 'Diplômé en présentiel de l’Université de Moncton ou du CCNB',
   'form.tefHelp': 'Votre attestation TEF Canada comporte deux colonnes. Entrée express utilise la colonne « Équivalence ancien score » ; les autres programmes utilisent le score sur 699.',
+  'hint.raiseLanguageAny': 'Un meilleur résultat linguistique dans chaque compétence.',
+  'hint.moreWorkAny': 'Davantage d’expérience de travail admissible dans la province.',
 };

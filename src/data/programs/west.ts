@@ -6,7 +6,7 @@
  * `sources` on every spec and docs/RESEARCH.md for the evidence log.
  */
 import {
-  ageRange, anyOf, canadianGraduate, custom, inCanadaNow, intendsToLive, jobOffer, languageForTeer,
+  anyOf, canadianGraduate, custom, inCanadaNow, intendsToLive, jobOffer, languageForTeer,
   minLanguage, minEducation, note, settlementFunds, workExperience,
 } from '../../engine/criteria';
 import type { ProgramSpec } from '../../engine/types';
@@ -147,10 +147,7 @@ export const westPrograms: ProgramSpec[] = [
         [workExperience({ months: 12, province: 'AB', withinMonths: 18, excludeStudentWork: true })],
         [workExperience({ months: 24, withinMonths: 30, excludeStudentWork: true })],
       ),
-      custom('check.clbForTeer', (p) => {
-        const need = p.jobOffer?.noc === '33102' ? 7 : p.jobOffer && p.jobOffer.teer <= 3 ? 5 : 4;
-        return Math.max(minOfP(p.english), minOfP(p.french)) >= need;
-      }, { need: 5, teer: '0–3', have: '' }, 'hint.raiseLanguage'),
+      languageForTeer({ 0: 5, 1: 5, 2: 5, 3: 5, 4: 4, 5: 4 }),
       minEducation('secondary', { requireEcaIfForeign: true }),
     ],
     notes: [
@@ -160,9 +157,9 @@ export const westPrograms: ProgramSpec[] = [
         '从阿尔伯塔工人 EOI 池中邀请，近期最低分 54–58。截至 2026-10-21，3,562 个名额仅剩 289 个。',
       ),
       L(
-        'Alberta graduates on a PGWP from an Alberta public institution need only 6 months of Alberta work.',
-        'Les diplômés d’un établissement public albertain titulaires d’un PTPD n’ont besoin que de 6 mois de travail en Alberta.',
-        '持阿尔伯塔公立院校学历 PGWP 的毕业生只需 6 个月阿尔伯塔工作经验。',
+        'Alberta graduates on a PGWP from an Alberta public institution need only 6 months of Alberta work. Nurse aides (NOC 33102) need CLB 7.',
+        'Les diplômés d’un établissement public albertain titulaires d’un PTPD n’ont besoin que de 6 mois de travail en Alberta. Les aides-infirmiers (CNP 33102) doivent avoir un CLB 7.',
+        '持阿尔伯塔公立院校学历 PGWP 的毕业生只需 6 个月阿尔伯塔工作经验。护理助理（NOC 33102）需 CLB 7。',
       ),
     ],
     sources: [
@@ -399,7 +396,7 @@ export const westPrograms: ProgramSpec[] = [
         const mbMonths = p.work.filter((w) => w.inCanada && w.province === 'MB' && !w.whileFullTimeStudent && w.endedMonthsAgo === 0).reduce((m, w) => Math.max(m, w.months), 0);
         const otherProvinceGrad = p.canadianStudy && p.canadianStudy.province !== 'MB';
         return mbMonths >= (otherProvinceGrad ? 12 : 6);
-      }, { mb: 6, other: 12 }, 'hint.moreWork'),
+      }, { mb: 6, other: 12 }, 'hint.moreWorkAny'),
       inCanadaNow(),
       intendsToLive('MB'),
     ],
@@ -495,11 +492,3 @@ export const westPrograms: ProgramSpec[] = [
     sources: [{ url: 'https://www.immigratenwt.ca/expression-interest', verified: VERIFIED }],
   },
 ];
-
-// Small local helper to avoid importing UI code.
-function minOfP(r?: { listening: number; reading: number; writing: number; speaking: number }) {
-  return r ? Math.min(r.listening, r.reading, r.writing, r.speaking) : 0;
-}
-
-// Keep tree-shaking honest for helpers that some provinces don't use.
-void ageRange;

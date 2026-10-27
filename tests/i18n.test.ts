@@ -31,3 +31,27 @@ describe('translations', () => {
     for (const k of used) expect(en[k], k).toBeDefined();
   });
 });
+
+describe('rendered requirements', () => {
+  it('leave no placeholder unfilled in any program, profile or language', async () => {
+    const { translate } = await import('../src/i18n/context');
+    const { PROGRAMS } = await import('../src/data/programs');
+    const { evaluateProgram } = await import('../src/engine/evaluate');
+    const { SAMPLES, EMPTY, toProfile } = await import('../src/ui/model');
+    const profiles = [...Object.values(SAMPLES), EMPTY].map(toProfile);
+    for (const locale of ['en', 'fr', 'zh'] as const) {
+      for (const spec of PROGRAMS) {
+        for (const p of profiles) {
+          for (const c of evaluateProgram(spec, p, '2026-10-27').checks) {
+            const msg = translate(locale, c.key, c.params);
+            expect(msg, `${locale} ${spec.id} ${c.key}`).not.toMatch(/\{\w+\}|undefined|NaN|^(check|hint)\./);
+            if (c.hintKey) {
+              const hint = translate(locale, c.hintKey, { ...c.params, ...c.hintParams });
+              expect(hint, `${locale} ${spec.id} ${c.hintKey}`).not.toMatch(/\{\w+\}|undefined|NaN|^hint\./);
+            }
+          }
+        }
+      }
+    }
+  });
+});

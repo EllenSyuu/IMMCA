@@ -261,4 +261,6 @@ export const zh: Record<string, string> = {
   'check.onRecentGrad': '安省近期毕业生（3 年内完成 2 年以上项目、研究生证书、硕士或博士）',
   'check.monctonCcnb': '以面授方式毕业于蒙克顿大学或 CCNB',
   'form.tefHelp': 'TEF Canada 成绩单有两栏分数。快速通道使用“Équivalence ancien score”一栏，其他项目使用满分 699 的分数。',
+  'hint.raiseLanguageAny': '每项语言能力取得更高成绩。',
+  'hint.moreWorkAny': '在该省积累更多符合条件的工作经验。',
 };

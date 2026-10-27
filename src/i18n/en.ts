@@ -268,4 +268,6 @@ export const en: Record<string, string> = {
   'check.onRecentGrad': 'Recent Ontario graduate (2-year+ program, graduate certificate, master’s or PhD within 3 years)',
   'check.monctonCcnb': 'Graduated in person from Université de Moncton or CCNB',
   'form.tefHelp': 'Your TEF Canada attestation has two columns. Express Entry uses the “Équivalence ancien score” column; other programs use the score out of 699.',
+  'hint.raiseLanguageAny': 'A higher language result in every ability.',
+  'hint.moreWorkAny': 'More qualifying work experience in the province.',
 };
