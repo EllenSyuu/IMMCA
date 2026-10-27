@@ -5,7 +5,7 @@
     {
       "number": 452,
       "date": "2026-10-27",
-      "type": "French language proficiency",
+      "type": "French-Language proficiency 2026-Version 2",
       "invited": 5000,
       "crs": 407
     },
@@ -19,7 +19,7 @@
     {
       "number": 450,
       "date": "2026-10-16",
-      "type": "French language proficiency",
+      "type": "French-Language proficiency 2026-Version 2",
       "invited": 5000,
       "crs": 435
     },
@@ -40,7 +40,7 @@
     {
       "number": 447,
       "date": "2026-10-01",
-      "type": "Trade occupations",
+      "type": "Trades Occupations, 2026-Version 3",
       "invited": 3500,
       "crs": 476
     },
@@ -61,7 +61,7 @@
     {
       "number": 444,
       "date": "2026-09-16",
-      "type": "Senior managers with Canadian work experience",
+      "type": "Senior managers with Canadian Work Experience, 2026-Version 1",
       "invited": 250,
       "crs": 389
     },
@@ -82,14 +82,14 @@
     {
       "number": 441,
       "date": "2026-09-04",
-      "type": "Healthcare and social services occupations",
+      "type": "Healthcare and Social Services Occupations, 2026-Version 3",
       "invited": 3500,
       "crs": 475
     },
     {
       "number": 440,
       "date": "2026-09-03",
-      "type": "Physicians with Canadian work experience",
+      "type": "Physicians with Canadian Work Experience, 2026-Version 1",
       "invited": 229,
       "crs": 198
     },
@@ -110,9 +110,72 @@
     {
       "number": 437,
       "date": "2026-08-19",
-      "type": "French language proficiency",
+      "type": "French-Language proficiency 2026-Version 2",
       "invited": 5000,
       "crs": 382
+    },
+    {
+      "number": 436,
+      "date": "2026-08-18",
+      "type": "Canadian Experience Class",
+      "invited": 1000,
+      "crs": 523
+    },
+    {
+      "number": 435,
+      "date": "2026-08-17",
+      "type": "Provincial Nominee Program",
+      "invited": 442,
+      "crs": 760
+    },
+    {
+      "number": 434,
+      "date": "2026-08-07",
+      "type": "Transport Occupations, 2026-Version 2",
+      "invited": 300,
+      "crs": 470
+    },
+    {
+      "number": 433,
+      "date": "2026-08-06",
+      "type": "French-Language proficiency 2026-Version 2",
+      "invited": 5000,
+      "crs": 391
+    },
+    {
+      "number": 432,
+      "date": "2026-08-05",
+      "type": "Canadian Experience Class",
+      "invited": 3000,
+      "crs": 516
+    },
+    {
+      "number": 431,
+      "date": "2026-08-04",
+      "type": "Provincial Nominee Program",
+      "invited": 507,
+      "crs": 768
+    },
+    {
+      "number": 430,
+      "date": "2026-07-23",
+      "type": "Skilled Military Recruits, 2026-Version 1",
+      "invited": 4,
+      "crs": 368
+    },
+    {
+      "number": 429,
+      "date": "2026-07-22",
+      "type": "French-Language proficiency 2026-Version 2",
+      "invited": 5000,
+      "crs": 399
+    },
+    {
+      "number": 428,
+      "date": "2026-07-21",
+      "type": "Canadian Experience Class",
+      "invited": 2000,
+      "crs": 516
     }
   ],
   "pool": {

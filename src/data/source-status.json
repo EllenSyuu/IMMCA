@@ -1,3 +1,254 @@
 {
-  "sources": {}
+  "sources": {
+    "https://cdn-contenu.quebec.ca/cdn-contenu/adm/min/immigration/publications-adm/reouverture_peq.pdf": {
+      "baseline": "092f9a0522ae4155",
+      "current": "092f9a0522ae4155",
+      "status": "unchanged"
+    },
+    "https://cdn-contenu.quebec.ca/cdn-contenu/immigration/publications/fr/Pointage_criteres.pdf": {
+      "baseline": "b78dc21afc6a6495",
+      "current": "b78dc21afc6a6495",
+      "status": "unchanged"
+    },
+    "https://immigratemanitoba.com/draws/": {
+      "baseline": "28c324244d717e46",
+      "current": "28c324244d717e46",
+      "status": "unchanged"
+    },
+    "https://immigratemanitoba.com/immigrate/ies/graduate-internship/eligibility/": {
+      "baseline": "0559fca390fd1558",
+      "current": "0559fca390fd1558",
+      "status": "unchanged"
+    },
+    "https://immigratemanitoba.com/mpnp/skilled-worker/swm/eligibility/": {
+      "baseline": "90301a71ab114344",
+      "current": "90301a71ab114344",
+      "status": "unchanged"
+    },
+    "https://liveinnovascotia.com/express-entry": {
+      "baseline": "e2559b16bf8ef81c",
+      "current": "e2559b16bf8ef81c",
+      "status": "unchanged"
+    },
+    "https://liveinnovascotia.com/nova-scotia-graduate": {
+      "baseline": "3bffa584bdea293c",
+      "current": "3bffa584bdea293c",
+      "status": "unchanged"
+    },
+    "https://liveinnovascotia.com/skilled-worker": {
+      "baseline": "948a7916c1bba338",
+      "current": "948a7916c1bba338",
+      "status": "unchanged"
+    },
+    "https://www.alberta.ca/aaip-alberta-express-entry-stream-eligibility": {
+      "baseline": "fc77bbcb9771b7d5",
+      "current": "fc77bbcb9771b7d5",
+      "status": "unchanged"
+    },
+    "https://www.alberta.ca/aaip-alberta-opportunity-stream-eligibility": {
+      "baseline": "43f580167b444738",
+      "current": "43f580167b444738",
+      "status": "unchanged"
+    },
+    "https://www.alberta.ca/aaip-processing-information": {
+      "baseline": "693c077eaca3e613",
+      "current": "693c077eaca3e613",
+      "status": "unchanged"
+    },
+    "https://www.alberta.ca/aaip-rural-renewal-stream-eligibility": {
+      "baseline": "dce484cba73c2bfc",
+      "current": "dce484cba73c2bfc",
+      "status": "unchanged"
+    },
+    "https://www.alberta.ca/dedicated-health-care-pathway": {
+      "baseline": "8e19d3e85b2bb20a",
+      "current": "8e19d3e85b2bb20a",
+      "status": "unchanged"
+    },
+    "https://www.canada.ca/en/immigration-refugees-citizenship/news/notices/pausing-home-care-worker-immigration-pilots-application-intake.html": {
+      "baseline": "addef921a62e925c",
+      "current": "addef921a62e925c",
+      "status": "unchanged"
+    },
+    "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/atlantic-immigration/how-to-immigrate.html": {
+      "baseline": "1d2d4ffcb355ac1d",
+      "current": "1d2d4ffcb355ac1d",
+      "status": "unchanged"
+    },
+    "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/changes.html": {
+      "baseline": "812312fadb357de3",
+      "current": "812312fadb357de3",
+      "status": "unchanged"
+    },
+    "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/rounds-invitations/category-based-selection.html": {
+      "baseline": "23212ab5d0019854",
+      "current": "23212ab5d0019854",
+      "status": "unchanged"
+    },
+    "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/who-can-apply/canadian-experience-class.html": {
+      "baseline": "a3c69b8a0dec18e5",
+      "current": "a3c69b8a0dec18e5",
+      "status": "unchanged"
+    },
+    "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/who-can-apply/federal-skilled-trades.html": {
+      "baseline": "3019cb072f15ca0b",
+      "current": "3019cb072f15ca0b",
+      "status": "unchanged"
+    },
+    "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/who-can-apply/federal-skilled-workers.html": {
+      "baseline": "0f327d79ad715223",
+      "current": "0f327d79ad715223",
+      "status": "unchanged"
+    },
+    "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/rural-franco-pilots/franco-immigration/eligibility.html": {
+      "baseline": "710e255375576e13",
+      "current": "710e255375576e13",
+      "status": "unchanged"
+    },
+    "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/rural-franco-pilots/rural-immigration/eligibility.html": {
+      "baseline": "82e63a6e17e55021",
+      "current": "82e63a6e17e55021",
+      "status": "unchanged"
+    },
+    "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/work/after-graduation/eligibility.html": {
+      "baseline": "e64625cc1a679427",
+      "current": "e64625cc1a679427",
+      "status": "unchanged"
+    },
+    "https://www.gnb.ca/en/topic/family-home-community/immigration/important-notices.html": {
+      "baseline": "215c26e8933f4f0e",
+      "current": "215c26e8933f4f0e",
+      "status": "unchanged"
+    },
+    "https://www.gnb.ca/en/topic/family-home-community/immigration/provincial-nominee-program/express-entry-stream.html": {
+      "baseline": "94d26d5331d480c8",
+      "current": "94d26d5331d480c8",
+      "status": "unchanged"
+    },
+    "https://www.gnb.ca/en/topic/family-home-community/immigration/provincial-nominee-program/skilled-worker-stream.html": {
+      "baseline": "050aa12f3f2f26a0",
+      "current": "050aa12f3f2f26a0",
+      "status": "unchanged"
+    },
+    "https://www.gnb.ca/en/topic/family-home-community/immigration/provincial-nominee-program/strategic-initiative.html": {
+      "baseline": "7ac2d2dc6bdb3551",
+      "current": "7ac2d2dc6bdb3551",
+      "status": "unchanged"
+    },
+    "https://www.gov.nl.ca/immigration/files/4.-Express-Entry-Skilled-Worker-Category-Eligibility-Criteria.pdf": {
+      "baseline": "a6303c04c84deb20",
+      "current": "a6303c04c84deb20",
+      "status": "unchanged"
+    },
+    "https://www.gov.nl.ca/immigration/files/4.-International-Graduate-Eligibility-Criteria.pdf": {
+      "baseline": "0050406a32e59d30",
+      "current": "0050406a32e59d30",
+      "status": "unchanged"
+    },
+    "https://www.gov.nl.ca/immigration/invitations-to-apply-updates/": {
+      "baseline": "64096a115499ab72",
+      "current": "64096a115499ab72",
+      "status": "unchanged"
+    },
+    "https://www.immigratenwt.ca/expression-interest": {
+      "baseline": "ad42bd5511ae4d65",
+      "current": "ad42bd5511ae4d65",
+      "status": "unchanged"
+    },
+    "https://www.ontario.ca/page/2026-ontario-immigrant-nominee-program-updates": {
+      "baseline": "645a25d200a5487d",
+      "current": "645a25d200a5487d",
+      "status": "unchanged"
+    },
+    "https://www.ontario.ca/page/ontario-workforce-priority-stream": {
+      "baseline": "2cd11ba2d6aa2dd9",
+      "current": "2cd11ba2d6aa2dd9",
+      "status": "unchanged"
+    },
+    "https://www.princeedwardisland.ca/en/information/office-of-immigration/international-graduates": {
+      "baseline": "",
+      "current": "",
+      "status": "unreachable",
+      "unreachableSince": "2026-10-27"
+    },
+    "https://www.princeedwardisland.ca/en/topic/expression-of-interest": {
+      "baseline": "",
+      "current": "",
+      "status": "unreachable",
+      "unreachableSince": "2026-10-27"
+    },
+    "https://www.princeedwardisland.ca/sites/default/files/publications/pei_pnp_express_entry_guide.pdf": {
+      "baseline": "9b430db8d8b4048e",
+      "current": "9b430db8d8b4048e",
+      "status": "unchanged"
+    },
+    "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/intelligence-artificielle": {
+      "baseline": "09b8502d13f36955",
+      "current": "09b8502d13f36955",
+      "status": "unchanged"
+    },
+    "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-experience-quebecoise": {
+      "baseline": "5cf43225c836238a",
+      "current": "5cf43225c836238a",
+      "status": "unchanged"
+    },
+    "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-selection-travailleurs-qualifies/exigences": {
+      "baseline": "1de2770446518876",
+      "current": "1de2770446518876",
+      "status": "unchanged"
+    },
+    "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-selection-travailleurs-qualifies/invitation/2026": {
+      "baseline": "55d611ef06aa622a",
+      "current": "55d611ef06aa622a",
+      "status": "unchanged"
+    },
+    "https://www.saskatchewan.ca/residents/moving-to-saskatchewan/live-in-saskatchewan/by-immigrating/saskatchewan-immigrant-nominee-program/browse-sinp-programs/applicants-international-skilled-workers/international-skilled-worker-occupations-in-demand": {
+      "baseline": "30a2044422df59b5",
+      "current": "30a2044422df59b5",
+      "status": "unchanged"
+    },
+    "https://www.saskatchewan.ca/residents/moving-to-saskatchewan/live-in-saskatchewan/by-immigrating/saskatchewan-immigrant-nominee-program/browse-sinp-programs/applicants-international-skilled-workers/international-skilled-worker-with-employment-offer": {
+      "baseline": "4bc9621972e49a72",
+      "current": "4bc9621972e49a72",
+      "status": "unchanged"
+    },
+    "https://www.saskatchewan.ca/residents/moving-to-saskatchewan/live-in-saskatchewan/by-immigrating/saskatchewan-immigrant-nominee-program/browse-sinp-programs/applicants-with-saskatchewan-experience/students": {
+      "baseline": "5551368a962df895",
+      "current": "5551368a962df895",
+      "status": "unchanged"
+    },
+    "https://www.saskatchewan.ca/residents/moving-to-saskatchewan/live-in-saskatchewan/by-immigrating/saskatchewan-immigrant-nominee-program/browse-sinp-programs/health-talent-pathway": {
+      "baseline": "",
+      "current": "",
+      "status": "unreachable",
+      "unreachableSince": "2026-10-27"
+    },
+    "https://www.saskatchewan.ca/residents/moving-to-saskatchewan/live-in-saskatchewan/by-immigrating/saskatchewan-immigrant-nominee-program/browse-sinp-programs/sinp-innovation-tech-talent-pathway": {
+      "baseline": "",
+      "current": "",
+      "status": "unreachable",
+      "unreachableSince": "2026-10-27"
+    },
+    "https://www.welcomebc.ca/immigrate-to-b-c/about-the-bc-provincial-nominee-program/invitations-to-apply": {
+      "baseline": "5f957acb8480fa99",
+      "current": "5f957acb8480fa99",
+      "status": "unchanged"
+    },
+    "https://www.welcomebc.ca/immigrate-to-b-c/about-the-bc-provincial-nominee-program/news": {
+      "baseline": "a180bf57ebb7a639",
+      "current": "a180bf57ebb7a639",
+      "status": "unchanged"
+    },
+    "https://www.welcomebc.ca/immigrate-to-b-c/bc-pnp-si-program-guide-pdf": {
+      "baseline": "989ff92407ad1f5b",
+      "current": "989ff92407ad1f5b",
+      "status": "unchanged"
+    },
+    "https://yukon.ca/sites/default/files/ecdev-ynp-2026-operational-guidance-2026-07-03.pdf": {
+      "baseline": "",
+      "current": "",
+      "status": "unreachable",
+      "unreachableSince": "2026-10-27"
+    }
+  }
 }
