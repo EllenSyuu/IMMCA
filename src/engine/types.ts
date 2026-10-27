@@ -162,18 +162,27 @@ export interface Criterion {
   evaluate(profile: Profile): Check | Check[];
 }
 
+/** Text in each interface language, stored next to the rule it describes. */
+export interface L10n {
+  en: string;
+  fr: string;
+  zh: string;
+}
+
 export interface ProgramSpec {
   id: string;
+  name: L10n;
+  /** One-sentence plain-language description of who the program is for. */
+  summary: L10n;
   jurisdiction: Jurisdiction;
   kind: ProgramKind;
   status: ProgramStatus;
-  /** i18n keys: `program.<id>.name` / `.summary` are resolved by the UI. */
   criteria: Criterion[];
   sources: Source[];
-  /** Short, rule-relevant facts shown on the detail panel (i18n keys). */
-  noteKeys?: string[];
+  /** Short, rule-relevant facts shown on the detail panel (selection, recent draws, caveats). */
+  notes?: L10n[];
+  /** Express Entry-linked provincial streams add 600 CRS points. */
+  enhanced?: boolean;
   /** Optional numeric scoring (e.g. CRS) shown with the result. */
   points?: (profile: Profile) => ProgramResult['points'];
-  /** Programs only worth showing to people with a link to this jurisdiction. */
-  requiresLinkTo?: Province;
 }
