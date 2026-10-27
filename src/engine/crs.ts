@@ -202,10 +202,12 @@ export function computeCrs(p: Profile, date: string = today()): CrsBreakdown {
   const enMin = minOf(p.english);
   const french = frMin >= 7 ? (enMin >= 5 ? 50 : 25) : 0;
   const sibling = p.siblingInCanada ? 15 : 0;
+  // Canadian credential: completed, post-secondary, at least 8 months full-time.
+  // 1–2 year credentials earn 15; 3+ year programs, master's, professional degrees and PhDs earn 30.
   let canadianEducation = 0;
   const cs = p.canadianStudy;
-  if (cs && postSecondary(cs.level) && cs.monthsSinceGraduation >= 0) {
-    canadianEducation = cs.programMonths >= 36 || ['master', 'phd'].includes(cs.level) ? 30 : cs.programMonths >= 12 ? 15 : 0;
+  if (cs && postSecondary(cs.level) && cs.fullTime && p.status !== 'student' && cs.programMonths >= 8) {
+    canadianEducation = cs.programMonths >= 36 || ['master', 'phd'].includes(cs.level) ? 30 : 15;
   }
   const additional = {
     nomination, french, sibling, canadianEducation,

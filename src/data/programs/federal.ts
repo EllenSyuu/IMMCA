@@ -4,13 +4,13 @@
  * and the post-graduation work permit as a bridge. Verified 2026-10-27.
  */
 import {
-  anyOf, canadianGraduate, custom, educationAtLeast, firstOfficial, inCanadaNow, jobOffer,
-  minEducation, minLanguage, minOf, note, qualifyingMonths, secondOfficial, settlementFunds, workExperience,
+  anyOf, canadianGraduate, custom, educationAtLeast, inCanadaNow, jobOffer, languageForTeer,
+  minEducation, minLanguage, minOf, note, qualifyingMonths, settlementFunds, workExperience,
 } from '../../engine/criteria';
 import { computeCrs } from '../../engine/crs';
-import type { Criterion, EducationLevel, Profile, ProgramSpec } from '../../engine/types';
+import type { Criterion, Profile, ProgramSpec, Teer } from '../../engine/types';
 import { latestCutoff, type DrawFamily } from '../draws';
-import { FUNDS_TABLE, L, VERIFIED, cecLanguageOk, expressEntryEligible, meetsFst } from './shared';
+import { FUNDS_TABLE, L, VERIFIED, cecLanguageOk, expressEntryEligible, fswGridScore, meetsFst } from './shared';
 
 const ircc = 'https://www.canada.ca/en/immigration-refugees-citizenship/services';
 const ee = `${ircc}/immigrate-canada/express-entry`;
@@ -22,30 +22,35 @@ const crsPoints = (family: DrawFamily) => (p: Profile) => ({
   benchmark: latestCutoff(family)?.crs,
 });
 
-// ---------------------------------------------------------------- FSW 67-point grid
-const FSW_EDU: Record<EducationLevel, number> = {
-  none: 0, secondary: 5, 'one-year': 15, 'two-year': 19, bachelor: 21, 'two-or-more': 22, master: 23, phd: 25,
-};
+/** FSW/FST funds are waived for people already authorised to work in Canada who hold a valid offer. */
+const authorisedWithOffer = (p: Profile) => (p.status === 'worker' || p.status === 'graduate-pgwp') && !!p.jobOffer;
 
-export function fswGridScore(p: Profile): number {
-  const first = firstOfficial(p).result;
-  const per = (c: number) => (c >= 9 ? 6 : c === 8 ? 5 : c === 7 ? 4 : 0);
-  const lang = first ? per(first.listening) + per(first.reading) + per(first.writing) + per(first.speaking) : 0;
-  const second = minOf(secondOfficial(p)) >= 5 ? 4 : 0;
-  const edu = FSW_EDU[p.education];
-  const years = Math.floor(qualifyingMonths(p.work, { months: 0, teers: [0, 1, 2, 3], withinMonths: 120 }) / 12);
-  const work = years >= 6 ? 15 : years >= 4 ? 13 : years >= 2 ? 11 : years >= 1 ? 9 : 0;
-  const age = p.age < 18 ? 0 : p.age <= 35 ? 12 : Math.max(0, 12 - (p.age - 35));
-  const offer = p.jobOffer && p.jobOffer.fullTime && p.jobOffer.teer <= 3 ? 10 : 0;
-  let adapt = 0;
-  if (p.spouse?.accompanying && minOf(p.spouse.firstLanguage) >= 4) adapt += 5;
-  if (p.canadianStudy && p.canadianStudy.programMonths >= 24 && p.canadianStudy.fullTime) adapt += 5;
-  if (qualifyingMonths(p.work, { months: 0, teers: [0, 1, 2, 3], inCanada: true, excludeStudentWork: true }) >= 12) adapt += 10;
-  if (p.spouse?.accompanying && p.spouse.canadianWorkMonths >= 12) adapt += 5;
-  if (offer) adapt += 5;
-  if (p.siblingInCanada) adapt += 5;
-  return lang + second + edu + work + age + offer + Math.min(10, adapt);
+/**
+ * Experience whose TEER is compatible with the job offer's TEER, per a
+ * program's matching table (AIP, RCIP). `null` means the same NOC is required.
+ */
+function matchedExperience(table: Record<Teer, Teer[] | null>, withinMonths: number): Criterion {
+  return {
+    evaluate(p) {
+      const offer = p.jobOffer;
+      const allowed = offer ? table[offer.teer] : null;
+      const have = !offer
+        ? 0
+        : allowed
+          ? qualifyingMonths(p.work, { months: 12, teers: allowed, withinMonths, excludeSelfEmployed: true })
+          : qualifyingMonths(p.work, { months: 12, nocs: offer.noc ? [offer.noc] : ['-'], withinMonths, excludeSelfEmployed: true });
+      return {
+        key: 'check.matchedWork',
+        params: { months: 12, years: withinMonths / 12, teers: allowed ? allowed.join(', ') : (offer?.noc ?? '—'), have },
+        status: have >= 12 ? 'met' : 'unmet',
+        ...(have >= 12 ? {} : { hintKey: 'hint.moreWork', hintParams: { more: 12 - have } }),
+      };
+    },
+  };
 }
+
+const AIP_MATCH: Record<Teer, Teer[] | null> = { 0: [0, 1, 2, 3, 4], 1: [1, 2, 3, 4], 2: [2, 3, 4], 3: [3, 4], 4: [4], 5: [] };
+const RCIP_MATCH: Record<Teer, Teer[] | null> = { 0: [0, 1, 2, 3], 1: [0, 1, 2, 3], 2: [1, 2, 3, 4], 3: [2, 3, 4], 4: [2, 3, 4], 5: null };
 
 // ---------------------------------------------------------------- category draws
 /** 12 months of full-time work in a single listed occupation in the last 3 years. */
@@ -60,6 +65,7 @@ const CATEGORY_NOCS = {
   stem: '20011 21220 21300 21301 21310 21321 21331 22300 22301 22310 63100'.split(' '),
   trades: '22303 70010 70011 72100 72102 72106 72200 72201 72300 72302 72310 72311 72320 72400 72401 72402 72422 72501 72999 73100 73110 73112 73113 82021 63201'.split(' '),
   education: '41220 41221 42202 42203 43100'.split(' '),
+  physicians: ['31100', '31101', '31102'],
   transport: '72404 72600 22313 72410'.split(' '),
   researchers: ['41200', '41201'],
   managers: ['00012', '00013', '00014', '00015'],
@@ -124,11 +130,11 @@ export const federalPrograms: ProgramSpec[] = [
       '适合在任何地方有一年连续技术类经验、语言 CLB 7 并在评分表上至少 67 分的人。',
     ),
     criteria: [
-      workExperience({ months: 12, teers: [0, 1, 2, 3], withinMonths: 120, continuous: true, excludeStudentWork: true }),
+      workExperience({ months: 12, teers: [0, 1, 2, 3], withinMonths: 120, continuous: true }),
       minLanguage(7),
       minEducation('secondary', { requireEcaIfForeign: true }),
       custom('check.fswGrid', (p) => fswGridScore(p) >= 67, { min: 67 }, 'hint.fswGrid'),
-      settlementFunds(FUNDS_TABLE, (p) => p.status !== 'outside' && !!p.jobOffer),
+      settlementFunds(FUNDS_TABLE, authorisedWithOffer),
     ],
     points: crsPoints('general'),
     sources: [{ url: `${ee}/who-can-apply/federal-skilled-workers.html`, verified: VERIFIED }],
@@ -144,7 +150,7 @@ export const federalPrograms: ProgramSpec[] = [
       'Pour les gens de métier ayant deux ans dans un métier spécialisé et une offre d’emploi ou un certificat de qualification canadien.',
       '适合有两年技工经验、并有工作邀请或加拿大技工资格证书的人。',
     ),
-    criteria: [custom('check.fst', meetsFst, undefined, 'hint.fst'), settlementFunds(FUNDS_TABLE, (p) => p.status !== 'outside' && !!p.jobOffer)],
+    criteria: [custom('check.fst', meetsFst, undefined, 'hint.fst'), settlementFunds(FUNDS_TABLE, authorisedWithOffer)],
     points: crsPoints('trades'),
     sources: [{ url: `${ee}/who-can-apply/federal-skilled-trades.html`, verified: VERIFIED }],
   },
@@ -183,6 +189,16 @@ export const federalPrograms: ProgramSpec[] = [
     L('Teachers, early childhood educators and instructors of persons with disabilities.',
       'Enseignants, éducateurs à la petite enfance et instructeurs de personnes handicapées.',
       '教师、幼儿教育者和残障人士指导员。')),
+  category('ee-transport', 'transport', CATEGORY_NOCS.transport,
+    L('Express Entry – Transport occupations draws', 'Entrée express – Tirages professions du transport', '快速通道 – 交通运输职业定向抽签'),
+    L('Twelve months in the last 3 years as a truck driver, aircraft pilot, aircraft mechanic or rail worker (4 listed occupations).',
+      'Douze mois au cours des 3 dernières années comme camionneur, pilote, mécanicien d’aéronefs ou travailleur ferroviaire (4 professions admissibles).',
+      '过去 3 年担任卡车司机、飞行员、飞机机械师或铁路工作人员（4 个列明职业）满 12 个月。')),
+  category('ee-physicians', 'physicians', CATEGORY_NOCS.physicians,
+    L('Express Entry – Physicians with Canadian work experience', 'Entrée express – Médecins ayant une expérience canadienne', '快速通道 – 有加拿大经验的医生'),
+    L('Twelve months in Canada as a physician (NOC 31100, 31101, 31102). The latest round invited 229 at CRS 198.',
+      'Douze mois au Canada comme médecin (CNP 31100, 31101, 31102). La dernière ronde a invité 229 personnes à un SCG de 198.',
+      '在加拿大担任医生（NOC 31100、31101、31102）满 12 个月。最近一轮邀请 229 人，分数线 198。'), true),
   category('ee-researchers', 'researchers', CATEGORY_NOCS.researchers,
     L('Express Entry – Researchers with Canadian work experience', 'Entrée express – Chercheurs ayant une expérience canadienne', '快速通道 – 有加拿大经验的研究人员'),
     L('Twelve months in Canada as a university professor or post-secondary research/teaching assistant (NOC 41200, 41201).',
@@ -209,12 +225,9 @@ export const federalPrograms: ProgramSpec[] = [
     criteria: [
       custom('check.offerDesignated', (p) => !!p.jobOffer?.designatedEmployer && ['NB', 'NS', 'PE', 'NL'].includes(p.jobOffer.province) && p.jobOffer.teer <= 4 && p.jobOffer.fullTime, { where: 'where.atlantic' }, 'hint.offer'),
       anyOf('check.oneOf',
-        [workExperience({ months: 12, withinMonths: 60, excludeSelfEmployed: true })],
+        [matchedExperience(AIP_MATCH, 60)],
         [canadianGraduate({ provinces: ['NB', 'NS', 'PE', 'NL'], minProgramMonths: 24, withinMonths: 24, fullTime: true })]),
-      custom('check.clbByTeer', (p) => {
-        const need = p.jobOffer && p.jobOffer.teer <= 3 ? 5 : 4;
-        return Math.max(minOf(p.english), minOf(p.french)) >= need;
-      }, { high: 5, low: 4 }, 'hint.raiseLanguage'),
+      languageForTeer({ 0: 5, 1: 5, 2: 5, 3: 5, 4: 4 }),
       custom('check.educationByTeer', (p) => educationAtLeast(p.education, p.jobOffer && p.jobOffer.teer <= 1 ? 'one-year' : 'secondary') && (p.hasEca || !!p.canadianStudy)),
       settlementFunds([3815, 4750, 5840, 7090, 8042, 9070, 10098], (p) => p.status === 'worker' || p.status === 'graduate-pgwp'),
     ],
@@ -240,13 +253,10 @@ export const federalPrograms: ProgramSpec[] = [
       jobOffer({ permanent: true, fullTime: true }),
       note('check.communityRecommendation'),
       anyOf('check.oneOf',
-        [workExperience({ months: 12, withinMonths: 36, excludeSelfEmployed: true })],
-        [canadianGraduate({ withinMonths: 18, minProgramMonths: 24 })]),
-      custom('check.rcipLanguage', (p) => {
-        const t = p.jobOffer?.teer ?? 5;
-        const need = t <= 1 ? 6 : t <= 3 ? 5 : 4;
-        return Math.max(minOf(p.english), minOf(p.french)) >= need;
-      }, { high: 6, mid: 5, low: 4 }, 'hint.raiseLanguage'),
+        [matchedExperience(RCIP_MATCH, 36)],
+        [canadianGraduate({ withinMonths: 18, minProgramMonths: 24, fullTime: true })],
+        [canadianGraduate({ withinMonths: 18, levels: ['master', 'phd'], fullTime: true })]),
+      languageForTeer({ 0: 6, 1: 6, 2: 5, 3: 5, 4: 4, 5: 4 }),
     ],
     notes: [L(
       'Communities: Pictou County NS; North Bay, Sudbury, Timmins, Sault Ste. Marie, Thunder Bay ON; Steinbach, Altona/Rhineland, Brandon MB; Moose Jaw SK; Claresholm AB; West Kootenay, North Okanagan Shuswap, Peace Liard BC.',

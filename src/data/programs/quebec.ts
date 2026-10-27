@@ -32,6 +32,9 @@ function qcFrench(oral: number, written = 0): Criterion {
   };
 }
 
+/** Every 2026 PSTQ invitation round was limited to people living in Québec. */
+const qcResidence = (): Criterion => custom('check.qcResidence', (p) => p.currentProvince === 'QC');
+
 /** The person's main occupation: the job offer if any, else the most recent work period. */
 const mainTeer = (p: Profile) =>
   p.jobOffer?.teer ?? [...p.work].sort((a, b) => a.endedMonthsAgo - b.endedMonthsAgo)[0]?.teer;
@@ -91,6 +94,23 @@ export function monthsSinceSnapshot(today = new Date()): number {
   return (today.getUTCFullYear() - snap.getUTCFullYear()) * 12 + (today.getUTCMonth() - snap.getUTCMonth()) - (today.getUTCDate() < snap.getUTCDate() ? 1 : 0);
 }
 
+/**
+ * Months of full-time skilled work in Québec (TEER 0–3) inside the 36 months
+ * before applying that had already been worked by the 2025-11-19 snapshot.
+ * A period is the interval [endedMonthsAgo + months, endedMonthsAgo] months ago;
+ * the counted window is [36, monthsSinceSnapshot] months ago.
+ */
+export function peqWorkerMonths(p: Profile, today = new Date()): number {
+  const snap = monthsSinceSnapshot(today);
+  return p.work
+    .filter((w) => w.inCanada && w.province === 'QC' && w.teer <= 3 && !w.selfEmployed)
+    .reduce((sum, w) => {
+      const start = w.endedMonthsAgo + w.months;
+      const end = w.endedMonthsAgo;
+      return sum + Math.max(0, Math.min(start, 36) - Math.max(end, snap));
+    }, 0);
+}
+
 const PEQ_LEVELS: EducationLevel[] = ['bachelor', 'two-or-more', 'master', 'phd'];
 
 export const quebecPrograms: ProgramSpec[] = [
@@ -111,14 +131,14 @@ export const quebecPrograms: ProgramSpec[] = [
       minEducation('one-year', { requireEcaIfForeign: false }),
       qcFrench(7, 5),
       ageRange(18, 99),
-      livesIn('QC'),
+      qcResidence(),
     ],
     points: arrimaPoints(),
     notes: [
       L(
-        'Every 2026 round required living in Québec. Rounds for Québec-diploma holders had minimums of 677–782; since July rounds have been small (≈ 30–50) and targeted at health, IT, engineering and trades occupations, with minimums around 634–700.',
-        'Toutes les rondes de 2026 exigeaient de résider au Québec. Les exercices réservés aux diplômés du Québec avaient des minimums de 677 à 782 ; depuis juillet, les rondes sont petites (≈ 30–50) et ciblent la santé, les TI, le génie et les métiers, avec des minimums d’environ 634 à 700.',
-        '2026 年每轮都要求居住在魁北克。魁北克学历专场的最低分为 677–782；7 月以来每轮规模小（约 30–50 人），针对医疗、IT、工程和技工职业，最低分约 634–700。',
+        'Every 2026 round required living in Québec. Rounds for Québec-diploma holders had minimums of 677–782. Since July, rounds have been small (74–105 people in total) and split into occupation-targeted exercises of about 5–50 people, with minimums from 628 to 726.',
+        'Toutes les rondes de 2026 exigeaient de résider au Québec. Les exercices réservés aux diplômés du Québec avaient des minimums de 677 à 782. Depuis juillet, les rondes sont petites (74 à 105 personnes au total) et divisées en exercices ciblés par profession d’environ 5 à 50 personnes, avec des minimums de 628 à 726.',
+        '2026 年每轮都要求居住在魁北克。魁北克学历专场的最低分为 677–782。7 月以来每轮规模小（总计 74–105 人），按职业分为每场约 5–50 人的定向抽签，最低分在 628 到 726 之间。',
       ),
       L(
         'The Arrima score shown is indicative: it leaves out the labour-market diagnosis of your occupation (up to 120), time outside the Montréal area (up to 120) and family factors.',
@@ -153,7 +173,8 @@ export const quebecPrograms: ProgramSpec[] = [
       },
       minEducation('secondary'),
       qcFrench(5),
-      livesIn('QC'),
+      ageRange(18, 99),
+      qcResidence(),
     ],
     points: arrimaPoints(),
     sources: [{ url: `${qc}/programme-selection-travailleurs-qualifies/exigences`, verified: VERIFIED }],
@@ -174,7 +195,8 @@ export const quebecPrograms: ProgramSpec[] = [
       anyOf('check.oneOf',
         [custom('check.qcTeer', (p) => (mainTeer(p) ?? 9) <= 2, { teers: '0, 1, 2' }), qcFrench(7, 5)],
         [custom('check.qcTeer', (p) => (mainTeer(p) ?? -1) >= 3, { teers: '3, 4, 5' }), qcFrench(5)]),
-      livesIn('QC'),
+      ageRange(18, 99),
+      qcResidence(),
     ],
     points: arrimaPoints(),
     notes: [L(
@@ -229,7 +251,7 @@ export const quebecPrograms: ProgramSpec[] = [
       '适合过去 36 个月内在魁北克全职从事技术类工作（TEER 0–3）满 24 个月、且目前仍在职的人。',
     ),
     criteria: [
-      workExperience({ months: 24, province: 'QC', teers: [0, 1, 2, 3], withinMonths: 36, excludeSelfEmployed: true }),
+      custom('check.peqWorkSnapshot', (p) => peqWorkerMonths(p) >= 24, { months: 24, date: '2025-11-19' }, 'hint.moreWork'),
       custom('check.currentlyEmployed', (p) => p.work.some((w) => w.inCanada && w.province === 'QC' && w.endedMonthsAgo === 0 && w.teer <= 3)),
       qcFrench(7),
       livesIn('QC'),

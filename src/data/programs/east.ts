@@ -3,11 +3,22 @@
  * Verified 2026-10-27 against official program pages; see `sources` on each spec.
  */
 import {
-  ageRange, anyOf, canadianGraduate, custom, intendsToLive, jobOffer, minEducation,
+  ageRange, anyOf, canadianGraduate, custom, educationAtLeast, intendsToLive, jobOffer, languageForTeer, minEducation,
   minLanguage, note, settlementFunds, workExperience,
 } from '../../engine/criteria';
-import type { ProgramSpec } from '../../engine/types';
+import type { ProgramSpec, Teer } from '../../engine/types';
 import { L, VERIFIED, expressEntryEligible, FUNDS_TABLE } from './shared';
+
+/** Recent Ontario graduate: 2-year+ diploma or degree, graduate certificate, master's or PhD within 3 years. */
+const onRecentGrad = () =>
+  custom('check.onRecentGrad', (p) => {
+    const st = p.canadianStudy;
+    return !!st && st.province === 'ON' && st.fullTime && st.monthsSinceGraduation <= 36 && p.status !== 'student' &&
+      // 2-year+ program, master's or PhD — or a one-year Ontario College Graduate Certificate taken after a degree.
+      (st.programMonths >= 24 || ['master', 'phd'].includes(st.level) || (st.level === 'one-year' && educationAtLeast(p.education, 'bachelor')));
+  });
+
+const livesInNb = () => custom('check.livesIn', (p) => p.currentProvince === 'NB', { where: 'prov.NB' });
 
 const nb = 'https://www.gnb.ca/en/topic/family-home-community/immigration/provincial-nominee-program';
 
@@ -18,31 +29,21 @@ export const eastPrograms: ProgramSpec[] = [
     jurisdiction: 'ON',
     kind: 'pnp-base',
     status: 'open',
-    name: L('OINP Ontario Workforce Priority', 'POCIO Priorité main-d’œuvre de l’Ontario', '安省提名 – 安省劳动力优先类别'),
+    name: L('OINP Ontario Workforce Priority – TEER 0–3 jobs', 'POCIO Priorité main-d’œuvre – emplois FEER 0–3', '安省提名 – 劳动力优先类别（TEER 0–3 职位）'),
     summary: L(
       'Ontario’s only open stream since June 2026: a permanent full-time job offer at the regional median wage from an approved Ontario employer.',
       'Seul volet ouvert en Ontario depuis juin 2026 : une offre permanente à temps plein au salaire médian régional d’un employeur ontarien approuvé.',
       '自 2026 年 6 月起安省唯一开放的类别：需要获批安省雇主提供的、达到地区工资中位数的永久全职工作邀请。',
     ),
     criteria: [
-      jobOffer({ province: 'ON', permanent: true, fullTime: true }),
+      jobOffer({ province: 'ON', teers: [0, 1, 2, 3], permanent: true, fullTime: true }),
       anyOf(
         'check.oneOf',
-        [canadianGraduate({ province: 'ON', minProgramMonths: 24, withinMonths: 36 }), workExperience({ months: 3, province: 'ON', withinMonths: 12, continuous: true })],
-        [canadianGraduate({ province: 'ON', levels: ['master', 'phd'], withinMonths: 36 }), workExperience({ months: 3, province: 'ON', withinMonths: 12, continuous: true })],
-        [workExperience({ months: 6, inCanada: true, withinMonths: 12, continuous: true })],
+        [onRecentGrad(), workExperience({ months: 3, province: 'ON', withinMonths: 12, continuous: true })],
+        [workExperience({ months: 6, province: 'ON', withinMonths: 12, continuous: true })],
         [workExperience({ months: 24, withinMonths: 60 })],
       ),
-      anyOf(
-        'check.oneOf',
-        [canadianGraduate({ province: 'ON', withinMonths: 36 })],
-        [custom('check.clbByTeer', (p) => {
-          const need = p.jobOffer && p.jobOffer.teer >= 4 ? 4 : 6;
-          const en = p.english ? Math.min(p.english.listening, p.english.reading, p.english.writing, p.english.speaking) : 0;
-          const fr = p.french ? Math.min(p.french.listening, p.french.reading, p.french.writing, p.french.speaking) : 0;
-          return Math.max(en, fr) >= need;
-        }, { high: 6, low: 4 }, 'hint.raiseLanguage')],
-      ),
+      anyOf('check.oneOf', [onRecentGrad()], [minLanguage(6)]),
       minEducation('one-year', { requireEcaIfForeign: true }),
       intendsToLive('ON'),
     ],
@@ -62,6 +63,26 @@ export const eastPrograms: ProgramSpec[] = [
       { url: 'https://www.ontario.ca/page/ontario-workforce-priority-stream', verified: VERIFIED },
       { url: 'https://www.ontario.ca/page/2026-ontario-immigrant-nominee-program-updates', verified: VERIFIED },
     ],
+  },
+  {
+    id: 'on-workforce-priority-teer45',
+    jurisdiction: 'ON',
+    kind: 'pnp-base',
+    status: 'open',
+    name: L('OINP Ontario Workforce Priority – TEER 4–5 jobs', 'POCIO Priorité main-d’œuvre – emplois FEER 4–5', '安省提名 – 劳动力优先类别（TEER 4–5 职位）'),
+    summary: L(
+      'The same stream for intermediate and entry-level jobs: 9 months in the position within 2 years, CLB 4 and high school.',
+      'Le même volet pour les emplois intermédiaires et d’entrée : 9 mois dans le poste en 2 ans, CLB 4 et études secondaires.',
+      '同一类别中针对中级和入门职位的路线：2 年内在该职位工作 9 个月，CLB 4，高中学历。',
+    ),
+    criteria: [
+      jobOffer({ province: 'ON', teers: [4, 5], permanent: true, fullTime: true }),
+      workExperience({ months: 9, province: 'ON', withinMonths: 24 }),
+      minLanguage(4),
+      minEducation('secondary', { requireEcaIfForeign: true }),
+      intendsToLive('ON'),
+    ],
+    sources: [{ url: 'https://www.ontario.ca/page/ontario-workforce-priority-stream', verified: VERIFIED }],
   },
   {
     id: 'on-masters-phd-graduate',
@@ -121,10 +142,16 @@ export const eastPrograms: ProgramSpec[] = [
     criteria: [
       jobOffer({ province: 'NB', fullTime: true, nocs: ['3', '4', '7'] }),
       workExperience({ months: 6, province: 'NB', excludeStudentWork: true }),
+      custom('check.livesIn6', (p) => p.currentProvince === 'NB', { where: 'prov.NB', months: 6 }),
       minLanguage(4),
       minEducation('secondary'),
       ageRange(19, 99),
     ],
+    notes: [L(
+      'This screener approximates “health, education and construction” with NOC broad categories 3, 4 and 7, which are wider; check your occupation against the province’s list.',
+      'Ce filtre approxime « santé, éducation et construction » par les grandes catégories 3, 4 et 7 de la CNP, qui sont plus larges ; vérifiez votre profession sur la liste de la province.',
+      '本工具用 NOC 大类 3、4、7 近似“医疗、教育和建筑”，范围更宽，请对照省政府清单核实你的职业。',
+    )],
     sources: [{ url: `${nb}/skilled-worker-stream.html`, verified: VERIFIED }],
   },
   {
@@ -164,7 +191,7 @@ export const eastPrograms: ProgramSpec[] = [
       anyOf(
         'check.oneOf',
         [jobOffer({ province: 'NB', permanent: true, fullTime: true }), workExperience({ months: 12, withinMonths: 60 })],
-        [canadianGraduate({ province: 'NB', minProgramMonths: 12 })],
+        [canadianGraduate({ province: 'NB', minProgramMonths: 12 }), note('check.monctonCcnb'), livesInNb()],
       ),
       minEducation('secondary'),
       ageRange(19, 99),
@@ -192,15 +219,10 @@ export const eastPrograms: ProgramSpec[] = [
     criteria: [
       jobOffer({ province: 'NS', permanent: true, fullTime: true }),
       workExperience({ months: 12, withinMonths: 60 }),
-      custom('check.clbByTeer', (p) => {
-        const need = p.jobOffer && p.jobOffer.teer <= 3 ? 5 : 4;
-        const en = p.english ? Math.min(p.english.listening, p.english.reading, p.english.writing, p.english.speaking) : 0;
-        const fr = p.french ? Math.min(p.french.listening, p.french.reading, p.french.writing, p.french.speaking) : 0;
-        return Math.max(en, fr) >= need;
-      }, { high: 5, low: 4 }, 'hint.raiseLanguage'),
+      languageForTeer({ 0: 5, 1: 5, 2: 5, 3: 5, 4: 4, 5: 4 }),
       minEducation('secondary'),
       ageRange(21, 55),
-      settlementFunds(FUNDS_TABLE, (p) => p.currentProvince === 'NS' && !!p.jobOffer),
+      settlementFunds(FUNDS_TABLE),
       custom('check.notStudying', (p) => p.status !== 'student'),
     ],
     notes: [L(
@@ -245,7 +267,10 @@ export const eastPrograms: ProgramSpec[] = [
       expressEntryEligible(),
       workExperience({ months: 12, province: 'NS', teers: [0, 1, 2, 3], excludeStudentWork: true }),
       custom('check.pgwpLocalGrad', (p) => p.status !== 'graduate-pgwp' || p.canadianStudy?.province === 'NS', { where: 'prov.NS' }),
-      minLanguage(5),
+      languageForTeer({ 0: 7, 1: 7, 2: 5, 3: 5 }, (p) => {
+        const ns = p.work.filter((w) => w.inCanada && w.province === 'NS' && w.teer <= 3);
+        return ns.length ? (Math.min(...ns.map((w) => w.teer)) as Teer) : undefined;
+      }),
       ageRange(21, 55),
     ],
     sources: [{ url: 'https://liveinnovascotia.com/express-entry', verified: VERIFIED }],

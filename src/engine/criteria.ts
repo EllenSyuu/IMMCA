@@ -262,3 +262,30 @@ export function note(key: string, params?: Check['params']): Criterion {
 export function custom(key: string, fn: (p: Profile) => boolean | null, params?: Check['params'], hintKey?: string): Criterion {
   return { evaluate: (p) => check(key, fn(p), params, hintKey) };
 }
+
+/**
+ * Language minimum that depends on the TEER of the job offer (or, with
+ * `teerOf`, of the person's own work). `null` means no test is required.
+ * Without a job offer the strictest level is shown.
+ */
+export function languageForTeer(
+  levels: Partial<Record<Teer, number | null>>,
+  teerOf: (p: Profile) => Teer | undefined = (p) => p.jobOffer?.teer,
+): Criterion {
+  return {
+    evaluate(p) {
+      const teer = teerOf(p);
+      const have = Math.max(minOf(p.english), minOf(p.french));
+      const values = Object.values(levels).filter((v): v is number => typeof v === 'number');
+      if (teer !== undefined && levels[teer] === null) return check('check.noLanguageTest', true, { teer });
+      const need = teer !== undefined && typeof levels[teer] === 'number' ? (levels[teer] as number) : Math.max(...values);
+      return check(
+        teer !== undefined ? 'check.clbForTeer' : 'check.clbStrictest',
+        p.english || p.french ? have >= need : false,
+        { need, teer: teer ?? '', have },
+        p.english || p.french ? 'hint.raiseLanguage' : 'hint.takeTest',
+        { clb: need },
+      );
+    },
+  };
+}

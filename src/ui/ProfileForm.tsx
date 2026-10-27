@@ -19,13 +19,17 @@ function LanguageBlock({ which, value, onChange }: { which: 'en' | 'fr'; value: 
     { value: 'clb', label: t('form.test.clb') },
   ];
   const meta = value.test === 'none' || value.test === 'clb' ? undefined : TESTS[value.test];
-  const scale = value.test === 'tcf' ? (a: Ability) => (a === 'writing' || a === 'speaking' ? 20 : 699) : () => meta?.max ?? 12;
+  const scale = (a: Ability) =>
+    value.test === 'tcf' ? (a === 'writing' || a === 'speaking' ? 20 : 699)
+    : value.test === 'tefold' ? ({ listening: 360, reading: 300, writing: 450, speaking: 450 } as const)[a]
+    : meta?.max ?? 12;
   const r = value.test === 'none' || value.test === 'clb' ? undefined : toLanguageResult(value.test, value.scores);
   const qc = which === 'fr' ? quebecLevels(value) : undefined;
 
   return (
     <div className="lang">
       <SelectField label={t(which === 'en' ? 'form.english' : 'form.french')} value={value.test} options={options} onChange={(test) => onChange({ ...value, test })} />
+      {(value.test === 'tef' || value.test === 'tefold') && <p className="help">{t('form.tefHelp')}</p>}
       {value.test !== 'none' && (
         <>
           <div className="grid-4">

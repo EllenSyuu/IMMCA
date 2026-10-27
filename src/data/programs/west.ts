@@ -6,7 +6,7 @@
  * `sources` on every spec and docs/RESEARCH.md for the evidence log.
  */
 import {
-  ageRange, anyOf, canadianGraduate, custom, inCanadaNow, intendsToLive, jobOffer,
+  ageRange, anyOf, canadianGraduate, custom, inCanadaNow, intendsToLive, jobOffer, languageForTeer,
   minLanguage, minEducation, note, settlementFunds, workExperience,
 } from '../../engine/criteria';
 import type { ProgramSpec } from '../../engine/types';
@@ -16,7 +16,12 @@ const welcomeBC = 'https://www.welcomebc.ca/immigrate-to-b-c/about-the-bc-provin
 const aaip = 'https://www.alberta.ca/aaip-processing-information';
 const sinp = 'https://www.saskatchewan.ca/residents/moving-to-saskatchewan/live-in-saskatchewan/by-immigrating/saskatchewan-immigrant-nominee-program';
 
-const BC_CARE_BUILD = ['3', '41300', '42202', '72106', '72200', '72201', '72300', '72301', '72310', '72400', '72401', '72402'];
+/** Care (health, childcare, education, veterinary) and Build NOCs from WelcomeBC, updated 2026-06-17. */
+const BC_CARE_BUILD = [
+  '30010', '311', '312', '313', '3210', '3211', '3212', '32200', '33101', '33102', '41300', // health
+  '42202', '41220', '41221', '31103', '32104', // childcare, French-language teachers, veterinary
+  '72106', '72200', '72201', '72300', '72301', '72310', '72400', '72401', '72402', // construction trades
+];
 
 export const westPrograms: ProgramSpec[] = [
   // ---------------------------------------------------------------- BC
@@ -34,7 +39,7 @@ export const westPrograms: ProgramSpec[] = [
     criteria: [
       jobOffer({ province: 'BC', teers: [0, 1, 2, 3], fullTime: true }),
       workExperience({ months: 24, teers: [0, 1, 2, 3], withinMonths: 120, excludeStudentWork: true }),
-      minLanguage(4),
+      languageForTeer({ 0: null, 1: null, 2: 4, 3: 4 }),
       intendsToLive('BC'),
     ],
     notes: [
@@ -67,8 +72,8 @@ export const westPrograms: ProgramSpec[] = [
     ),
     criteria: [
       jobOffer({ province: 'BC', nocs: BC_CARE_BUILD, fullTime: true }),
-      workExperience({ months: 24, withinMonths: 120, excludeStudentWork: true }),
-      minLanguage(4),
+      workExperience({ months: 24, teers: [0, 1, 2, 3], withinMonths: 120, excludeStudentWork: true }),
+      languageForTeer({ 0: null, 1: null, 2: 4, 3: 4 }),
       intendsToLive('BC'),
     ],
     notes: [
@@ -134,14 +139,18 @@ export const westPrograms: ProgramSpec[] = [
       jobOffer({ province: 'AB', fullTime: true }),
       anyOf(
         'check.oneOf',
-        [canadianGraduate({ province: 'AB', minLevel: 'one-year' }), workExperience({ months: 6, province: 'AB', withinMonths: 18, excludeStudentWork: true })],
+        [
+          canadianGraduate({ province: 'AB', minProgramMonths: 24 }),
+          custom('check.pgwp', (p) => p.status === 'graduate-pgwp'),
+          workExperience({ months: 6, province: 'AB', withinMonths: 18, excludeStudentWork: true }),
+        ],
         [workExperience({ months: 12, province: 'AB', withinMonths: 18, excludeStudentWork: true })],
         [workExperience({ months: 24, withinMonths: 30, excludeStudentWork: true })],
       ),
-      custom('check.clbByTeer', (p) => {
-        const need = p.jobOffer && p.jobOffer.teer <= 3 ? 5 : 4;
+      custom('check.clbForTeer', (p) => {
+        const need = p.jobOffer?.noc === '33102' ? 7 : p.jobOffer && p.jobOffer.teer <= 3 ? 5 : 4;
         return Math.max(minOfP(p.english), minOfP(p.french)) >= need;
-      }, { high: 5, low: 4 }, 'hint.raiseLanguage'),
+      }, { need: 5, teer: '0–3', have: '' }, 'hint.raiseLanguage'),
       minEducation('secondary', { requireEcaIfForeign: true }),
     ],
     notes: [
@@ -217,9 +226,14 @@ export const westPrograms: ProgramSpec[] = [
       '持有阿尔伯塔医疗机构工作邀请的医生、护士、治疗师、心理学家等持证医护人员。',
     ),
     criteria: [
-      jobOffer({ province: 'AB', nocs: ['31100', '31101', '31102', '31112', '31200', '31202', '31203', '31301', '31302', '32101', '41300'] }),
+      jobOffer({ province: 'AB', nocs: ['31100', '31101', '31102', '31303', '31301', '31302', '32101', '31203', '31202', '41300', '31200'] }),
       minLanguage(5),
     ],
+    notes: [L(
+      'Has an Express Entry-linked option (CRS ≥ 300, nomination adds 600 points) and a non-Express Entry option for those who can’t reach 300.',
+      'Comporte une option liée à Entrée express (SCG ≥ 300, la nomination ajoute 600 points) et une option hors Entrée express pour ceux qui n’atteignent pas 300.',
+      '分为与快速通道挂钩的选项（CRS ≥ 300，获提名加 600 分）和面向达不到 300 分者的非快速通道选项。',
+    )],
     sources: [{ url: 'https://www.alberta.ca/dedicated-health-care-pathway', verified: VERIFIED }],
   },
   {
@@ -241,7 +255,7 @@ export const westPrograms: ProgramSpec[] = [
         [canadianGraduate({ province: 'AB', minProgramMonths: 24 })],
         [workExperience({ months: 12, withinMonths: 18, excludeStudentWork: true })],
       ),
-      minLanguage(4),
+      languageForTeer({ 0: 5, 1: 5, 2: 5, 3: 5, 4: 4, 5: 4 }),
       minEducation('secondary', { requireEcaIfForeign: true }),
     ],
     notes: [L(
@@ -271,9 +285,9 @@ export const westPrograms: ProgramSpec[] = [
       intendsToLive('SK'),
     ],
     notes: [L(
-      '750 of the 2026 spaces are reserved for Saskatchewan graduates with a priority-sector offer. Graduates of schools outside Saskatchewan can no longer use the Saskatchewan Experience categories.',
-      '750 places de 2026 sont réservées aux diplômés de la Saskatchewan ayant une offre dans un secteur prioritaire. Les diplômés d’autres provinces ne peuvent plus utiliser les catégories Expérience Saskatchewan.',
-      '2026 年有 750 个名额预留给持优先行业工作邀请的萨省毕业生。外省毕业生已不能使用萨省经验类别。',
+      '750 of the 2026 spaces are reserved for Saskatchewan graduates with a priority-sector offer. PGWP holders who studied outside Saskatchewan can no longer use the Saskatchewan Experience categories.',
+      '750 places de 2026 sont réservées aux diplômés de la Saskatchewan ayant une offre dans un secteur prioritaire. Les titulaires d’un PTPD ayant étudié hors de la Saskatchewan ne peuvent plus utiliser les catégories Expérience Saskatchewan.',
+      '2026 年有 750 个名额预留给持优先行业工作邀请的萨省毕业生。在萨省以外读书的 PGWP 持有者已不能使用萨省经验类别。',
     )],
     sources: [{ url: `${sinp}/browse-sinp-programs/applicants-with-saskatchewan-experience/students`, verified: VERIFIED }],
   },
@@ -313,13 +327,18 @@ export const westPrograms: ProgramSpec[] = [
       '适合持有 32 个合格科技职业之一永久全职工作邀请的科技人才。',
     ),
     criteria: [
-      jobOffer({ province: 'SK', nocs: ['20012', '21211', '21220', '21221', '21222', '21223', '21230', '21231', '21232', '21233', '21234', '21310', '21311', '22220', '22221', '22222'], permanent: true, fullTime: true }),
+      jobOffer({ province: 'SK', nocs: ['2'], permanent: true, fullTime: true }),
       minEducation('two-year'),
       minLanguage(5),
       anyOf('check.oneOf',
         [workExperience({ months: 6, province: 'SK' })],
         [workExperience({ months: 12, withinMonths: 60 })]),
     ],
+    notes: [L(
+      'Saskatchewan lists 32 eligible tech occupations; this screener approximates the list with NOC broad category 2 (natural and applied sciences). Check your NOC on the official page.',
+      'La Saskatchewan admet 32 professions technologiques ; ce filtre les approxime par la grande catégorie 2 de la CNP (sciences naturelles et appliquées). Vérifiez votre CNP sur la page officielle.',
+      '萨省列出 32 个合格科技职业，本工具以 NOC 大类 2（自然与应用科学）近似，请在官方页面核对你的 NOC。',
+    )],
     sources: [{ url: `${sinp}/browse-sinp-programs/sinp-innovation-tech-talent-pathway`, verified: VERIFIED }],
   },
   {
@@ -443,7 +462,7 @@ export const westPrograms: ProgramSpec[] = [
     criteria: [
       jobOffer({ province: 'YT', teers: [0, 1, 2, 3], permanent: true, fullTime: true }),
       workExperience({ months: 12 }),
-      minLanguage(5),
+      languageForTeer({ 0: 6, 1: 6, 2: 5, 3: 5 }),
     ],
     notes: [L(
       '2026 intakes ran 19–30 Jan and 6–17 Jul; no intake is open now.',
@@ -465,13 +484,13 @@ export const westPrograms: ProgramSpec[] = [
     ),
     criteria: [
       jobOffer({ province: 'NT', teers: [0, 1, 2, 3], permanent: true, fullTime: true }),
-      minLanguage(5),
+      languageForTeer({ 0: 6, 1: 6, 2: 5, 3: 5 }),
       minEducation('secondary', { requireEcaIfForeign: true }),
     ],
     notes: [L(
-      'The final 2026 draw was on 2026-09-25; the next round of employer EOIs is expected in 2027.',
-      'Le dernier tirage de 2026 a eu lieu le 2026-09-25 ; la prochaine ronde est attendue en 2027.',
-      '2026 年最后一次抽签在 2026-09-25，下一轮预计在 2027 年。',
+      'The final 2026 draw was on 2026-09-25, so the employer-driven stream is effectively closed for the rest of 2026.',
+      'Le dernier tirage de 2026 a eu lieu le 2026-09-25 ; le volet employeur est donc fermé pour le reste de 2026.',
+      '2026 年最后一次抽签在 2026-09-25，雇主担保类在 2026 年余下时间实际已关闭。',
     )],
     sources: [{ url: 'https://www.immigratenwt.ca/expression-interest', verified: VERIFIED }],
   },

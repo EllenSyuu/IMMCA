@@ -22,12 +22,12 @@ IMMCA turns that into one question: *given my studies, languages and work, which
 
 ## What it does
 
-- **Screens 53 programs** — Express Entry (CEC, FSW, FST and every 2026 category draw), the Atlantic, rural and francophone pilots, Québec's PSTQ and PEQ, and the nominee streams of all twelve provinces and territories that run one.
+- **Screens 56 programs** — Express Entry (CEC, FSW, FST and every 2026 category draw), the Atlantic, rural and francophone pilots, Québec's PSTQ and PEQ, and the nominee streams of all twelve provinces and territories that run one.
 - **Shows each program as a transit line.** Every requirement is a station: filled when you meet it, hollow when you don't, dashed when it can't be judged from a form (a community recommendation, a regulator's licence). Open a line to see each station, how to close each gap, and the official sources.
 - **Calculates your CRS under both rule sets** — the grid in force today and the Labour Market Integration factor that starts on 3 November 2026 — and ranks the single changes that would raise it most.
 - **Places your score in the real Express Entry pool** using IRCC's published distribution of 228,724 candidates, refreshed weekly from IRCC's own feed.
 - **Estimates your Arrima score** for Québec's PSTQ from the ministry's 1,400-point grid.
-- **Converts raw test scores** (IELTS, CELPIP, PTE Core, TEF Canada, TCF Canada) to CLB/NCLC and to the Québec French scale, so people can type what is on their result sheet.
+- **Converts raw test scores** (IELTS, CELPIP, PTE Core, TEF Canada on both of its scales, TCF Canada) to CLB/NCLC and to the Québec French scale, so people can type what is on their result sheet.
 - **Runs entirely in the browser**, in English, French or Chinese. Nothing anyone types leaves their device.
 
 <table>
@@ -44,7 +44,7 @@ flowchart LR
   subgraph Browser
     F[Profile form<br/>raw test scores] -->|toProfile| P[Profile]
     P --> E{{Rules engine}}
-    R[(Program registry<br/>53 specs · 49 official sources)] --> E
+    R[(Program registry<br/>56 specs · 49 official sources)] --> E
     E --> V[Ranked results<br/>verdict + stations + hints]
     P --> C[CRS calculator<br/>2 rule sets by date]
     P --> A[Arrima estimate]
@@ -87,13 +87,15 @@ Immigration rules have dates, so the engine does too:
 
 Every program carries the official URLs it was checked against and the date. Where an official page could not be read in full, or two official pages disagree (Québec's PEQ notice and stream page differ on whether workers need a Québec diploma), the program says so in plain words instead of guessing. The full evidence log, including what could *not* be verified, is in [`docs/research/`](docs/research/).
 
+Before release, every spec was audited line by line against that log by a reviewer that had not written the code; each finding (for example, trade-NOC limits for the Federal Skilled Trades, the FSW 67-point grid for Express Entry-linked streams, the PEQ's snapshot date for work experience) is pinned by a regression test in [`tests/audit.test.ts`](tests/audit.test.ts).
+
 ## Coverage
 
 | Jurisdiction | Programs | Notes |
 |---|---:|---|
-| Federal | 15 | Express Entry programs and 2026 categories, AIP, RCIP, FCIP, PGWP bridge |
+| Federal | 17 | Express Entry programs and all 2026 categories, AIP, RCIP, FCIP, PGWP bridge |
 | Québec | 6 | PSTQ streams 1–3, PEQ reopening (graduates, workers), ended pilots |
-| Ontario | 2 | Ontario Workforce Priority; closed Masters/PhD streams for context |
+| Ontario | 3 | Ontario Workforce Priority (TEER 0–3 and TEER 4–5 rules); closed Masters/PhD streams for context |
 | British Columbia | 4 | Targeted Care / Build / Innovate draws; graduate streams closed |
 | Alberta | 5 | Worker EOI pool streams, Accelerated Tech, health care, rural renewal |
 | Saskatchewan | 5 | Students, Tech and Health Talent, job-offer and in-demand categories |
@@ -111,7 +113,7 @@ Nunavut has no nominee program. Business and investor streams are out of scope.
 ```bash
 npm install
 npm run dev            # http://localhost:5173
-npm test               # 37 tests: CRS tables, conversions, time windows, programs, translations
+npm test               # 52 tests: CRS tables, conversions, time windows, programs, audit regressions, translations
 npm run build          # static site in dist/, deployable to any static host (Vercel, Netlify, Pages)
 npm run refresh:draws  # pull the latest Express Entry rounds from IRCC
 ```

@@ -7,13 +7,14 @@
 import type { LanguageResult } from './types';
 
 export type Ability = 'listening' | 'reading' | 'writing' | 'speaking';
-export type TestId = 'celpip' | 'ielts' | 'pte' | 'tef' | 'tcf';
+export type TestId = 'celpip' | 'ielts' | 'pte' | 'tef' | 'tefold' | 'tcf';
 
 export const TESTS: Record<TestId, { lang: 'en' | 'fr'; label: string; step: number; max: number }> = {
   celpip: { lang: 'en', label: 'CELPIP-General', step: 1, max: 12 },
   ielts: { lang: 'en', label: 'IELTS General Training', step: 0.5, max: 9 },
   pte: { lang: 'en', label: 'PTE Core', step: 1, max: 90 },
-  tef: { lang: 'fr', label: 'TEF Canada', step: 1, max: 699 },
+  tef: { lang: 'fr', label: 'TEF Canada (score /699)', step: 1, max: 699 },
+  tefold: { lang: 'fr', label: 'TEF Canada (Express Entry “ancien score”)', step: 1, max: 450 },
   tcf: { lang: 'fr', label: 'TCF Canada', step: 1, max: 699 },
 };
 
@@ -42,6 +43,13 @@ const TABLES: Record<TestId, Thresholds> = {
     reading: [546, 503, 462, 434, 393, 352, 306],
     writing: [558, 512, 472, 428, 379, 330, 268],
     speaking: [556, 518, 494, 456, 422, 387, 328],
+  },
+  // TEF Canada "Équivalence ancien score" column — the scale IRCC requires in an Express Entry profile.
+  tefold: {
+    listening: [316, 298, 280, 249, 217, 181, 145],
+    reading: [263, 248, 233, 207, 181, 151, 121],
+    writing: [393, 371, 349, 310, 271, 226, 181],
+    speaking: [393, 371, 349, 310, 271, 226, 181],
   },
   // TCF Canada: comprehension out of 699, expression out of 20.
   tcf: {
