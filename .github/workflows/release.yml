@@ -1,0 +1,33 @@
+name: Release
+
+# Publishes a GitHub Release when a version tag (v*) is pushed, using the notes
+# in docs/releases/<tag>.md and attaching a zip of the built static site.
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx vitest run
+      - run: npm run build
+      - name: Package site
+        run: cd dist && zip -qr "../immca-site-${GITHUB_REF_NAME}.zip" .
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          notes="docs/releases/${GITHUB_REF_NAME}.md"
+          test -f "$notes" || { echo "Missing $notes"; exit 1; }
+          gh release create "$GITHUB_REF_NAME" "immca-site-${GITHUB_REF_NAME}.zip" \
+            --title "IMMCA ${GITHUB_REF_NAME}" --notes-file "$notes" --verify-tag

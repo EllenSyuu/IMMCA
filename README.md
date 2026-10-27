@@ -4,7 +4,10 @@
 
 **Which routes to Canadian permanent residence are open to you — and what is still missing — with every rule linked to the government page it comes from.**
 
+### [**Open the live site → ellensyuu.github.io/IMMCA**](https://ellensyuu.github.io/IMMCA/)
+
 [![CI](https://github.com/EllenSyuu/IMMCA/actions/workflows/ci.yml/badge.svg)](https://github.com/EllenSyuu/IMMCA/actions/workflows/ci.yml)
+[![Deploy](https://github.com/EllenSyuu/IMMCA/actions/workflows/pages.yml/badge.svg)](https://github.com/EllenSyuu/IMMCA/actions/workflows/pages.yml)
 [![Express Entry data](https://github.com/EllenSyuu/IMMCA/actions/workflows/refresh-draws.yml/badge.svg)](https://github.com/EllenSyuu/IMMCA/actions/workflows/refresh-draws.yml)
 ![Licence](https://img.shields.io/badge/licence-Apache--2.0-12213d)
 ![Languages](https://img.shields.io/badge/UI-English%20%C2%B7%20Fran%C3%A7ais%20%C2%B7%20%E4%B8%AD%E6%96%87-1d4ed8)
@@ -114,7 +117,7 @@ Nunavut has no nominee program. Business and investor streams are out of scope.
 npm install
 npm run dev            # http://localhost:5173
 npm test               # 52 tests: CRS tables, conversions, time windows, programs, audit regressions, translations
-npm run build          # static site in dist/, deployable to any static host (Vercel, Netlify, Pages)
+npm run build          # static site in dist/ — deployed to GitHub Pages on every push to main
 npm run refresh:draws  # pull the latest Express Entry rounds from IRCC
 ```
 

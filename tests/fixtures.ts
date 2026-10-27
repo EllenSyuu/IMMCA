@@ -2,7 +2,7 @@ import type { LanguageResult, Profile } from '../src/engine/types';
 
 export const clb = (n: number): LanguageResult => ({ listening: n, reading: n, writing: n, speaking: n });
 
-/** A McGill-style master's graduate working in Montréal on a PGWP. */
+/** A typical master's graduate working in Montréal on a post-graduation work permit. */
 export function graduate(overrides: Partial<Profile> = {}): Profile {
   return {
     age: 27,
