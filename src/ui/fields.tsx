@@ -74,11 +74,18 @@ export function Toggle(props: { label: string; checked: boolean; onChange: (v: b
   );
 }
 
-export function Step({ n, title, children }: { n: number; title: string; children: ReactNode }) {
+/** A collapsible form step: closed, it shows a one-line summary of what was entered. */
+export function Step({ n, title, summary, defaultOpen = false, children }: {
+  n: number; title: string; summary: string; defaultOpen?: boolean; children: ReactNode;
+}) {
   return (
-    <fieldset className="step">
-      <legend><span className="step__n" aria-hidden="true">{n}</span>{title}</legend>
+    <details className="step" open={defaultOpen}>
+      <summary>
+        <span className="step__n" aria-hidden="true">{n}</span>
+        <span className="step__title">{title}</span>
+        <span className="step__summary">{summary}</span>
+      </summary>
       <div className="step__body">{children}</div>
-    </fieldset>
+    </details>
   );
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Refresh src/data/draws.json from IRCC's public Express Entry rounds feed.
- * Run weekly by .github/workflows/refresh-draws.yml; exits non-zero (and
+ * Run daily by .github/workflows/daily.yml; exits non-zero (and
  * leaves the file untouched) if the feed is unreachable or its shape changed.
  *
  *   node scripts/refresh-draws.mjs [--check]

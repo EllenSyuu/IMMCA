@@ -5,6 +5,29 @@ import { useI18n } from '../i18n';
 import { NumberField, SelectField, Step, TextField, Toggle } from './fields';
 import { quebecLevels, type FormState, type LangInput, type LangTest } from './model';
 
+type T = (k: string, p?: Record<string, string | number>) => string;
+
+/** One-line summaries shown on collapsed steps. */
+function summaries(s: FormState, t: T) {
+  const lang = (l: LangInput) => {
+    if (l.test === 'none') return null;
+    const r = l.test === 'clb' ? l.scores : toLanguageResult(l.test, l.scores);
+    return Math.min(r.listening, r.reading, r.writing, r.speaking);
+  };
+  const en = lang(s.english);
+  const fr = lang(s.french);
+  const canadaMonths = s.work.filter((w) => w.where !== 'abroad').reduce((a, w) => a + w.months, 0);
+  const where = (p: string) => (p === 'outside' ? t('form.outsideCanada') : p === 'any' ? t('form.anywhere') : t(`prov.${p}`));
+  return {
+    you: `${s.age} · ${t(`status.${s.status}`)} · ${where(s.currentProvince)}`,
+    study: s.studied ? `${t(`edu.${s.education}`)} · ${t(`prov.${s.study.province}`)}` : t(`edu.${s.education}`),
+    language: [en !== null ? `EN CLB ${en}` : null, fr !== null ? `FR NCLC ${fr}` : null].filter(Boolean).join(' · ') || t('form.test.none'),
+    work: s.work.length ? t('form.sumWork', { n: s.work.length, months: canadaMonths }) : t('form.noWork'),
+    plans: s.hasOffer ? t('form.sumOffer', { where: `prov.${s.offer.province}`, teer: s.offer.teer }) : t('form.sumNoOffer'),
+    family: t('form.sumFamily', { n: s.familySize, funds: s.funds }),
+  };
+}
+
 const ABILITIES: Ability[] = ['listening', 'reading', 'writing', 'speaking'];
 const TEERS: Teer[] = [0, 1, 2, 3, 4, 5];
 
@@ -60,6 +83,7 @@ function LanguageBlock({ which, value, onChange }: { which: 'en' | 'fr'; value: 
 
 export function ProfileForm({ state, set }: { state: FormState; set: Set }) {
   const { t } = useI18n();
+  const sum = summaries(state, t);
   const provinceOptions = PROVINCES.map((p) => ({ value: p, label: t(`prov.${p}`) }));
   const eduOptions = EDUCATION_ORDER.map((e) => ({ value: e, label: t(`edu.${e}`) }));
   const teerOptions = TEERS.map((n) => ({ value: n, label: t(`teer.${n}`) }));
@@ -68,7 +92,7 @@ export function ProfileForm({ state, set }: { state: FormState; set: Set }) {
 
   return (
     <form className="profile" onSubmit={(e) => e.preventDefault()} aria-label={t('form.title')}>
-      <Step n={1} title={t('form.step.you')}>
+      <Step n={1} title={t('form.step.you')} summary={sum.you} defaultOpen>
         <div className="grid-2">
           <SelectField
             wide
@@ -93,7 +117,7 @@ export function ProfileForm({ state, set }: { state: FormState; set: Set }) {
         </div>
       </Step>
 
-      <Step n={2} title={t('form.step.study')}>
+      <Step n={2} title={t('form.step.study')} summary={sum.study}>
         <SelectField label={t('form.education')} value={state.education} options={eduOptions} onChange={(education) => set({ education })} />
         <Toggle label={t('form.canadianStudy')} checked={state.studied} onChange={(studied) => set({ studied })} />
         {state.studied ? (
@@ -110,12 +134,12 @@ export function ProfileForm({ state, set }: { state: FormState; set: Set }) {
         )}
       </Step>
 
-      <Step n={3} title={t('form.step.language')}>
+      <Step n={3} title={t('form.step.language')} summary={sum.language}>
         <LanguageBlock which="en" value={state.english} onChange={(english) => set({ english })} />
         <LanguageBlock which="fr" value={state.french} onChange={(french) => set({ french })} />
       </Step>
 
-      <Step n={4} title={t('form.step.work')}>
+      <Step n={4} title={t('form.step.work')} summary={sum.work}>
         <p className="help">{t('form.workHelp')}</p>
         {state.work.length === 0 && <p className="empty">{t('form.noWork')}</p>}
         <ul className="jobs">
@@ -158,7 +182,7 @@ export function ProfileForm({ state, set }: { state: FormState; set: Set }) {
         </button>
       </Step>
 
-      <Step n={5} title={t('form.step.plans')}>
+      <Step n={5} title={t('form.step.plans')} summary={sum.plans}>
         <Toggle label={t('form.hasOffer')} checked={state.hasOffer} onChange={(hasOffer) => set({ hasOffer })} />
         {state.hasOffer && (
           <div className="nested">
@@ -178,7 +202,7 @@ export function ProfileForm({ state, set }: { state: FormState; set: Set }) {
         <Toggle label={t('form.certificate')} checked={state.certificate} onChange={(certificate) => set({ certificate })} />
       </Step>
 
-      <Step n={6} title={t('form.step.family')}>
+      <Step n={6} title={t('form.step.family')} summary={sum.family}>
         <div className="grid-2">
           <NumberField label={t('form.familySize')} value={state.familySize} min={1} max={12} onChange={(familySize) => set({ familySize })} />
           <NumberField label={t('form.funds')} value={state.funds} min={0} step={500} onChange={(funds) => set({ funds })} />

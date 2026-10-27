@@ -1,13 +1,10 @@
 name: Deploy site
 
-# Builds the static site and publishes it to GitHub Pages on every push to main
-# (and after the weekly data refresh commits new Express Entry rounds).
+# Builds the static site and publishes it to GitHub Pages on every push to main.
+# The daily update workflow also redeploys every morning with fresh data.
 on:
   push:
     branches: [main]
-  workflow_run:
-    workflows: [Refresh Express Entry rounds]
-    types: [completed]
   workflow_dispatch:
 
 permissions:
@@ -17,7 +14,7 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:

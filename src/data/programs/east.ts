@@ -29,6 +29,7 @@ export const eastPrograms: ProgramSpec[] = [
     jurisdiction: 'ON',
     kind: 'pnp-base',
     status: 'open',
+    capacity: { level: 'limited', note: L('Open since 2026-08-04, but Ontario has not yet published any invitation rounds.', 'Ouvert depuis le 2026-08-04, mais l’Ontario n’a encore publié aucune ronde d’invitations.', '自 2026-08-04 开放，但安省尚未公布任何邀请轮次。') },
     name: L('OINP Ontario Workforce Priority – TEER 0–3 jobs', 'POCIO Priorité main-d’œuvre – emplois FEER 0–3', '安省提名 – 劳动力优先类别（TEER 0–3 职位）'),
     summary: L(
       'Ontario’s only open stream since June 2026: a permanent full-time job offer at the regional median wage from an approved Ontario employer.',
@@ -57,6 +58,11 @@ export const eastPrograms: ProgramSpec[] = [
         'The EOI portal opened 2026-08-04; Ontario has not yet published invitation rounds or cutoffs for this stream. The former Masters and PhD Graduate streams (no job offer) are closed.',
         'Le portail des déclarations d’intérêt a ouvert le 2026-08-04 ; l’Ontario n’a pas encore publié de rondes d’invitations pour ce volet. Les anciens volets Maîtrise et Doctorat (sans offre) sont fermés.',
         'EOI 系统于 2026-08-04 开放，安省尚未公布该类别的邀请轮次或分数线。原无需工作邀请的硕士、博士毕业生类别已关闭。',
+      ),
+      L(
+        'A regional initiative launched on 2026-10-16 for Greater Sudbury, Kenora, Nipissing, Rainy River, Renfrew and Thunder Bay runs through this stream until the end of 2027; no separate application is needed.',
+        'Une initiative régionale lancée le 2026-10-16 pour le Grand Sudbury, Kenora, Nipissing, Rainy River, Renfrew et Thunder Bay passe par ce volet jusqu’à la fin de 2027 ; aucune demande distincte n’est requise.',
+        '2026-10-16 启动的地区计划覆盖大萨德伯里、凯诺拉、尼皮辛、雷尼河、伦弗鲁和桑德湾，通过本类别进行至 2027 年底，无需另行申请。',
       ),
     ],
     sources: [
@@ -133,6 +139,7 @@ export const eastPrograms: ProgramSpec[] = [
     jurisdiction: 'NB',
     kind: 'pnp-base',
     status: 'invitation-only',
+    confidence: { level: 'approximate', note: L('“Health, education and construction” is approximated by NOC broad categories 3, 4 and 7.', '« Santé, éducation et construction » est approximé par les grandes catégories 3, 4 et 7 de la CNP.', '“医疗、教育和建筑”以 NOC 大类 3、4、7 近似。') },
     name: L('NBPNP Skilled Worker – NB Experience', 'PCNB Travailleur qualifié – Expérience au N.-B.', '新省提名 – 技术工人：新省工作经验'),
     summary: L(
       'For people working full-time for a New Brunswick employer for six months. Since May 2026, only health, education and construction workers are invited.',
@@ -282,6 +289,7 @@ export const eastPrograms: ProgramSpec[] = [
     jurisdiction: 'PE',
     kind: 'pnp-base',
     status: 'invitation-only',
+    confidence: { level: 'unconfirmed', note: L('PEI’s detailed thresholds could not be read on the official site.', 'Les seuils détaillés de l’Î.-P.-É. n’ont pas pu être lus sur le site officiel.', '无法在官方网站读取爱德华王子岛的详细门槛。') },
     name: L('PEI PNP Labour Impact – International Graduates', 'PCÎPÉ Impact main-d’œuvre – Diplômés internationaux', '爱德华王子岛提名 – 劳动力影响：国际毕业生'),
     summary: L(
       'Graduates of UPEI, Holland College or Collège de l’Île working on the Island. Local graduates get priority in the monthly draws.',
@@ -294,9 +302,9 @@ export const eastPrograms: ProgramSpec[] = [
       note('check.unverifiedDetail'),
     ],
     notes: [L(
-      'Monthly draws continue (164 invited on 2026-10-16; next scheduled 2026-11-19 and 2026-12-17). PEI does not publish its detailed 2026 thresholds online in a form this screener could verify.',
-      'Les tirages mensuels continuent (164 invitations le 2026-10-16 ; prochains prévus le 2026-11-19 et le 2026-12-17). L’Î.-P.-É. ne publie pas ses seuils détaillés de 2026 sous une forme vérifiable par ce filtre.',
-      '月度抽签持续进行（2026-10-16 邀请 164 人；下次安排在 2026-11-19 和 2026-12-17）。爱德华王子岛的 2026 年详细门槛无法由本工具核实。',
+      'Monthly draws continue (164 invited on 2026-10-16; the reported schedule lists 2026-11-19 and 2026-12-17 next). PEI does not publish its detailed 2026 thresholds online in a form this screener could verify.',
+      'Les tirages mensuels continuent (164 invitations le 2026-10-16 ; le calendrier rapporté prévoit ensuite le 2026-11-19 et le 2026-12-17). L’Î.-P.-É. ne publie pas ses seuils détaillés de 2026 sous une forme vérifiable par ce filtre.',
+      '月度抽签持续进行（2026-10-16 邀请 164 人；据报道的日程，下两次为 2026-11-19 和 2026-12-17）。爱德华王子岛的 2026 年详细门槛无法由本工具核实。',
     )],
     sources: [
       { url: 'https://www.princeedwardisland.ca/en/information/office-of-immigration/international-graduates', verified: VERIFIED },
@@ -341,9 +349,9 @@ export const eastPrograms: ProgramSpec[] = [
       ageRange(21, 59),
     ],
     notes: [L(
-      'All applications go through an invitation system. Only two 2026 rounds have been published (6 and 30 March).',
-      'Toutes les demandes passent par un système d’invitations. Seules deux rondes de 2026 ont été publiées (6 et 30 mars).',
-      '所有申请都通过邀请制。2026 年仅公布了两轮（3 月 6 日和 30 日）。',
+      'All applications go through an invitation system with published priority criteria. The latest round was on 2026-10-16 (126 invitations).',
+      'Toutes les demandes passent par un système d’invitations avec des critères de priorité publiés. La dernière ronde a eu lieu le 2026-10-16 (126 invitations).',
+      '所有申请都通过邀请制，并公布优先标准。最近一轮在 2026-10-16（126 人）。',
     )],
     sources: [
       { url: 'https://www.gov.nl.ca/immigration/files/4.-International-Graduate-Eligibility-Criteria.pdf', verified: VERIFIED },

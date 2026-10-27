@@ -1,0 +1,81 @@
+name: Daily update
+
+# Every morning (≈ 07:17 Eastern):
+#   1. refresh Express Entry rounds and the CRS pool distribution from IRCC's feed;
+#   2. check every official page a program rule cites, flagging pages that changed;
+#   3. commit real changes (new rounds, changed or unreachable pages, text snapshots);
+#   4. open an issue listing newly changed pages for review;
+#   5. rebuild and redeploy the site, so the "last checked" date is always current.
+on:
+  schedule:
+    - cron: '17 11 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Refresh Express Entry rounds
+        run: npm run refresh:draws || echo "::warning::IRCC rounds feed could not be refreshed; keeping the last good data"
+
+      - name: Check official sources
+        run: npm run sources:check
+
+      - name: Test with the new data
+        run: npx vitest run
+
+      - name: Commit changes
+        run: |
+          git add src/data/draws.json src/data/source-status.json monitor/snapshots
+          if git diff --cached --quiet; then
+            echo "No data changes today."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "data: daily update $(date -u +%F)"
+            git push
+          fi
+
+      - name: Report newly changed official pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -s monitor/new-changes.md ]; then
+            gh label create source-change --color d93f0b --description "An official page cited by a rule changed" --force
+            gh issue create --title "Official pages changed — $(date -u +%F)" --label source-change --body-file monitor/new-changes.md
+          fi
+
+      - run: npm run build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: update
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

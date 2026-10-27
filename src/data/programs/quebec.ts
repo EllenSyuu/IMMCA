@@ -243,6 +243,7 @@ export const quebecPrograms: ProgramSpec[] = [
     jurisdiction: 'QC',
     kind: 'quebec',
     status: 'open',
+    confidence: { level: 'unconfirmed', note: L('Québec’s reopening notice and stream page disagree on whether workers need a Québec diploma.', 'L’avis de réouverture et la page du volet divergent sur l’exigence d’un diplôme du Québec pour les travailleurs.', '魁北克重开通知与项目页面对工人是否需要魁北克学历说法不一。') },
     closesOn: '2026-10-31',
     name: L('PEQ – Temporary workers (reopened until 31 Oct 2026)', 'PEQ – Travailleurs étrangers temporaires (rouvert jusqu’au 31 oct. 2026)', '魁北克经验类 PEQ – 临时外劳（重开至 2026-10-31）'),
     summary: L(

@@ -1,6 +1,6 @@
 /**
- * Recent Express Entry rounds. `draws.json` is refreshed weekly from IRCC's
- * public JSON feed by `.github/workflows/refresh-draws.yml`.
+ * Recent Express Entry rounds. `draws.json` is refreshed daily from IRCC's
+ * public JSON feed by `.github/workflows/daily.yml`.
  */
 import raw from './draws.json';
 

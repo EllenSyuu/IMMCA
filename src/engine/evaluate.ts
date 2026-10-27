@@ -1,4 +1,4 @@
-import type { Check, Profile, ProgramResult, ProgramSpec, Verdict } from './types';
+import type { Check, Eligibility, Profile, ProgramResult, ProgramSpec, Verdict } from './types';
 
 const UNAVAILABLE = new Set(['paused', 'closed']);
 
@@ -11,15 +11,14 @@ export function evaluateProgram(spec: ProgramSpec, profile: Profile, today = new
   const unmet = decided.length - met;
   const score = decided.length ? met / decided.length : 0;
 
-  let verdict: Verdict;
-  const expired = !!spec.closesOn && today > spec.closesOn;
-  if (UNAVAILABLE.has(spec.status) || expired) verdict = 'unavailable';
-  else if (unmet === 0 && met > 0) verdict = 'eligible';
   // "Within reach": most of the line is already travelled — one gap with at least 60% met, or two gaps with four or more met.
-  else if ((unmet === 1 && score >= 0.6) || (unmet === 2 && met >= 4)) verdict = 'close';
-  else verdict = 'gap';
+  const eligibility: Eligibility =
+    unmet === 0 && met > 0 ? 'met' : (unmet === 1 && score >= 0.6) || (unmet === 2 && met >= 4) ? 'close' : 'gap';
+  const expired = !!spec.closesOn && today > spec.closesOn;
+  const verdict: Verdict =
+    UNAVAILABLE.has(spec.status) || expired ? 'unavailable' : eligibility === 'met' ? 'eligible' : eligibility;
 
-  return { programId: spec.id, verdict, checks, score, points: spec.points?.(profile) };
+  return { programId: spec.id, verdict, eligibility, checks, score, points: spec.points?.(profile) };
 }
 
 const VERDICT_RANK: Record<Verdict, number> = { eligible: 0, close: 1, gap: 2, unavailable: 3 };

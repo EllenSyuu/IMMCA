@@ -155,9 +155,13 @@ export type Verdict =
   | 'gap'           // several gaps
   | 'unavailable';  // program closed / paused, shown for awareness
 
+/** Whether the requirements themselves are met, independent of whether the program is open. */
+export type Eligibility = 'met' | 'close' | 'gap';
+
 export interface ProgramResult {
   programId: string;
   verdict: Verdict;
+  eligibility: Eligibility;
   checks: Check[];
   /** Fraction of determinable checks that are met (0–1). */
   score: number;
@@ -190,6 +194,14 @@ export interface ProgramSpec {
   notes?: L10n[];
   /** Last day applications are accepted (ISO date); after it the program counts as closed. */
   closesOn?: string;
+  /** Allocation pressure: invitations continue but space is scarce or used up for the year. */
+  capacity?: { level: 'limited' | 'exhausted'; note: L10n };
+  /**
+   * How closely the screener can follow the official rule. `approximate`: an
+   * official list is approximated (e.g. by NOC group). `unconfirmed`: official
+   * sources were unreadable or disagree on a detail.
+   */
+  confidence?: { level: 'approximate' | 'unconfirmed'; note: L10n };
   /** Express Entry-linked provincial streams add 600 CRS points. */
   enhanced?: boolean;
   /** Optional numeric scoring (e.g. CRS) shown with the result. */

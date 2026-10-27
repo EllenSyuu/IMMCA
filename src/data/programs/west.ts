@@ -64,6 +64,7 @@ export const westPrograms: ProgramSpec[] = [
     jurisdiction: 'BC',
     kind: 'pnp-base',
     status: 'invitation-only',
+    confidence: { level: 'approximate', note: L('Care occupations are matched by NOC code groups; check your exact code on WelcomeBC.', 'Les professions de soins sont reconnues par groupes de codes CNP ; vérifiez votre code exact sur WelcomeBC.', '护理类职业按 NOC 代码组匹配，请在 WelcomeBC 核对你的具体代码。') },
     name: L('BC PNP – Care and Build targeted draws', 'PCP C.-B. – Tirages ciblés Soins et Construction', '卑诗省提名 – 护理与建筑定向抽签'),
     summary: L(
       'Skilled Worker candidates in health, early childhood education or construction trades, who are invited at lower scores.',
@@ -128,6 +129,7 @@ export const westPrograms: ProgramSpec[] = [
     jurisdiction: 'AB',
     kind: 'pnp-base',
     status: 'invitation-only',
+    capacity: { level: 'limited', note: L('289 of 3,562 spaces left for 2026 (2026-10-21).', 'Il restait 289 places sur 3 562 pour 2026 (2026-10-21).', '2026 年 3,562 个名额剩 289 个（2026-10-21）。') },
     name: L('Alberta Opportunity Stream', 'Volet Opportunité de l’Alberta', '阿尔伯塔机会类别 (AOS)'),
     summary: L(
       'For people already living and working in Alberta with a full-time offer in their current occupation.',
@@ -173,6 +175,7 @@ export const westPrograms: ProgramSpec[] = [
     kind: 'pnp-enhanced',
     enhanced: true,
     status: 'invitation-only',
+    capacity: { level: 'limited', note: L('The 2026 priority-sector allocation is already over-issued (651 of 619 by 2026-10-21), but draws continue: 386 were invited on 2026-10-20.', 'L’allocation 2026 des secteurs prioritaires est déjà dépassée (651 sur 619 au 2026-10-21), mais les tirages continuent : 386 invitations le 2026-10-20.', '2026 年优先行业配额已超发（截至 2026-10-21 发出 651 个，配额 619），但抽签仍在继续：2026-10-20 邀请了 386 人。') },
     name: L('Alberta Express Entry Stream', 'Volet Entrée express de l’Alberta', '阿尔伯塔快速通道类别'),
     summary: L(
       'Express Entry candidates with CRS ≥ 300 whose occupation is in an Alberta priority sector (health, construction, agriculture, aviation, manufacturing).',
@@ -181,9 +184,9 @@ export const westPrograms: ProgramSpec[] = [
     ),
     criteria: [expressEntryEligible(), crsAtLeast(300), intendsToLive('AB')],
     notes: [L(
-      'The 2026 allocation is fully used; a general priority-sector draw on 2026-10-20 still invited 386 people (minimum score 60).',
-      'L’allocation 2026 est épuisée ; un tirage général des secteurs prioritaires le 2026-10-20 a tout de même invité 386 personnes (score minimum 60).',
-      '2026 年名额已用完，但 2026-10-20 的优先行业综合抽签仍邀请了 386 人（最低 60 分）。',
+      'Latest priority-sector draw: 2026-10-20, 386 invited, minimum Alberta score 60.',
+      'Dernier tirage des secteurs prioritaires : 2026-10-20, 386 invitations, score albertain minimum 60.',
+      '最近一次优先行业抽签：2026-10-20，邀请 386 人，阿尔伯塔最低分 60。',
     )],
     sources: [{ url: 'https://www.alberta.ca/aaip-alberta-express-entry-stream-eligibility', verified: VERIFIED }],
   },
@@ -193,6 +196,8 @@ export const westPrograms: ProgramSpec[] = [
     kind: 'pnp-enhanced',
     enhanced: true,
     status: 'invitation-only',
+    capacity: { level: 'limited', note: L('61 spaces left for 2026 (2026-10-21).', 'Il restait 61 places pour 2026 (2026-10-21).', '2026 年剩余 61 个名额（2026-10-21）。') },
+    confidence: { level: 'approximate', note: L('Alberta’s tech-occupation list is approximated by NOC broad category 2.', 'La liste des professions technologiques de l’Alberta est approximée par la grande catégorie 2 de la CNP.', '阿尔伯塔科技职业清单以 NOC 大类 2 近似。') },
     name: L('Alberta Accelerated Tech Pathway', 'Voie accélérée Technologie de l’Alberta', '阿尔伯塔科技加速通道'),
     summary: L(
       'Express Entry candidates working in, or with an offer from, an Alberta tech company in an eligible tech occupation.',
@@ -216,6 +221,7 @@ export const westPrograms: ProgramSpec[] = [
     jurisdiction: 'AB',
     kind: 'pnp-base',
     status: 'invitation-only',
+    capacity: { level: 'limited', note: L('167 spaces left for 2026 (2026-10-21).', 'Il restait 167 places pour 2026 (2026-10-21).', '2026 年剩余 167 个名额（2026-10-21）。') },
     name: L('Alberta Dedicated Health Care Pathway', 'Voie dédiée aux soins de santé de l’Alberta', '阿尔伯塔医疗专项通道'),
     summary: L(
       'Physicians, nurses, therapists, psychologists and other licensed health workers with an Alberta health-sector offer.',
@@ -238,6 +244,7 @@ export const westPrograms: ProgramSpec[] = [
     jurisdiction: 'AB',
     kind: 'pnp-base',
     status: 'invitation-only',
+    capacity: { level: 'limited', note: L('244 spaces left for 2026 (2026-10-21), with a cap per community.', 'Il restait 244 places pour 2026 (2026-10-21), avec un plafond par collectivité.', '2026 年剩余 244 个名额（2026-10-21），每个社区另有上限。') },
     name: L('Alberta Rural Renewal Stream', 'Volet Renouveau rural de l’Alberta', '阿尔伯塔乡村振兴类别'),
     summary: L(
       'For people with a job offer in a designated rural Alberta community and that community’s endorsement.',
@@ -317,6 +324,7 @@ export const westPrograms: ProgramSpec[] = [
     jurisdiction: 'SK',
     kind: 'pnp-base',
     status: 'open',
+    confidence: { level: 'approximate', note: L('Saskatchewan’s 32 tech occupations are approximated by NOC broad category 2.', 'Les 32 professions technologiques de la Saskatchewan sont approximées par la grande catégorie 2 de la CNP.', '萨省 32 个科技职业以 NOC 大类 2 近似。') },
     name: L('SINP Tech Talent Pathway', 'PCIS Voie des talents technologiques', '萨省提名 – 科技人才通道'),
     summary: L(
       'For tech workers with a permanent full-time offer in one of 32 eligible tech occupations.',
@@ -384,6 +392,7 @@ export const westPrograms: ProgramSpec[] = [
     jurisdiction: 'MB',
     kind: 'pnp-base',
     status: 'invitation-only',
+    confidence: { level: 'unconfirmed', note: L('Eligibility is from the official page; recent draw details come from secondary reports.', 'L’admissibilité provient de la page officielle ; les détails des tirages récents proviennent de sources secondaires.', '资格条件来自官方页面，近期抽签细节来自第三方报道。') },
     name: L('MPNP Skilled Worker in Manitoba', 'PCMB Travailleur qualifié au Manitoba', '曼省提名 – 曼省技术工人类'),
     summary: L(
       'For people working full-time for a Manitoba employer who offers them a long-term job. Manitoba graduates get dedicated draws.',

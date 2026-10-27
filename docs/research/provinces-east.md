@@ -491,7 +491,7 @@
 - **ITA rounds:**
   - 2025: 13 rounds, 3,376 ITAs (NLPNP 2,473)
   - 2026: Mar 6 = 445 total (NLPNP 362, AIP 83); Mar 30 = 245 total (NLPNP 209, AIP 36)
-  - **No rounds published after Mar 30, 2026.** The page was last updated then. Rounds may not be published, or may not have occurred.
+  - **Correction (re-verified 2026-10-27):** rounds did continue; the latest published round is **2026-10-16 with 126 invitations** (page updated 2026-10-19, https://www.gov.nl.ca/immigration/?p=6706).
 - **URLs:**
   - https://www.gov.nl.ca/immigration/invitations-to-apply-updates/
   - https://www.gov.nl.ca/immigration/expression-of-interest-model-prioritization-criteria/

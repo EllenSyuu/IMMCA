@@ -1,12 +1,17 @@
 import { useEffect, useMemo, useState } from 'react';
 import { rankPrograms } from '../engine/evaluate';
+import { decide, dimensions, runScenarios } from '../data/insights';
+import { LAST_RUN } from '../data/monitor';
 import { PROGRAMS, PROGRAM_BY_ID } from '../data/programs';
 import { VERIFIED } from '../data/programs/shared';
 import { LOCALES, useI18n } from '../i18n';
+import { DecisionPanel } from './DecisionPanel';
 import { ProfileForm } from './ProfileForm';
 import { RouteCard } from './RouteCard';
 import { RouteMap } from './RouteMap';
+import { ScenarioLab } from './ScenarioLab';
 import { ScorePanel } from './ScorePanel';
+import { useDate } from './format';
 import { EMPTY, SAMPLES, toProfile, type FormState } from './model';
 
 const STORAGE_KEY = 'immca.profile.v1';
@@ -23,37 +28,12 @@ function loadState(): FormState {
   return SAMPLES.mtl;
 }
 
-function daysUntil(iso: string): number {
-  return Math.ceil((new Date(`${iso}T23:59:59`).getTime() - Date.now()) / 86_400_000);
-}
-
-function Watch() {
-  const { t } = useI18n();
-  const items = [
-    { key: 'watch.peq', date: '2026-10-31' },
-    { key: 'watch.crs', date: '2026-11-03' },
-    { key: 'watch.qcElection', date: '2026-11-01' },
-  ].filter((i) => daysUntil(i.date) >= 0);
-  if (!items.length) return null;
-  return (
-    <aside className="watch" aria-labelledby="watch-title">
-      <h2 id="watch-title">{t('watch.title')}</h2>
-      <ul>
-        {items.map((i) => (
-          <li key={i.key}>
-            <span className="watch__days">{t('watch.daysLeft', { days: daysUntil(i.date) })}</span>
-            <span>{t(i.key)}</span>
-          </li>
-        ))}
-      </ul>
-    </aside>
-  );
-}
-
 export function App() {
   const { t, locale, setLocale } = useI18n();
+  const fmt = useDate('long');
   const [state, setState] = useState<FormState>(loadState);
   const [filter, setFilter] = useState<Filter>('best');
+  const [openIds, setOpenIds] = useState<Set<string>>(new Set());
   const set = (patch: Partial<FormState>) => setState((s) => ({ ...s, ...patch }));
 
   useEffect(() => {
@@ -66,6 +46,8 @@ export function App() {
 
   const profile = useMemo(() => toProfile(state), [state]);
   const results = useMemo(() => rankPrograms(PROGRAMS, profile), [profile]);
+  const decision = useMemo(() => decide(results), [results]);
+  const scenarios = useMemo(() => runScenarios(profile), [profile]);
   const counts = {
     eligible: results.filter((r) => r.verdict === 'eligible').length,
     close: results.filter((r) => r.verdict === 'close').length,
@@ -74,7 +56,22 @@ export function App() {
   const shown = results.filter((r) =>
     filter === 'all' ? true : filter === 'closed' ? r.verdict === 'unavailable' : r.verdict === 'eligible' || r.verdict === 'close',
   );
-  const verified = new Date(`${VERIFIED}T12:00:00`).toLocaleDateString(locale === 'zh' ? 'zh-CN' : `${locale}-CA`, { year: 'numeric', month: 'long', day: 'numeric' });
+  const showScore = profile.intendedProvince !== 'QC';
+
+  const toggle = (id: string) =>
+    setOpenIds((s) => {
+      const next = new Set(s);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+
+  /** Open a route from the summary or scenario panel and scroll to it. */
+  const show = (id: string) => {
+    if (!shown.some((r) => r.programId === id)) setFilter('all');
+    setOpenIds((s) => new Set(s).add(id));
+    window.setTimeout(() => document.getElementById(`route-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+  };
 
   return (
     <>
@@ -111,8 +108,6 @@ export function App() {
           <RouteMap />
         </section>
 
-        <Watch />
-
         <div className="workspace">
           <section className="workspace__form" aria-labelledby="form-title">
             <h2 id="form-title">{t('form.title')}</h2>
@@ -124,17 +119,36 @@ export function App() {
               <h2 id="results-title">{t('results.title')}</h2>
               <p className="muted" aria-live="polite">{t('results.count', counts)}</p>
             </div>
-            <ScorePanel profile={profile} />
-            <div className="filters" role="group" aria-label={t('results.title')}>
-              {(['best', 'all', 'closed'] as Filter[]).map((f) => (
-                <button key={f} type="button" aria-pressed={filter === f} onClick={() => setFilter(f)}>
-                  {t(`results.filter.${f}`)}
-                </button>
-              ))}
+
+            <DecisionPanel decision={decision} onShow={show} />
+            <ScenarioLab scenarios={scenarios} onShow={show} />
+            {showScore && <ScorePanel profile={profile} />}
+
+            <div className="routes__head">
+              <h3>{t('results.allRoutes')}</h3>
+              <div className="filters" role="group" aria-label={t('results.allRoutes')}>
+                {(['best', 'all', 'closed'] as Filter[]).map((f) => (
+                  <button key={f} type="button" aria-pressed={filter === f} onClick={() => setFilter(f)}>
+                    {t(`results.filter.${f}`)}
+                  </button>
+                ))}
+              </div>
             </div>
             {shown.length ? (
               <ul className="routes">
-                {shown.map((r) => <RouteCard key={r.programId} spec={PROGRAM_BY_ID.get(r.programId)!} result={r} />)}
+                {shown.map((r) => {
+                  const spec = PROGRAM_BY_ID.get(r.programId)!;
+                  return (
+                    <RouteCard
+                      key={r.programId}
+                      spec={spec}
+                      result={r}
+                      dims={dimensions(spec, r)}
+                      open={openIds.has(r.programId)}
+                      onToggle={() => toggle(r.programId)}
+                    />
+                  );
+                })}
               </ul>
             ) : (
               <p className="empty">{t('results.empty')}</p>
@@ -145,7 +159,10 @@ export function App() {
       </main>
 
       <footer className="footer">
-        <p>{t('app.verified', { date: verified })}</p>
+        <p>
+          {t('app.verified', { date: fmt(VERIFIED) })}
+          {LAST_RUN && <> {t('app.lastCheck', { date: fmt(LAST_RUN.checkedAt), n: LAST_RUN.reachable, total: LAST_RUN.total })}</>}
+        </p>
         <p>{t('footer.about')} {t('footer.nunavut')}</p>
         <p><a href={REPO} target="_blank" rel="noreferrer">{t('footer.source')}</a></p>
       </footer>
