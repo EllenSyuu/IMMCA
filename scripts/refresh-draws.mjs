@@ -39,7 +39,7 @@ export function normalize(feed, fetched) {
   const rounds = feed.rounds.slice(0, KEEP).map((r) => ({
     number: num(r.drawNumber),
     date: String(r.drawDate),
-    type: String(r.drawName).replace(/\s*\(?\d{4}-Version \d+\)?/i, '').trim(),
+    type: String(r.drawName).replace(/\s*\(?\d{4}-Version \d+\)?/i, '').replace(/[\s,;:]+$/, '').trim(),
     invited: num(r.drawSize),
     crs: num(r.drawCRS),
   }));

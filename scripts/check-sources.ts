@@ -57,9 +57,15 @@ export function pageText(html: string): string {
     .replace(/\b(nonce|csrf|token|session)[-_a-z]*\s*[:=]\s*\S+/gi, '')
     .split('\n')
     .map((l) => l.replace(/\s+/g, ' ').trim())
-    .filter(Boolean)
+    .filter((l) => l && !NOISE.test(l))
     .join('\n');
 }
+
+/**
+ * Site-wide banners that come and go without any rule changing — maintenance
+ * and outage notices, cookie prompts — are ignored so they don't raise false alarms.
+ */
+export const NOISE = /\b(site|system|service|scheduled)\b.{0,40}\b(outage|maintenance|unavailable|interruption)\b|\b(outage|maintenance)\b.{0,60}\b(\d{1,2}(:\d{2})?\s*(am|pm|a\.m\.|p\.m\.)|\d{4}-\d{2}-\d{2})|panne temporaire|interruption de service|maintenance planifiée|\bwe use cookies\b/i;
 
 export const hash = (s: string | Buffer) => createHash('sha256').update(s).digest('hex').slice(0, 16);
 const snapName = (url: string) => `${hash(url)}.txt`;

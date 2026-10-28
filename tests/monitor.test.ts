@@ -33,3 +33,14 @@ describe('source monitor', () => {
     for (const url of cited.keys()) expect(url).toMatch(/^https:\/\//);
   });
 });
+
+describe('monitor noise filter', () => {
+  it('ignores maintenance and outage banners but keeps rule text', () => {
+    const page = (banner: string) => pageText(`<main><p>${banner}</p><p>Minimum score 99 for childcare.</p></main>`);
+    expect(page('A temporary WelcomeBC.ca site outage will occur on October 28 from 6 am to 8 am (PT).')).toBe('Minimum score 99 for childcare.');
+    expect(page('Scheduled maintenance: the portal will be unavailable this weekend.')).toBe('Minimum score 99 for childcare.');
+    expect(page('Interruption de service prévue le 2026-11-02.')).toBe('Minimum score 99 for childcare.');
+    expect(page('The intake window is closed.')).toContain('The intake window is closed.');
+    expect(page('Applications are temporarily unavailable for the Entry Level stream.')).toContain('temporarily unavailable');
+  });
+});
