@@ -231,13 +231,15 @@
     },
     "https://www.welcomebc.ca/immigrate-to-b-c/about-the-bc-provincial-nominee-program/invitations-to-apply": {
       "baseline": "5f957acb8480fa99",
-      "current": "5f957acb8480fa99",
-      "status": "unchanged"
+      "current": "e5020f7c501841c0",
+      "status": "changed",
+      "changedOn": "2026-10-28"
     },
     "https://www.welcomebc.ca/immigrate-to-b-c/about-the-bc-provincial-nominee-program/news": {
       "baseline": "a180bf57ebb7a639",
-      "current": "a180bf57ebb7a639",
-      "status": "unchanged"
+      "current": "dbeec3c56b0f40f2",
+      "status": "changed",
+      "changedOn": "2026-10-28"
     },
     "https://www.welcomebc.ca/immigrate-to-b-c/bc-pnp-si-program-guide-pdf": {
       "baseline": "989ff92407ad1f5b",

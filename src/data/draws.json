@@ -1,7 +1,14 @@
 {
   "source": "https://www.canada.ca/content/dam/ircc/documents/json/ee_rounds_123_en.json",
-  "fetched": "2026-10-27",
+  "fetched": "2026-10-28",
   "rounds": [
+    {
+      "number": 453,
+      "date": "2026-10-28",
+      "type": "Transport Occupations,",
+      "invited": 150,
+      "crs": 477
+    },
     {
       "number": 452,
       "date": "2026-10-27",
@@ -169,13 +176,6 @@
       "type": "French-Language proficiency",
       "invited": 5000,
       "crs": 399
-    },
-    {
-      "number": 428,
-      "date": "2026-07-21",
-      "type": "Canadian Experience Class",
-      "invited": 2000,
-      "crs": 516
     }
   ],
   "pool": {
