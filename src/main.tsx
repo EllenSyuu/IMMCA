@@ -11,3 +11,12 @@ createRoot(document.getElementById('root')!).render(
     </I18nProvider>
   </StrictMode>,
 );
+
+// Offline support for the installed app (sw.js is generated at build time).
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {
+      /* the site works the same without it */
+    });
+  });
+}

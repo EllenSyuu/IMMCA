@@ -6,6 +6,10 @@
 
 ### [**Open the live site → ellensyuu.github.io/IMMCA**](https://ellensyuu.github.io/IMMCA/)
 
+[![Visits](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FEllenSyuu%2FIMMCA%2Fmain%2Fstats%2Fbadge-visits.json&style=for-the-badge)](PRIVACY.md)
+[![Calendar subscriptions](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FEllenSyuu%2FIMMCA%2Fmain%2Fstats%2Fbadge-subscriptions.json&style=for-the-badge)](https://ellensyuu.github.io/IMMCA/#stay-updated)
+[![App installs](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FEllenSyuu%2FIMMCA%2Fmain%2Fstats%2Fbadge-installs.json&style=for-the-badge)](https://ellensyuu.github.io/IMMCA/#stay-updated)
+
 [![CI](https://github.com/EllenSyuu/IMMCA/actions/workflows/ci.yml/badge.svg)](https://github.com/EllenSyuu/IMMCA/actions/workflows/ci.yml)
 [![Deploy](https://github.com/EllenSyuu/IMMCA/actions/workflows/pages.yml/badge.svg)](https://github.com/EllenSyuu/IMMCA/actions/workflows/pages.yml)
 [![Daily update](https://github.com/EllenSyuu/IMMCA/actions/workflows/daily.yml/badge.svg)](https://github.com/EllenSyuu/IMMCA/actions/workflows/daily.yml)
@@ -34,7 +38,11 @@ IMMCA turns that into one question: *given my studies, languages and work, which
 - **Places your score in the real Express Entry pool** using IRCC's published distribution of 228,724 candidates, refreshed daily from IRCC's own feed.
 - **Estimates your Arrima score** for Québec's PSTQ from the ministry's 1,400-point grid.
 - **Converts raw test scores** (IELTS, CELPIP, PTE Core, TEF Canada on both of its scales, TCF Canada) to CLB/NCLC and to the Québec French scale, so people can type what is on their result sheet.
-- **Runs entirely in the browser**, in English, French or Chinese. Nothing anyone types leaves their device.
+- **Subscribe in any calendar.** One click adds IMMCA to Apple Calendar (Mac, iPhone), Google Calendar or Outlook (Windows, web, work accounts): an event for every new Express Entry round, deadline (reminder three days before) and official rule change — or a short digest every morning. Also available as an RSS/Atom feed. In English, French or Chinese.
+- **Installs as an app** on iPhone, Android, Mac and Windows straight from the browser — full screen and offline.
+
+  <img src="docs/images/subscribe.png" alt="The Stay updated section: buttons to add IMMCA to Apple Calendar, Google Calendar, Outlook.com and Outlook for work or school, a choice between updates-only and a daily digest, and an Install the app card" width="760">
+- **Runs entirely in the browser**, in English, French or Chinese. Nothing anyone types leaves their device; usage is counted anonymously by IMMCA's own open-source counter (see [Privacy](#privacy)).
 
 <table>
 <tr>
@@ -60,6 +68,10 @@ flowchart LR
   end
   I[IRCC rounds feed] -->|daily GitHub Action<br/>validated refresh| D
   G[49 official pages] -->|daily GitHub Action<br/>text diff| M
+  D --> FE[Calendar & RSS feeds<br/>rebuilt daily]
+  M --> FE
+  FE --> CW[[Counter worker<br/>anonymous counts]]
+  CW -->|daily| ST[(stats/ → README badges)]
 ```
 
 ### Rules as data
@@ -125,7 +137,7 @@ Nunavut has no nominee program. Business and investor streams are out of scope.
 ```bash
 npm install
 npm run dev            # http://localhost:5173
-npm test               # 64 tests: CRS tables, conversions, time windows, programs, audit regressions, monitor, translations
+npm test               # 87 tests: CRS, conversions, programs, audit regressions, monitor, feeds (checked with ical.js), counter (real SQLite), translations
 npm run build          # static site in dist/ — deployed to GitHub Pages on every push to main
 npm run refresh:draws  # pull the latest Express Entry rounds from IRCC
 npm run sources:check  # check every official page for changes
@@ -140,8 +152,14 @@ src/
     insights.ts      the four dimensions, decision summary and scenario lab
     draws.json       Express Entry rounds and pool distribution (refreshed daily)
     source-status.json  state of every official page (updated daily)
+    updates-log.json    what changed each day — the source of the calendar and RSS feeds
+  feeds/             iCalendar writer, feed events, calendar subscription links
   i18n/              en · fr · zh dictionaries (a test enforces identical keys and placeholders)
-  ui/                React components: profile form, score panel, route cards
+  ui/                React components: profile form, score panel, route cards, subscribe and install
+  usage.ts           anonymous usage counts (off unless VITE_COUNTER_URL is set)
+counter/             open-source usage counter (Cloudflare Worker + D1) — setup in counter/README.md
+scripts/             daily data refresh, source monitor, feed and service-worker builders, stats collection
+stats/               daily usage totals and README badges (open data)
 tests/               Vitest suites
 docs/research/       evidence log for every rule
 ```
@@ -150,7 +168,9 @@ To update a rule when a government changes it, see [CONTRIBUTING.md](CONTRIBUTIN
 
 ## Privacy
 
-IMMCA has no server, no analytics and no accounts. The profile is computed in the browser and kept only in that browser's local storage so the form survives a reload; clearing site data removes it.
+Nothing you enter leaves your device: the profile is computed in the browser and kept only in its local storage, so the form survives a reload; clearing site data removes it. There are no accounts and no cookies.
+
+The visit, subscription and install numbers above come from IMMCA's own open-source counter ([`counter/`](counter/)). It accepts only an event type and one fixed label (language, calendar app or platform), stores no IP addresses, and counts unique visitors with a hash salted by a random value that is deleted every day. Daily totals are published in [`stats/`](stats/). Details in [PRIVACY.md](PRIVACY.md).
 
 ## Disclaimer
 

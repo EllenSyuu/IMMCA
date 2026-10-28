@@ -342,3 +342,37 @@ html:lang(zh-Hans) .hero h1 { letter-spacing: 0; max-width: 14em; }
   .route-map__station { animation: none; opacity: 1; }
   .bar span, .route__chevron { transition: none; }
 }
+
+/* ---------------------------------------------------------------- stay updated */
+.topbar__actions { display: flex; align-items: center; gap: 14px; }
+.topbar__link { font-size: var(--step--1); font-weight: 600; text-decoration: none; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--ink); }
+.topbar__link:hover { background: var(--ink); color: #fff; }
+.stay { background: var(--surface); border-top: 1px solid var(--rule); scroll-margin-top: 16px; }
+.stay__inner { max-width: 1280px; margin: 0 auto; padding: 48px var(--gutter) 56px; display: grid; gap: 24px; }
+.stay__intro { max-width: 64ch; display: grid; gap: 8px; }
+.stay__intro p { color: var(--ink-2); }
+.stay__grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.stay__card { background: var(--paper); border-radius: var(--radius-l); padding: 22px 24px; display: grid; gap: 12px; }
+.stay__card h3 { display: flex; align-items: center; gap: 8px; }
+.stay__buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.stay__btn {
+  display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-size: var(--step--1); font-weight: 600;
+  background: var(--surface); border: 1px solid var(--rule-strong); padding: 8px 14px; border-radius: 999px; color: var(--ink);
+}
+.stay__btn:hover { border-color: var(--ink); }
+.stay__btn--plain { background: transparent; border-style: dashed; }
+.stay__steps { margin: 0; padding-left: 1.2rem; display: grid; gap: 4px; }
+.stay__done { display: inline-flex; gap: 6px; align-items: center; color: var(--ok); font-weight: 600; }
+.segmented--wide { width: fit-content; }
+.segmented--wide button { font-size: var(--step--1); padding: 6px 14px; }
+.primary-button {
+  justify-self: start; display: inline-flex; gap: 8px; align-items: center; border: 0; background: var(--ink); color: #fff;
+  padding: 10px 18px; border-radius: 999px; font-weight: 700;
+}
+.primary-button:hover { background: #1d3463; }
+@media (max-width: 860px) {
+  .stay__grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  .topbar__link { display: none; }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "IMMCA — Canadian immigration pathway finder",
+  "short_name": "IMMCA",
+  "description": "Which routes to Canadian permanent residence are open to you, checked daily against official sources. English, français, 中文.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f6f7f9",
+  "theme_color": "#12213d",
+  "lang": "en-CA",
+  "categories": ["education", "utilities", "productivity"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

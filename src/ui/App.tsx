@@ -11,6 +11,8 @@ import { RouteCard } from './RouteCard';
 import { RouteMap } from './RouteMap';
 import { ScenarioLab } from './ScenarioLab';
 import { ScorePanel } from './ScorePanel';
+import { StayUpdated } from './StayUpdated';
+import { COUNTER_URL, startUsageTracking } from '../usage';
 import { useDate } from './format';
 import { EMPTY, SAMPLES, toProfile, type FormState } from './model';
 
@@ -35,6 +37,10 @@ export function App() {
   const [filter, setFilter] = useState<Filter>('best');
   const [openIds, setOpenIds] = useState<Set<string>>(new Set());
   const set = (patch: Partial<FormState>) => setState((s) => ({ ...s, ...patch }));
+
+  // One anonymous view count per page load (only when the counter is configured).
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => startUsageTracking(locale), []);
 
   useEffect(() => {
     try {
@@ -82,6 +88,8 @@ export function App() {
           <span className="topbar__name">{t('app.name')}</span>
           <span className="topbar__tagline">{t('app.tagline')}</span>
         </div>
+        <div className="topbar__actions">
+        <a className="topbar__link" href="#stay-updated">{t('nav.subscribe')}</a>
         <nav className="langs" aria-label={t('app.language')}>
           {LOCALES.map((l) => (
             <button key={l.id} type="button" lang={l.htmlLang} aria-pressed={locale === l.id} onClick={() => setLocale(l.id)}>
@@ -89,6 +97,7 @@ export function App() {
             </button>
           ))}
         </nav>
+        </div>
       </header>
 
       <main>
@@ -156,6 +165,7 @@ export function App() {
             <p className="disclaimer">{t('results.disclaimer')}</p>
           </section>
         </div>
+        <StayUpdated />
       </main>
 
       <footer className="footer">
@@ -164,6 +174,7 @@ export function App() {
           {LAST_RUN && <> {t('app.lastCheck', { date: fmt(LAST_RUN.checkedAt), n: LAST_RUN.reachable, total: LAST_RUN.total })}</>}
         </p>
         <p>{t('footer.about')} {t('footer.nunavut')}</p>
+        {COUNTER_URL && <p>{t('footer.counts')} <a href={`${REPO}/blob/main/PRIVACY.md`} target="_blank" rel="noreferrer">{t('footer.privacy')}</a></p>}
         <p><a href={REPO} target="_blank" rel="noreferrer">{t('footer.source')}</a></p>
       </footer>
     </>

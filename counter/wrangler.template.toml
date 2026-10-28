@@ -1,0 +1,17 @@
+# Filled in by .github/workflows/counter.yml at deploy time (database_id is looked up or created).
+name = "immca-counter"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+
+[vars]
+SITE_URL = "https://ellensyuu.github.io/IMMCA/"
+SITE_ORIGIN = "https://ellensyuu.github.io"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "immca-counter"
+database_id = "__DATABASE_ID__"
+
+# Daily cleanup of one-day visitor hashes and salts.
+[triggers]
+crons = ["7 4 * * *"]

@@ -1,0 +1,56 @@
+name: Deploy counter
+
+# Deploys the open-source usage counter (counter/) to Cloudflare Workers.
+# Needs a free Cloudflare account: add the repository secret CLOUDFLARE_API_TOKEN
+# (template "Edit Cloudflare Workers" + D1 edit permission) and the repository
+# variable CLOUDFLARE_ACCOUNT_ID. Until both exist, the job skips with a warning
+# instead of failing.
+on:
+  push:
+    branches: [main]
+    paths: ['counter/**', '.github/workflows/counter.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: Check that Cloudflare is configured
+        id: cf
+        run: |
+          if [ -n "$CLOUDFLARE_API_TOKEN" ] && [ -n "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=Counter not deployed::Add the secret CLOUDFLARE_API_TOKEN and the variable CLOUDFLARE_ACCOUNT_ID (Settings → Secrets and variables → Actions), then re-run this workflow."
+          fi
+      - if: steps.cf.outputs.ready == 'true'
+        uses: actions/checkout@v4
+      - if: steps.cf.outputs.ready == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - if: steps.cf.outputs.ready == 'true'
+        name: Find or create the D1 database
+        working-directory: counter
+        run: |
+          id=$(npx --yes wrangler@4 d1 list --json | node -e "const l=JSON.parse(require('fs').readFileSync(0,'utf8'));const d=l.find(x=>x.name==='immca-counter');console.log(d?d.uuid:'')")
+          if [ -z "$id" ]; then
+            npx --yes wrangler@4 d1 create immca-counter
+            id=$(npx --yes wrangler@4 d1 list --json | node -e "const l=JSON.parse(require('fs').readFileSync(0,'utf8'));console.log(l.find(x=>x.name==='immca-counter').uuid)")
+          fi
+          sed "s/__DATABASE_ID__/$id/" wrangler.template.toml > wrangler.toml
+      - if: steps.cf.outputs.ready == 'true'
+        name: Apply schema
+        working-directory: counter
+        run: npx --yes wrangler@4 d1 execute immca-counter --remote --file schema.sql
+      - if: steps.cf.outputs.ready == 'true'
+        name: Deploy worker
+        working-directory: counter
+        run: npx --yes wrangler@4 deploy

@@ -5,7 +5,8 @@ name: Daily update
 #   2. check every official page a program rule cites, flagging pages that changed;
 #   3. commit real changes (new rounds, changed or unreachable pages, text snapshots);
 #   4. open an issue listing newly changed pages for review;
-#   5. rebuild and redeploy the site, so the "last checked" date is always current
+#   4b. log the day's changes, which become calendar (iCal) and RSS feed entries;
+#   5. rebuild and redeploy the site and feeds, so the "last checked" date is always current
 #      (skipped with a warning, not a failure, if GitHub Pages is not enabled).
 on:
   schedule:
@@ -43,12 +44,25 @@ jobs:
       - name: Check official sources
         run: npm run sources:check
 
+      - name: Record what changed today (for calendar and RSS subscribers)
+        run: npm run log:update
+
       - name: Test with the new data
         run: npx vitest run
 
+      - name: Collect usage stats for the README
+        env:
+          COUNTER_URL: ${{ vars.COUNTER_URL }}
+        run: |
+          if [ -z "$COUNTER_URL" ]; then
+            echo "Counter not set up yet (repository variable COUNTER_URL is empty); skipping."
+          else
+            node scripts/collect-stats.mjs || echo "::warning::Could not read the counter's stats; keeping yesterday's numbers"
+          fi
+
       - name: Commit changes
         run: |
-          git add src/data/draws.json src/data/source-status.json monitor/snapshots
+          git add src/data/draws.json src/data/source-status.json src/data/updates-log.json monitor/snapshots stats
           if git diff --cached --quiet; then
             echo "No data changes today."
           else
@@ -68,6 +82,9 @@ jobs:
           fi
 
       - run: npm run build
+        env:
+          # Address of the usage counter (repository variable); empty = no counting.
+          VITE_COUNTER_URL: ${{ vars.COUNTER_URL }}
       - name: Check that GitHub Pages is enabled
         id: pages
         env:
