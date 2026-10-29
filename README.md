@@ -1,55 +1,102 @@
 <div align="center">
 
-# IMMCA — Canadian Immigration Pathway Finder
+<a href="https://ellensyuu.github.io/IMMCA/">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/brand/cover-dark.png">
+    <img src="docs/brand/cover-light.png" alt="IMMCA: every route to Canadian permanent residence, on one map. Coloured transit lines for Federal, Québec, Ontario, British Columbia, Alberta and Atlantic programs converge on a PR terminus." width="100%">
+  </picture>
+</a>
 
-**Which routes to Canadian permanent residence are open to you — and what is still missing — with every rule linked to the government page it comes from.**
+<h3>
+  <a href="https://ellensyuu.github.io/IMMCA/">Open the app</a>
+  <span> · </span>
+  <a href="https://ellensyuu.github.io/IMMCA/#stay-updated">Subscribe</a>
+  <span> · </span>
+  <a href="https://ellensyuu.github.io/IMMCA/#stay-updated">Install</a>
+  <span> · </span>
+  <a href="docs/research/">Evidence log</a>
+  <span> · </span>
+  <a href="PRIVACY.md">Privacy</a>
+</h3>
 
-### [**Open the live site → ellensyuu.github.io/IMMCA**](https://ellensyuu.github.io/IMMCA/)
+**Tell it your studies, languages and work. It tells you which routes to Canadian PR are open to you today,<br>which are within reach, and the one thing that would close the gap, with every rule linked to the government page it comes from.**
 
 [![Visits](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FEllenSyuu%2FIMMCA%2Fmain%2Fstats%2Fbadge-visits.json&style=for-the-badge)](PRIVACY.md)
 [![Calendar subscriptions](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FEllenSyuu%2FIMMCA%2Fmain%2Fstats%2Fbadge-subscriptions.json&style=for-the-badge)](https://ellensyuu.github.io/IMMCA/#stay-updated)
 [![App installs](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FEllenSyuu%2FIMMCA%2Fmain%2Fstats%2Fbadge-installs.json&style=for-the-badge)](https://ellensyuu.github.io/IMMCA/#stay-updated)
 
 [![CI](https://github.com/EllenSyuu/IMMCA/actions/workflows/ci.yml/badge.svg)](https://github.com/EllenSyuu/IMMCA/actions/workflows/ci.yml)
-[![Deploy](https://github.com/EllenSyuu/IMMCA/actions/workflows/pages.yml/badge.svg)](https://github.com/EllenSyuu/IMMCA/actions/workflows/pages.yml)
 [![Daily update](https://github.com/EllenSyuu/IMMCA/actions/workflows/daily.yml/badge.svg)](https://github.com/EllenSyuu/IMMCA/actions/workflows/daily.yml)
+[![Deploy](https://github.com/EllenSyuu/IMMCA/actions/workflows/pages.yml/badge.svg)](https://github.com/EllenSyuu/IMMCA/actions/workflows/pages.yml)
 ![Licence](https://img.shields.io/badge/licence-Apache--2.0-12213d)
-![Languages](https://img.shields.io/badge/UI-English%20%C2%B7%20Fran%C3%A7ais%20%C2%B7%20%E4%B8%AD%E6%96%87-1d4ed8)
 ![Rules verified](https://img.shields.io/badge/rules%20verified-2026--10--27-0f8b6e)
 
-<img src="docs/images/hero.png" alt="IMMCA home page: the headline 'Find the routes to permanent residence that are open to you' beside coloured transit lines converging on a PR terminus" width="900">
+**English** · [Français](docs/readme/README.fr.md) · [简体中文](docs/readme/README.zh-CN.md)
+
+<br>
+
+<img src="docs/images/showcase.png" alt="IMMCA on a laptop and a phone: the profile steps beside 'Your routes', with a 'Where to focus' summary naming three routes, a scenario list with CRS gains, and the same results in Chinese on the phone" width="100%">
 
 </div>
 
-## Why this exists
+<br>
 
-For an international student, the hardest part of planning permanent residence is not any single rule — it is that the rules are spread across **fourteen governments** and change every few months. Between 2024 and 2026 alone: job-offer points were removed from Express Entry and come back in a new form on **3 November 2026**; Ontario closed all eight of its nominee streams and replaced them with one; British Columbia, Manitoba and Saskatchewan closed or narrowed their graduate streams; Québec abolished the PEQ, then reopened it for a single four-month window that closes on **31 October 2026**.
+## Why IMMCA
 
-IMMCA turns that into one question: *given my studies, languages and work, which routes are open to me today, which are within reach, and what would close the gap?*
+For an international student, the hardest part of planning permanent residence is not any single rule. It is that the rules are spread across **fourteen governments** and change every few months. Between 2024 and 2026 alone, job-offer points left Express Entry and come back in a new form on **3 November 2026**; Ontario closed all eight of its nominee streams and replaced them with one; British Columbia, Manitoba and Saskatchewan closed or narrowed their graduate streams; Québec abolished the PEQ, then reopened it for a four-month window ending **31 October 2026**.
 
-## What it does
+- **One map instead of fourteen websites.** 56 programs: Express Entry and every 2026 category, the Atlantic, rural and francophone pilots, Québec's PSTQ and PEQ, and the nominee streams of every province and territory that runs one.
+- **An answer, not a checklist.** It starts with where to focus, the one requirement blocking your nearest route, and the dates that matter to you.
+- **Never stale.** A GitHub Action re-reads IRCC's rounds feed and all 49 official pages every morning, then redeploys the site. No one has to push anything.
+- **Honest about what it doesn't know.** Every rule says how solid its evidence is, and a changed government page is flagged on the site the same day.
+- **Private by design.** It runs entirely in your browser: no accounts, no cookies, and nothing you type is sent anywhere.
+- **In your language.** English, Français and 中文, switchable at the top of the page, in the app and in the calendar feeds.
 
-- **Screens 56 programs** — Express Entry (CEC, FSW, FST and every 2026 category draw), the Atlantic, rural and francophone pilots, Québec's PSTQ and PEQ, and the nominee streams of all twelve provinces and territories that run one.
-- **Answers first.** A short summary names the routes worth pursuing, the single requirement blocking the nearest one, and the dates that matter to you.
-- **Keeps four questions apart** that a single green light would blur: do you *meet the rules*, is the program *open* (or are its 2026 spaces nearly gone), how *competitive* are you where an official cutoff exists, and how *solid is the evidence* behind the rule (verified, approximated, unconfirmed, or the official page changed and is under review).
-- **Shows each program as a transit line.** Every requirement is a station: filled when you meet it, hollow when you don't, dashed when it can't be judged from a form (a community recommendation, a regulator's licence). Open a line to see each station, how to close each gap, and the official sources.
-- **Scenario lab.** One change at a time — NCLC 7 in French, another year of Canadian work, a job offer, a nomination — with the CRS effect *and* the routes it would open.
-- **Calculates your CRS under both rule sets** — the grid in force today and the Labour Market Integration factor that starts on 3 November 2026.
-- **Places your score in the real Express Entry pool** using IRCC's published distribution of 228,724 candidates, refreshed daily from IRCC's own feed.
-- **Estimates your Arrima score** for Québec's PSTQ from the ministry's 1,400-point grid.
-- **Converts raw test scores** (IELTS, CELPIP, PTE Core, TEF Canada on both of its scales, TCF Canada) to CLB/NCLC and to the Québec French scale, so people can type what is on their result sheet.
-- **Subscribe in any calendar.** One click adds IMMCA to Apple Calendar (Mac, iPhone), Google Calendar or Outlook (Windows, web, work accounts): an event for every new Express Entry round, deadline (reminder three days before) and official rule change — or a short digest every morning. Also available as an RSS/Atom feed. In English, French or Chinese.
-- **Installs as an app** on iPhone, Android, Mac and Windows straight from the browser — full screen and offline.
+## See it in action
 
-  <img src="docs/images/subscribe.png" alt="The Stay updated section: buttons to add IMMCA to Apple Calendar, Google Calendar, Outlook.com and Outlook for work or school, a choice between updates-only and a daily digest, and an Install the app card" width="760">
-- **Runs entirely in the browser**, in English, French or Chinese. Nothing anyone types leaves their device; usage is counted anonymously by IMMCA's own open-source counter (see [Privacy](#privacy)).
+<div align="center">
+<img src="docs/images/demo.gif" alt="Walkthrough: choosing an example profile updates the results; opening a route shows each requirement as a station with its official sources; the page switches to Chinese and French; then the Stay updated section with calendar buttons" width="100%">
+</div>
 
+## Anatomy of a result
+
+<div align="center">
+<img src="docs/images/anatomy-en.png" alt="The results page with five numbered callouts: 1 Where to focus, 2 What would change things, 3 your Express Entry score placed in the pool, 4 the four answers per route, 5 the official sources behind each requirement" width="820">
+</div>
+
+<details>
+<summary>The same page in 中文 and Français</summary>
+<br>
 <table>
 <tr>
-<td width="68%"><img src="docs/images/results.png" alt="Collapsed profile steps beside the results: a 'Where to focus' summary with three routes, a scenario lab, the Express Entry score placed in the pool, and route rows showing eligibility, availability, competitiveness and evidence"></td>
-<td width="32%"><img src="docs/images/mobile-zh.png" alt="The results on a phone, in Chinese"></td>
+<td width="50%"><img src="docs/images/anatomy-zh.png" alt="Annotated results page in Chinese"></td>
+<td width="50%"><img src="docs/images/anatomy-fr.png" alt="Annotated results page in French"></td>
 </tr>
 </table>
+</details>
+
+1. **Where to focus.** The routes worth pursuing first, the closest one that is not open to you yet, what it still needs, and the next date that affects you.
+2. **What would change things.** One change at a time (NCLC 7 in French, another year of Canadian work, a job offer, a nomination), showing both the CRS gain *and* the routes it would open.
+3. **Your score in the real pool.** Your CRS under today's grid and under the 3 November 2026 rules, placed in IRCC's published distribution of 228,724 candidates.
+4. **Four answers per route,** kept apart instead of blurred into one green light: do you *meet the rules*, is the program *open* (or are its 2026 spaces nearly gone), how *competitive* are you where an official cutoff exists, and how *solid is the evidence*.
+5. **Every requirement, with its source.** Each program is a transit line and each requirement a station: filled when you meet it, hollow when you don't, dashed when a form can't judge it. Open it to see how to close each gap and the official pages it was checked against.
+
+## Features
+
+| | |
+|---|---|
+| **Eligibility screener** | 56 federal, Québec and provincial programs, ranked into open / within reach / closed |
+| **CRS calculator** | Both rule sets, switched by date, including the Labour Market Integration factor and its 186 high-wage occupations |
+| **Arrima estimate** | Québec PSTQ score from the ministry's 1,400-point grid |
+| **Test-score conversion** | IELTS, CELPIP, PTE Core, TEF Canada (both scales) and TCF Canada to CLB/NCLC, so you type what is on your result sheet |
+| **Calendar subscriptions** | Apple Calendar, Google Calendar, Outlook (Windows, web, work accounts): every new round, deadline (reminder 3 days before) and rule change, or a daily digest. Also RSS/Atom |
+| **Installable app** | iPhone, Android, Mac and Windows straight from the browser: full screen, works offline |
+| **Daily self-update** | IRCC feed refresh, official-page monitoring with text diffs, automatic redeploy |
+| **Open usage stats** | Visits, subscriptions and installs counted by IMMCA's own open-source counter, published daily in [`stats/`](stats/) |
+
+<div align="center">
+<img src="docs/images/subscribe.png" alt="The Stay updated section: buttons to add IMMCA to Apple Calendar, Google Calendar, Outlook.com and Outlook for work or school, a choice between updates-only and a daily digest, and an Install the app card" width="760">
+</div>
 
 ## How it works
 
@@ -165,6 +212,10 @@ docs/research/       evidence log for every rule
 ```
 
 To update a rule when a government changes it, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Built with
+
+[React 19](https://react.dev) · [TypeScript](https://www.typescriptlang.org) · [Vite](https://vite.dev) · [Vitest](https://vitest.dev) · [oxlint](https://oxc.rs) · [lucide](https://lucide.dev) · [ical.js](https://github.com/kewisch/ical.js) (feed validation) · [Cloudflare Workers + D1](https://developers.cloudflare.com/d1/) (usage counter) · GitHub Actions and Pages · [Playwright](https://playwright.dev) (README images, regenerated by [`scripts/readme-assets.mjs`](scripts/readme-assets.mjs))
 
 ## Privacy
 
