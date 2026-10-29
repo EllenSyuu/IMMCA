@@ -13,6 +13,9 @@ type SourceState = {
 
 const SOURCES = (status as { sources: Record<string, SourceState> }).sources;
 
+/** How many official pages the monitor watches. */
+export const SOURCE_COUNT = Object.keys(SOURCES).length;
+
 const runFiles = import.meta.glob<{ checkedAt: string; reachable: number; total: number }>('./monitor-run.json', { eager: true, import: 'default' });
 
 /** The latest daily run, if this build came from the daily workflow. */

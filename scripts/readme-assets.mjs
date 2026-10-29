@@ -75,6 +75,7 @@ async function appPage(ctx, locale, width = 1440, height = 900) {
   }, locale);
   await page.goto(SITE, { waitUntil: 'networkidle' });
   await page.evaluate(() => document.fonts.ready);
+  await page.addStyleTag({ content: '.topbar{background:#fff!important}' });
   await page.waitForTimeout(2200); // let the hero lines finish drawing
   return page;
 }
@@ -191,6 +192,7 @@ const ANATOMY = {
 for (const [locale, labels] of Object.entries(ANATOMY)) {
   const ctx = await context();
   const page = await appPage(ctx, locale, 1180, 900);
+  await page.addStyleTag({ content: '.topbar{position:static!important}' });
   await page.locator('.route__head').first().click();
   await page.waitForTimeout(300);
   const box = await page.evaluate((labels) => {

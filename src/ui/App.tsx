@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
+import { ArrowDown, BellRing, Lock } from 'lucide-react';
 import { rankPrograms } from '../engine/evaluate';
 import { decide, dimensions, runScenarios } from '../data/insights';
-import { LAST_RUN } from '../data/monitor';
+import { LAST_RUN, SOURCE_COUNT } from '../data/monitor';
 import { PROGRAMS, PROGRAM_BY_ID } from '../data/programs';
 import { VERIFIED } from '../data/programs/shared';
 import { LOCALES, useI18n } from '../i18n';
@@ -89,32 +90,47 @@ export function App() {
           <span className="topbar__tagline">{t('app.tagline')}</span>
         </div>
         <div className="topbar__actions">
-        <a className="topbar__link" href="#stay-updated">{t('nav.subscribe')}</a>
-        <nav className="langs" aria-label={t('app.language')}>
-          {LOCALES.map((l) => (
-            <button key={l.id} type="button" lang={l.htmlLang} aria-pressed={locale === l.id} onClick={() => setLocale(l.id)}>
-              {l.label}
-            </button>
-          ))}
-        </nav>
+          <a className="topbar__link" href="#stay-updated"><BellRing size={16} aria-hidden="true" /> <span className="topbar__link-text">{t('nav.subscribe')}</span></a>
+          <nav className="langs" aria-label={t('app.language')}>
+            {LOCALES.map((l) => (
+              <button key={l.id} type="button" lang={l.htmlLang} aria-pressed={locale === l.id} onClick={() => setLocale(l.id)}>
+                {l.label}
+              </button>
+            ))}
+          </nav>
         </div>
       </header>
 
       <main>
         <section className="hero">
-          <div className="hero__text">
-            <h1>{t('hero.title')}</h1>
-            <p className="hero__body">{t('hero.body', { count: PROGRAMS.length })}</p>
-            <p className="hero__privacy">{t('hero.privacy')}</p>
-            <div className="hero__samples">
-              <span className="muted">{t('hero.samples')}</span>
-              {(Object.keys(SAMPLES) as (keyof typeof SAMPLES)[]).map((k) => (
-                <button key={k} type="button" className="chip" onClick={() => setState(SAMPLES[k])}>{t(`sample.${k}`)}</button>
-              ))}
-              <button type="button" className="chip chip--plain" onClick={() => setState(EMPTY)}>{t('sample.clear')}</button>
+          <div className="hero__inner">
+            <div className="hero__text">
+              <p className="live">
+                <span className="live__dot" aria-hidden="true" />
+                {LAST_RUN
+                  ? t('hero.live', { n: LAST_RUN.total, date: fmt(LAST_RUN.checkedAt) })
+                  : t('hero.live', { n: SOURCE_COUNT, date: fmt(VERIFIED) })}
+              </p>
+              <h1>{t('hero.title')}</h1>
+              <p className="hero__body">{t('hero.body', { count: PROGRAMS.length })}</p>
+              <div className="hero__actions">
+                <a className="primary-button primary-button--large" href="#form-title">
+                  {t('hero.start')} <ArrowDown size={18} aria-hidden="true" />
+                </a>
+                <p className="hero__privacy"><Lock size={14} aria-hidden="true" /> {t('hero.privacy')}</p>
+              </div>
+              <div className="hero__samples">
+                <span className="hero__samples-label">{t('hero.samples')}</span>
+                {(Object.keys(SAMPLES) as (keyof typeof SAMPLES)[]).map((k) => (
+                  <button key={k} type="button" className="chip" onClick={() => setState(SAMPLES[k])}>{t(`sample.${k}`)}</button>
+                ))}
+                <button type="button" className="chip chip--plain" onClick={() => setState(EMPTY)}>{t('sample.clear')}</button>
+              </div>
+            </div>
+            <div className="hero__map">
+              <RouteMap />
             </div>
           </div>
-          <RouteMap />
         </section>
 
         <div className="workspace">
@@ -126,7 +142,7 @@ export function App() {
           <section className="workspace__results" id="results" aria-labelledby="results-title">
             <div className="results__head">
               <h2 id="results-title">{t('results.title')}</h2>
-              <p className="muted" aria-live="polite">{t('results.count', counts)}</p>
+              <p className="results__count" aria-live="polite">{t('results.count', counts)}</p>
             </div>
 
             <DecisionPanel decision={decision} onShow={show} />

@@ -229,6 +229,8 @@ export const en: Record<string, string> = {
   'footer.about': 'IMMCA is an open-source screener, not legal advice. It is not affiliated with IRCC or any provincial government.',
   'footer.source': 'Source code and rule log on GitHub',
   'footer.nunavut': 'Nunavut has no nominee program; only federal programs apply there.',
+  'hero.live': 'Checked against {n} official pages on {date}',
+  'map.atlantic': 'Atlantic',
   'hero.terminus': 'PR',
   'draw.cec': 'Canadian Experience Class',
   'draw.french': 'French proficiency',

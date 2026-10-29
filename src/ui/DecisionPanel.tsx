@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarClock, CircleAlert } from 'lucide-react';
+import { ArrowRight, CalendarClock, ChevronRight, CircleAlert } from 'lucide-react';
 import type { Decision } from '../data/insights';
 import { PROGRAM_BY_ID } from '../data/programs';
 import { useI18n } from '../i18n';
@@ -23,6 +23,7 @@ export function DecisionPanel({ decision, onShow }: { decision: Decision; onShow
               <button type="button" className="decision__route" onClick={() => onShow(spec.id)}>
                 <span className="decision__name">{spec.name[locale]}</span>
                 <DimensionPills dims={dims} result={result} compact />
+                <ChevronRight className="decision__go" size={18} aria-hidden="true" />
               </button>
             </li>
           ))}

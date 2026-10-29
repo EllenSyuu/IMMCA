@@ -222,6 +222,8 @@ export const fr: Record<string, string> = {
   'footer.about': 'IMMCA est un outil libre de présélection, pas un avis juridique. Il n’est affilié ni à IRCC ni à aucun gouvernement provincial.',
   'footer.source': 'Code source et journal des règles sur GitHub',
   'footer.nunavut': 'Le Nunavut n’a pas de programme des candidats ; seuls les programmes fédéraux s’y appliquent.',
+  'hero.live': 'Vérifié auprès de {n} pages officielles le {date}',
+  'map.atlantic': 'Atlantique',
   'hero.terminus': 'RP',
   'draw.cec': 'Expérience canadienne',
   'draw.french': 'Français',

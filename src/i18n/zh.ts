@@ -222,6 +222,8 @@ export const zh: Record<string, string> = {
   'footer.about': 'IMMCA 是开源的初步筛查工具，不构成法律意见，与 IRCC 及任何省政府均无关联。',
   'footer.source': 'GitHub 上的源代码与规则记录',
   'footer.nunavut': '努纳武特没有省提名项目，只适用联邦项目。',
+  'hero.live': '已于 {date} 对照 {n} 个官方页面检查',
+  'map.atlantic': '大西洋省份',
   'hero.terminus': '永居',
   'draw.cec': '加拿大经验类',
   'draw.french': '法语能力',
