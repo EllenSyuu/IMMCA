@@ -52,7 +52,7 @@ Pour une personne étudiante étrangère, le plus difficile n’est pas une règ
 <img src="../images/anatomy-fr.png" alt="La page de résultats avec cinq repères numérotés" width="820">
 </div>
 
-1. **Où concentrer vos efforts** : les voies à viser d’abord, la plus proche qui ne vous est pas encore ouverte et ce qui lui manque, et la prochaine date qui vous concerne.
+1. **Où concentrer vos efforts** : la meilleure voie et la prochaine étape, les autres voies ouvertes, la plus proche qui ne vous est pas encore ouverte et ce qui lui manque, et la prochaine date qui vous concerne.
 2. **Ce qui changerait la donne** : un changement à la fois (NCLC 7 en français, une année de travail de plus au Canada, une offre d’emploi, une nomination), avec le gain SCG *et* les voies qu’il ouvrirait.
 3. **Votre score dans le vrai bassin** : votre SCG selon la grille actuelle et selon les règles du 3 novembre 2026, placé dans la distribution publiée par IRCC (228 724 candidats).
 4. **Quatre réponses par voie**, gardées distinctes : *respectez-vous les règles*, le programme est-il *ouvert* (ou ses places 2026 presque épuisées), quelle est votre *compétitivité* lorsqu’un seuil officiel existe, et quelle est la *solidité des preuves*.
@@ -62,6 +62,7 @@ Pour une personne étudiante étrangère, le plus difficile n’est pas une règ
 
 | | |
 |---|---|
+| **Vérification rapide ou profil complet** | Neuf questions pour une première réponse, hypothèses indiquées ; le profil complet prend les résultats exacts, chaque emploi, les offres et la famille |
 | **Admissibilité** | 56 programmes fédéraux, québécois et provinciaux, classés ouverts / à portée / fermés |
 | **Calcul du SCG** | Deux grilles selon la date, dont le nouveau facteur d’intégration au marché du travail (186 professions bien rémunérées) |
 | **Estimation Arrima** | Score PSTQ selon la grille de 1 400 points du ministère |

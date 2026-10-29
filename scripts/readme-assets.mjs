@@ -89,7 +89,7 @@ const LINES = [
   { label: 'Federal', color: '#D52B1E', d: 'M40 90 H330 Q385 90 418 145 L470 235 Q486 262 518 262 H590' },
   { label: 'Québec', color: '#2F6BFF', d: 'M40 160 H280 Q322 160 352 192 L404 240 Q428 262 460 262 H590' },
   { label: 'Ontario', color: '#E8710A', d: 'M40 230 H260 Q298 230 330 248 Q350 262 382 262 H590' },
-  { label: 'British Columbia', color: '#0F8B6E', d: 'M40 300 H262 Q300 300 332 280 Q354 262 386 262 H590' },
+  { label: 'British Columbia', color: '#0891B2', d: 'M40 300 H262 Q300 300 332 280 Q354 262 386 262 H590' },
   { label: 'Alberta', color: '#7C3AED', d: 'M40 370 H300 Q344 370 374 326 L410 286 Q428 262 460 262 H590' },
   { label: 'Atlantic', color: '#4F86B5', d: 'M40 440 H330 Q384 440 416 384 L466 296 Q486 262 518 262 H590' },
 ];
@@ -105,7 +105,7 @@ function coverHtml(dark) {
   <div class="cover">
     <div class="text">
       <div class="brand">
-        <span class="mark"><i style="background:#D52B1E"></i><i style="background:#2F6BFF;height:44px"></i><i style="background:#18A57F;height:28px"></i></span>
+        <svg class="mark" viewBox="0 0 32 32" width="64" height="64"><g fill="none" stroke-linecap="round" stroke-width="3.6"><path d="M4 7.5H9.5C14.5 7.5 15.5 16 21 16" stroke="#D52B1E"/><path d="M4 24.5H9.5C14.5 24.5 15.5 16 21 16" stroke="#E8710A"/><path d="M4 16H21" stroke="#2F6BFF"/></g><circle cx="25" cy="16" r="5" fill="${c.ink}"/><circle cx="25" cy="16" r="2" fill="${c.bg}"/></svg>
         <span class="name">IMMCA</span>
       </div>
       <h1>Every route to Canadian permanent residence, on one map.</h1>
@@ -120,7 +120,7 @@ function coverHtml(dark) {
   </div>`, `
   .cover{width:1280px;height:640px;background:${c.bg};display:grid;grid-template-columns:600px 1fr;align-items:center;padding:0 40px 0 84px;gap:8px}
   .brand{display:flex;align-items:center;gap:16px;margin-bottom:34px}
-  .mark{display:inline-flex;gap:6px;align-items:flex-end}.mark i{display:block;width:13px;height:58px;border-radius:7px}
+  .mark{display:block}
   .name{font-size:40px;font-weight:800;letter-spacing:.04em;color:${c.ink}}
   h1{font-size:50px;line-height:1.08;letter-spacing:-.025em;font-weight:800;color:${c.ink};margin:0 0 22px}
   p{font-size:21px;line-height:1.5;color:${c.sub};margin:0 0 28px;max-width:30em}
@@ -185,9 +185,9 @@ function coverHtml(dark) {
 
 // ---------------------------------------------------------------- 3. anatomy
 const ANATOMY = {
-  en: ['Where to focus: the routes worth pursuing first', 'What would change things: one change at a time', 'Your score, placed in the real Express Entry pool', 'Four answers per route: rules, openness, competitiveness, evidence', 'Every requirement, and the official page it comes from'],
-  zh: ['重点关注：最值得先走的路线', '怎样会改变结果：一次只改变一项', '你的分数在真实候选池中的位置', '每条路线四个维度：资格、开放、竞争力、证据', '每一项要求，以及它出自哪个官方页面'],
-  fr: ['Où concentrer vos efforts : les voies à viser d’abord', 'Ce qui changerait la donne : un changement à la fois', 'Votre score, placé dans le vrai bassin d’Entrée express', 'Quatre réponses par voie : règles, ouverture, compétitivité, preuves', 'Chaque exigence, avec la page officielle d’où elle vient'],
+  en: ['Where to focus: your strongest route and its next step', 'What would change things: one change at a time', 'Your score, placed in the real Express Entry pool', 'Four answers per route: rules, openness, competitiveness, evidence', 'Every requirement, and the official page it comes from'],
+  zh: ['重点关注：最值得先走的路线和下一步', '怎样会改变结果：一次只改变一项', '你的分数在真实候选池中的位置', '每条路线四个维度：资格、开放、竞争力、证据', '每一项要求，以及它出自哪个官方页面'],
+  fr: ['Où concentrer vos efforts : la meilleure voie et la prochaine étape', 'Ce qui changerait la donne : un changement à la fois', 'Votre score, placé dans le vrai bassin d’Entrée express', 'Quatre réponses par voie : règles, ouverture, compétitivité, preuves', 'Chaque exigence, avec la page officielle d’où elle vient'],
 };
 for (const [locale, labels] of Object.entries(ANATOMY)) {
   const ctx = await context();

@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { Check as CheckIcon, ChevronDown, CircleDashed, ExternalLink, X } from 'lucide-react';
+import { Check as CheckIcon, ChevronDown, CircleDashed, ExternalLink, Info, TriangleAlert, X } from 'lucide-react';
 import type { Check, ProgramResult, ProgramSpec } from '../engine/types';
 import type { Dimensions } from '../data/insights';
 import { useI18n } from '../i18n';
@@ -21,26 +21,78 @@ function Stations({ checks, color, label }: { checks: Check[]; color: string; la
   );
 }
 
-/** Availability, competitiveness and evidence as three short pills (eligibility is the station line). */
+type Pill = { tone: string; text: string };
+
+function availabilityPill(dims: Dimensions, t: (k: string, p?: Record<string, string | number>) => string): Pill {
+  return { tone: `avail-${dims.availability}`, text: t(`dim.avail.${dims.availability}`) };
+}
+
+function competitivenessPill(dims: Dimensions, result: ProgramResult, t: (k: string, p?: Record<string, string | number>) => string): Pill | undefined {
+  if (dims.competitiveness === 'none' || !result.points) return undefined;
+  const p = result.points;
+  return {
+    tone: `comp-${dims.competitiveness}`,
+    text: p.benchmark !== undefined
+      ? t(`dim.comp.${dims.competitiveness}`, { value: p.value, cutoff: p.benchmark })
+      : t(`dim.comp.${dims.competitiveness}`, { value: p.value, label: t(p.label) }),
+  };
+}
+
+/**
+ * The one status worth seeing before opening a route: a constraint on availability
+ * if there is one, otherwise how competitive the person is, otherwise how to get in.
+ */
+function keyPill(dims: Dimensions, result: ProgramResult, t: (k: string, p?: Record<string, string | number>) => string): Pill {
+  const constrained = dims.availability === 'closed' || dims.availability === 'exhausted' || dims.availability === 'limited' || dims.availability === 'windows';
+  return (!constrained && competitivenessPill(dims, result, t)) || availabilityPill(dims, t);
+}
+
+/** Eligibility plus the single most important status; the rest lives in the opened route. */
 export function DimensionPills({ dims, result, compact = false }: { dims: Dimensions; result: ProgramResult; compact?: boolean }) {
   const { t } = useI18n();
-  const pills: { tone: string; text: string }[] = [];
+  const pills: Pill[] = [];
   if (compact) pills.push({ tone: `elig-${dims.eligibility}`, text: t(`dim.elig.${dims.eligibility}`, { n: result.toConfirm }) });
-  pills.push({ tone: `avail-${dims.availability}`, text: t(`dim.avail.${dims.availability}`) });
-  if (dims.competitiveness !== 'none' && result.points) {
-    const p = result.points;
-    pills.push({
-      tone: `comp-${dims.competitiveness}`,
-      text: p.benchmark !== undefined
-        ? t(`dim.comp.${dims.competitiveness}`, { value: p.value, cutoff: p.benchmark })
-        : t(`dim.comp.${dims.competitiveness}`, { value: p.value, label: t(p.label) }),
-    });
-  }
-  if (dims.evidence !== 'verified') pills.push({ tone: `evid-${dims.evidence}`, text: t(`dim.evid.${dims.evidence}`) });
+  pills.push(keyPill(dims, result, t));
   return (
     <span className="pills">
       {pills.map((p) => <span key={p.tone} className={`pill pill--${p.tone}`}>{p.text}</span>)}
+      <EvidenceNote dims={dims} />
     </span>
+  );
+}
+
+/** How reliable the rule data is: metadata, so it is a quiet note rather than a status pill. */
+export function EvidenceNote({ dims }: { dims: Dimensions }) {
+  const { t } = useI18n();
+  if (dims.evidence === 'verified') return null;
+  const Icon = dims.evidence === 'review' ? TriangleAlert : Info;
+  return (
+    <span className={`evidence evidence--${dims.evidence}`}>
+      <Icon size={14} aria-hidden="true" /> {t(`dim.evid.${dims.evidence}`)}
+    </span>
+  );
+}
+
+/** All four dimensions, spelled out, for an opened route. */
+function DimensionTable({ dims, result }: { dims: Dimensions; result: ProgramResult }) {
+  const { t } = useI18n();
+  const comp = competitivenessPill(dims, result, t);
+  const avail = availabilityPill(dims, t);
+  const rows: { label: string; tone: string; text: string }[] = [
+    { label: t('dim.label.elig'), tone: `elig-${dims.eligibility}`, text: t(`dim.elig.${dims.eligibility}`, { n: result.toConfirm }) },
+    { label: t('dim.label.avail'), tone: avail.tone, text: avail.text },
+    { label: t('dim.label.comp'), tone: comp?.tone ?? 'comp-none', text: comp?.text ?? t('dim.comp.none') },
+    { label: t('dim.label.evid'), tone: `evid-${dims.evidence}`, text: t(`dim.evid.${dims.evidence}`) },
+  ];
+  return (
+    <dl className="dims">
+      {rows.map((r) => (
+        <div key={r.label} className={`dims__row dims__row--${r.tone}`}>
+          <dt>{r.label}</dt>
+          <dd>{r.text}</dd>
+        </div>
+      ))}
+    </dl>
   );
 }
 
@@ -86,6 +138,7 @@ export function RouteCard({ spec, result, dims, open, onToggle }: {
       <div id={panelId} className="route__panel" hidden={!open}>
         <p className="route__summary">{spec.summary[locale]}</p>
         <p className="route__kind">{t(`kind.${spec.kind}`)} · {t(`status.${spec.status}`)} · {t('results.met', { met, total: decided.length })}</p>
+        <DimensionTable dims={dims} result={result} />
 
         {dims.flag?.kind === 'changed' && <p className="route__alert">{t('evidence.changed', { date: fmt(dims.flag.since) })}</p>}
         {dims.flag?.kind === 'unreachable' && <p className="route__caveat">{t('evidence.unreachable', { date: fmt(dims.flag.since) })}</p>}

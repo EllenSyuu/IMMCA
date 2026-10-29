@@ -3,7 +3,7 @@ import { TESTS, toLanguageResult, type Ability } from '../engine/language';
 import { EDUCATION_ORDER, PROVINCES, type Teer } from '../engine/types';
 import { useI18n } from '../i18n';
 import { NumberField, SelectField, Step, TextField, Toggle } from './fields';
-import { quebecLevels, type FormState, type LangInput, type LangTest } from './model';
+import { quebecLevels, toProfile, type FormState, type LangInput, type LangTest } from './model';
 
 type T = (k: string, p?: Record<string, string | number>) => string;
 
@@ -222,6 +222,90 @@ export function ProfileForm({ state, set }: { state: FormState; set: Set }) {
           </div>
         )}
       </Step>
+    </form>
+  );
+}
+
+const LEVELS = [4, 5, 6, 7, 8, 9, 10];
+const WORK_BUCKETS = [0, 6, 12, 24, 36];
+
+/**
+ * Quick check: the few answers that decide most routes. It writes into the same
+ * state as the full profile, so switching to the full profile keeps everything.
+ */
+export function QuickForm({ state, set }: { state: FormState; set: Set }) {
+  const { t } = useI18n();
+  const profile = toProfile(state);
+  const provinceOptions = PROVINCES.map((p) => ({ value: p, label: t(`prov.${p}`) }));
+  const level = (r?: { listening: number; reading: number; writing: number; speaking: number }) =>
+    r ? Math.max(0, Math.min(r.listening, r.reading, r.writing, r.speaking)) : 0;
+  const snap = (n: number) => (n === 0 ? 0 : LEVELS.reduce((a, b) => (Math.abs(b - n) < Math.abs(a - n) ? b : a)));
+  const langOptions = (scale: 'CLB' | 'NCLC') => [
+    { value: 0, label: t('form.test.none') },
+    ...LEVELS.map((n) => ({ value: n, label: n === 10 ? `${scale} 10+` : `${scale} ${n}` })),
+  ];
+  const toLang = (n: number): LangInput =>
+    n === 0 ? { test: 'none', scores: { listening: 0, reading: 0, writing: 0, speaking: 0 } } : { test: 'clb', scores: { listening: n, reading: n, writing: n, speaking: n } };
+  const canadaMonths = state.work.filter((w) => w.where !== 'abroad').reduce((a, w) => a + w.months, 0);
+  const bucket = WORK_BUCKETS.reduce((a, b) => (canadaMonths >= b ? b : a), 0);
+  const workProvince = state.currentProvince !== 'outside' ? state.currentProvince : state.intendedProvince !== 'any' ? state.intendedProvince : 'ON';
+
+  return (
+    <form className="profile profile--quick" onSubmit={(e) => e.preventDefault()} aria-label={t('form.mode.quick')}>
+      <div className="quick">
+        <div className="grid-2">
+          <SelectField
+            wide
+            label={t('form.status')}
+            value={state.status}
+            options={(['student', 'graduate-pgwp', 'worker', 'outside'] as const).map((s) => ({ value: s, label: t(`status.${s}`) }))}
+            onChange={(status) => set({ status, ...(status === 'outside' ? { currentProvince: 'outside' as const } : {}) })}
+          />
+          <NumberField label={t('form.age')} value={state.age} min={16} max={70} onChange={(age) => set({ age })} />
+          <SelectField
+            label={t('form.currentProvince')}
+            value={state.currentProvince}
+            options={[{ value: 'outside' as const, label: t('form.outsideCanada') }, ...provinceOptions]}
+            onChange={(currentProvince) => set({ currentProvince })}
+          />
+          <SelectField
+            wide
+            label={t('form.intendedProvince')}
+            value={state.intendedProvince}
+            options={[{ value: 'any' as const, label: t('form.anywhere') }, ...provinceOptions]}
+            onChange={(intendedProvince) => set({ intendedProvince })}
+          />
+          <SelectField
+            wide
+            label={t('form.education')}
+            value={state.education}
+            options={EDUCATION_ORDER.map((e) => ({ value: e, label: t(`edu.${e}`) }))}
+            onChange={(education) => set({ education, study: { ...state.study, level: education === 'none' || education === 'secondary' ? state.study.level : education } })}
+          />
+          <div className="span-2">
+            <Toggle
+              label={t('form.canadianStudy')}
+              checked={state.studied}
+              onChange={(studied) => set({ studied, study: { ...state.study, province: state.currentProvince !== 'outside' ? state.currentProvince : state.study.province } })}
+            />
+          </div>
+          <SelectField label={t('form.quick.english')} value={snap(level(profile.english))} options={langOptions('CLB')} onChange={(n) => set({ english: toLang(n) })} />
+          <SelectField label={t('form.quick.french')} value={snap(level(profile.french))} options={langOptions('NCLC')} onChange={(n) => set({ french: toLang(n) })} />
+          <SelectField
+            wide
+            label={t('form.quick.work')}
+            value={bucket}
+            options={WORK_BUCKETS.map((m) => ({ value: m, label: t(`form.quick.work.${m}`) }))}
+            onChange={(months) => set({
+              work: [
+                ...state.work.filter((w) => w.where === 'abroad'),
+                ...(months ? [{ id: Math.max(0, ...state.work.map((w) => w.id)) + 1, where: workProvince, teer: 1 as Teer, noc: '', months, endedMonthsAgo: 0, whileFullTimeStudent: false, selfEmployed: false }] : []),
+              ],
+            })}
+          />
+        </div>
+      </div>
+      <p className="quick__note">{t('form.quick.note')}</p>
     </form>
   );
 }

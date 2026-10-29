@@ -6,8 +6,9 @@ import { LAST_RUN, SOURCE_COUNT } from '../data/monitor';
 import { PROGRAMS, PROGRAM_BY_ID } from '../data/programs';
 import { VERIFIED } from '../data/programs/shared';
 import { LOCALES, useI18n } from '../i18n';
+import { Logo } from './Logo';
 import { DecisionPanel } from './DecisionPanel';
-import { ProfileForm } from './ProfileForm';
+import { ProfileForm, QuickForm } from './ProfileForm';
 import { RouteCard } from './RouteCard';
 import { RouteMap } from './RouteMap';
 import { ScenarioLab } from './ScenarioLab';
@@ -18,8 +19,18 @@ import { useDate } from './format';
 import { EMPTY, SAMPLES, toProfile, type FormState } from './model';
 
 const STORAGE_KEY = 'immca.profile.v1';
+const MODE_KEY = 'immca.mode';
+type Mode = 'quick' | 'full';
 const REPO = 'https://github.com/EllenSyuu/IMMCA';
 type Filter = 'best' | 'all' | 'closed';
+
+function loadMode(): Mode {
+  try {
+    return localStorage.getItem(MODE_KEY) === 'full' ? 'full' : 'quick';
+  } catch {
+    return 'quick';
+  }
+}
 
 function loadState(): FormState {
   try {
@@ -35,6 +46,15 @@ export function App() {
   const { t, locale, setLocale } = useI18n();
   const fmt = useDate('long');
   const [state, setState] = useState<FormState>(loadState);
+  const [mode, setModeState] = useState<Mode>(loadMode);
+  const setMode = (m: Mode) => {
+    setModeState(m);
+    try {
+      localStorage.setItem(MODE_KEY, m);
+    } catch {
+      /* storage unavailable */
+    }
+  };
   const [filter, setFilter] = useState<Filter>('best');
   const [openIds, setOpenIds] = useState<Set<string>>(new Set());
   const set = (patch: Partial<FormState>) => setState((s) => ({ ...s, ...patch }));
@@ -85,7 +105,7 @@ export function App() {
       <a className="skip" href="#results">{t('results.title')}</a>
       <header className="topbar">
         <div className="topbar__brand">
-          <span className="logo" aria-hidden="true"><span /><span /><span /></span>
+          <Logo />
           <span className="topbar__name">{t('app.name')}</span>
           <span className="topbar__tagline">{t('app.tagline')}</span>
         </div>
@@ -135,14 +155,23 @@ export function App() {
 
         <div className="workspace">
           <section className="workspace__form" aria-labelledby="form-title">
-            <h2 id="form-title">{t('form.title')}</h2>
-            <ProfileForm state={state} set={set} />
+            <div className="form__head">
+              <h2 id="form-title">{t('form.title')}</h2>
+              <div className="segmented" role="group" aria-label={t('form.title')}>
+                {(['quick', 'full'] as Mode[]).map((m) => (
+                  <button key={m} type="button" aria-pressed={mode === m} onClick={() => setMode(m)}>{t(`form.mode.${m}`)}</button>
+                ))}
+              </div>
+            </div>
+            {mode === 'quick' ? <QuickForm state={state} set={set} /> : <ProfileForm state={state} set={set} />}
+            <a className="form__see" href="#results">{t('form.seeResults')}</a>
           </section>
 
           <section className="workspace__results" id="results" aria-labelledby="results-title">
             <div className="results__head">
               <h2 id="results-title">{t('results.title')}</h2>
               <p className="results__count" aria-live="polite">{t('results.count', counts)}</p>
+              <a className="results__edit secondary-button" href="#form-title">{t('results.edit')}</a>
             </div>
 
             <DecisionPanel decision={decision} onShow={show} />

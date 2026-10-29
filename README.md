@@ -75,7 +75,7 @@ For an international student, the hardest part of planning permanent residence i
 </table>
 </details>
 
-1. **Where to focus.** The routes worth pursuing first, the closest one that is not open to you yet, what it still needs, and the next date that affects you.
+1. **Where to focus.** Your strongest route and the next step towards it, the other routes open to you, the closest one that is not open yet and what it still needs, and the next date that affects you.
 2. **What would change things.** One change at a time (NCLC 7 in French, another year of Canadian work, a job offer, a nomination), showing both the CRS gain *and* the routes it would open.
 3. **Your score in the real pool.** Your CRS under today's grid and under the 3 November 2026 rules, placed in IRCC's published distribution of 228,724 candidates.
 4. **Four answers per route,** kept apart instead of blurred into one green light: do you *meet the rules*, is the program *open* (or are its 2026 spaces nearly gone), how *competitive* are you where an official cutoff exists, and how *solid is the evidence*.
@@ -85,6 +85,7 @@ For an international student, the hardest part of planning permanent residence i
 
 | | |
 |---|---|
+| **Quick check or full profile** | Nine questions for a first answer, with its assumptions stated; the full profile takes exact test scores, every job, offers and family |
 | **Eligibility screener** | 56 federal, Québec and provincial programs, ranked into open / within reach / closed |
 | **CRS calculator** | Both rule sets, switched by date, including the Labour Market Integration factor and its 186 high-wage occupations |
 | **Arrima estimate** | Québec PSTQ score from the ministry's 1,400-point grid |
