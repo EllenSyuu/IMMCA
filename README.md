@@ -47,8 +47,8 @@ For an international student, the hardest part of planning permanent residence i
 
 - **One map instead of fourteen websites.** 56 programs: Express Entry and every 2026 category, the Atlantic, rural and francophone pilots, Québec's PSTQ and PEQ, and the nominee streams of every province and territory that runs one.
 - **An answer, not a checklist.** It starts with where to focus, the one requirement blocking your nearest route, and the dates that matter to you.
-- **Never stale.** A GitHub Action re-reads IRCC's rounds feed and all 49 official pages every morning, then redeploys the site. No one has to push anything.
-- **Honest about what it doesn't know.** Every rule says how solid its evidence is, and a changed government page is flagged on the site the same day.
+- **Monitored every day, changed by review.** Each morning a GitHub Action pulls IRCC's latest rounds, re-reads all 49 official pages the rules cite, and redeploys the site. A changed page is flagged on the site and opened as an issue; the rule itself is only updated after a person has read the change and the tests pass.
+- **Honest about what it doesn't know.** Every rule says how solid its evidence is. A requirement a form can't judge (a community recommendation, a regulator's licence) is shown as *to confirm*, never counted as met.
 - **Private by design.** It runs entirely in your browser: no accounts, no cookies, and nothing you type is sent anywhere.
 - **In your language.** English, Français and 中文, switchable at the top of the page, in the app and in the calendar feeds.
 

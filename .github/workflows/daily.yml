@@ -39,7 +39,9 @@ jobs:
       - run: npm ci
 
       - name: Refresh Express Entry rounds
-        run: npm run refresh:draws || echo "::warning::IRCC rounds feed could not be refreshed; keeping the last good data"
+        id: draws
+        continue-on-error: true
+        run: npm run refresh:draws
 
       - name: Check official sources
         run: npm run sources:check
@@ -70,6 +72,21 @@ jobs:
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git commit -m "data: daily update $(date -u +%F)"
             git push
+          fi
+
+      - name: Report a failed rounds refresh
+        if: steps.draws.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "::warning::IRCC rounds feed could not be refreshed; the site keeps the last good data and shows its date"
+          gh label create stale-data --color fbca04 --description "A daily data refresh failed" --force
+          open=$(gh issue list --label stale-data --state open --json number --jq 'length')
+          body="The daily job could not refresh the Express Entry rounds from IRCC's feed on $(date -u +%F). The site still shows the last validated data, with its date. Run log: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          if [ "$open" = "0" ]; then
+            gh issue create --title "Express Entry rounds refresh failed" --label stale-data --body "$body"
+          else
+            gh issue comment "$(gh issue list --label stale-data --state open --json number --jq '.[0].number')" --body "$body"
           fi
 
       - name: Report newly changed official pages

@@ -150,19 +150,22 @@ export interface Source {
 }
 
 export type Verdict =
-  | 'eligible'      // every requirement met
+  | 'eligible'      // every requirement that can be checked is met (some may still need confirming)
   | 'close'         // one or two gaps that can realistically be closed
   | 'gap'           // several gaps
   | 'unavailable';  // program closed / paused, shown for awareness
 
 /** Whether the requirements themselves are met, independent of whether the program is open. */
-export type Eligibility = 'met' | 'close' | 'gap';
+/** 'confirm': everything that can be checked is met, but at least one requirement can't be judged from a form. */
+export type Eligibility = 'met' | 'confirm' | 'close' | 'gap';
 
 export interface ProgramResult {
   programId: string;
   verdict: Verdict;
   eligibility: Eligibility;
   checks: Check[];
+  /** Requirements a form can't judge (a community recommendation, a licence), still to be confirmed. */
+  toConfirm: number;
   /** Fraction of determinable checks that are met (0–1). */
   score: number;
   /** Program-specific numeric score, e.g. CRS. */

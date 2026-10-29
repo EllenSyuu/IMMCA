@@ -75,8 +75,9 @@ export function decide(results: ProgramResult[], today = new Date().toISOString(
   });
 
   const best = enriched
-    .filter((e) => e.dims.eligibility === 'met' && e.dims.availability !== 'closed' && e.spec.kind !== 'temporary')
+    .filter((e) => (e.dims.eligibility === 'met' || e.dims.eligibility === 'confirm') && e.dims.availability !== 'closed' && e.spec.kind !== 'temporary')
     .sort((a, b) =>
+      Number(a.dims.eligibility === 'confirm') - Number(b.dims.eligibility === 'confirm') ||
       COMP_RANK[a.dims.competitiveness] - COMP_RANK[b.dims.competitiveness] ||
       AVAIL_RANK[a.dims.availability] - AVAIL_RANK[b.dims.availability] ||
       Number(a.dims.evidence !== 'verified') - Number(b.dims.evidence !== 'verified'))
@@ -89,7 +90,7 @@ export function decide(results: ProgramResult[], today = new Date().toISOString(
 
   const deadlines: Decision['deadlines'] = [];
   for (const e of enriched) {
-    if (e.spec.closesOn && e.spec.closesOn >= today && e.dims.eligibility === 'met') {
+    if (e.spec.closesOn && e.spec.closesOn >= today && (e.dims.eligibility === 'met' || e.dims.eligibility === 'confirm')) {
       deadlines.push({ key: 'decision.closes', date: e.spec.closesOn, programId: e.spec.id });
     }
   }
@@ -104,12 +105,19 @@ export function decide(results: ProgramResult[], today = new Date().toISOString(
 // ---------------------------------------------------------------- scenario lab
 export interface Scenario {
   key: string;
+  /** The province a work or job-offer what-if assumes, shown in its label. */
+  province?: (p: Profile) => string;
   apply: (p: Profile) => Profile | null;
 }
 
 const clbAll = (n: number) => ({ listening: n, reading: n, writing: n, speaking: n });
 const lift = (r: Profile['english'], n: number) =>
   r ? { listening: Math.max(r.listening, n), reading: Math.max(r.reading, n), writing: Math.max(r.writing, n), speaking: Math.max(r.speaking, n) } : clbAll(n);
+
+/** Where a work or job-offer what-if takes place: where the person lives, else where they want to live, else Ontario. */
+function scenarioProvince(p: Profile) {
+  return p.currentProvince ?? (p.intendedProvince === 'any' ? 'ON' : p.intendedProvince);
+}
 
 export const SCENARIOS: Scenario[] = [
   {
@@ -124,8 +132,9 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     key: 'scenario.moreWork',
+    province: scenarioProvince,
     apply: (p) => {
-      const province = p.currentProvince ?? (p.intendedProvince === 'any' ? 'ON' : p.intendedProvince);
+      const province = scenarioProvince(p);
       return {
         ...p,
         status: p.status === 'student' ? 'graduate-pgwp' : p.status,
@@ -136,9 +145,10 @@ export const SCENARIOS: Scenario[] = [
   },
   {
     key: 'scenario.jobOffer',
+    province: scenarioProvince,
     apply: (p) => (p.jobOffer ? null : {
       ...p,
-      jobOffer: { province: p.currentProvince ?? (p.intendedProvince === 'any' ? 'ON' : p.intendedProvince), teer: 1, noc: '21211', permanent: true, fullTime: true },
+      jobOffer: { province: scenarioProvince(p), teer: 1, noc: '21211', permanent: true, fullTime: true },
     }),
   },
   { key: 'scenario.nomination', apply: (p) => (p.provincialNomination ? null : { ...p, provincialNomination: true }) },
@@ -146,6 +156,8 @@ export const SCENARIOS: Scenario[] = [
 
 export interface ScenarioResult {
   key: string;
+  /** Province assumed by the what-if, if any. */
+  province?: string;
   crsChange: number;
   /** Routes that become fully eligible and are still open. */
   opens: string[];
@@ -163,7 +175,7 @@ export function runScenarios(profile: Profile, today = new Date().toISOString().
       .filter((r) => r.verdict === 'eligible' && before.get(r.programId)?.verdict !== 'eligible')
       .map((r) => r.programId);
     const crsChange = computeCrs(next, today).total - crsBefore;
-    if (crsChange > 0 || opens.length) out.push({ key: s.key, crsChange, opens });
+    if (crsChange > 0 || opens.length) out.push({ key: s.key, province: s.province?.(profile), crsChange, opens });
   }
   return out.sort((a, b) => b.opens.length - a.opens.length || b.crsChange - a.crsChange);
 }

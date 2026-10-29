@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { qualifyingMonths } from '../src/engine/criteria';
+import { custom, note, qualifyingMonths } from '../src/engine/criteria';
 import { evaluateProgram, isRelevant, rankPrograms } from '../src/engine/evaluate';
 import { PROGRAMS, PROGRAM_BY_ID } from '../src/data/programs';
 import { monthsSinceSnapshot } from '../src/data/programs/quebec';
@@ -115,5 +115,28 @@ describe('Canadian Experience Class language rule', () => {
   it('needs CLB 7 for TEER 0–1 work but only CLB 5 for TEER 2–3', () => {
     expect(evaluateProgram(get('ee-cec'), tech(1)).verdict).not.toBe('eligible');
     expect(evaluateProgram(get('ee-cec'), tech(2)).verdict).toBe('eligible');
+  });
+});
+
+describe('requirements a form cannot judge', () => {
+  const base = PROGRAM_BY_ID.get('ee-cec')!;
+  const spec = { ...base, id: 'test-note', criteria: [custom('check.test', () => true), note('check.note')] };
+
+  it('are never reported as "meets all requirements"', () => {
+    const r = evaluateProgram(spec, graduate());
+    expect(r.eligibility).toBe('confirm');
+    expect(r.toConfirm).toBe(1);
+    expect(r.verdict).toBe('eligible');
+  });
+
+  it('rank below routes where every requirement is confirmed', () => {
+    const plain = { ...base, id: 'test-plain', criteria: [custom('check.test', () => true)] };
+    expect(rankPrograms([spec, plain], graduate()).map((r) => r.eligibility)).toEqual(['met', 'confirm']);
+  });
+
+  it('no real program says "met" while a requirement is still unjudged', () => {
+    for (const r of rankPrograms(PROGRAMS, graduate())) {
+      if (r.eligibility === 'met') expect(r.toConfirm, r.programId).toBe(0);
+    }
   });
 });

@@ -25,7 +25,7 @@ function Stations({ checks, color, label }: { checks: Check[]; color: string; la
 export function DimensionPills({ dims, result, compact = false }: { dims: Dimensions; result: ProgramResult; compact?: boolean }) {
   const { t } = useI18n();
   const pills: { tone: string; text: string }[] = [];
-  if (compact) pills.push({ tone: `elig-${dims.eligibility}`, text: t(`dim.elig.${dims.eligibility}`) });
+  if (compact) pills.push({ tone: `elig-${dims.eligibility}`, text: t(`dim.elig.${dims.eligibility}`, { n: result.toConfirm }) });
   pills.push({ tone: `avail-${dims.availability}`, text: t(`dim.avail.${dims.availability}`) });
   if (dims.competitiveness !== 'none' && result.points) {
     const p = result.points;
@@ -78,7 +78,7 @@ export function RouteCard({ spec, result, dims, open, onToggle }: {
         </span>
         <span className="route__meta">
           <Stations checks={stations} color={color} label={t('results.met', { met, total: decided.length })} />
-          <span className={`route__elig route__elig--${dims.eligibility}`}>{t(`dim.elig.${dims.eligibility}`)}</span>
+          <span className={`route__elig route__elig--${dims.eligibility}`}>{t(`dim.elig.${dims.eligibility}`, { n: result.toConfirm })}</span>
           <DimensionPills dims={dims} result={result} />
         </span>
       </button>

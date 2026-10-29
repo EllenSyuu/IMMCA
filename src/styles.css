@@ -265,7 +265,7 @@ html:lang(fr) .hero h1 { max-width: 16ch; }
 }
 .pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: 0.85; flex: none; }
 .pill--elig-met, .pill--avail-open, .pill--comp-above { background: var(--ok-bg); color: var(--ok); }
-.pill--elig-close, .pill--comp-near, .pill--avail-limited, .pill--avail-windows { background: var(--near-bg); color: var(--near); }
+.pill--elig-close, .pill--elig-confirm, .pill--comp-near, .pill--avail-limited, .pill--avail-windows { background: var(--near-bg); color: var(--near); }
 .pill--avail-exhausted, .pill--avail-closed, .pill--comp-below { background: var(--gap-bg); color: var(--muted); }
 .pill--evid-review { background: var(--alert-bg); color: var(--alert); }
 .pill--evid-approximate, .pill--evid-unconfirmed { background: transparent; color: var(--muted); box-shadow: inset 0 0 0 1px var(--rule-strong); }
@@ -384,7 +384,7 @@ html:lang(fr) .hero h1 { max-width: 16ch; }
 .route__meta { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; }
 .route__elig { font-size: var(--step--2); font-weight: 700; }
 .route__elig--met { color: var(--ok); }
-.route__elig--close { color: var(--near); }
+.route__elig--close, .route__elig--confirm { color: var(--near); }
 .route__elig--gap { color: var(--muted); }
 
 .stations { flex: none; }

@@ -10,15 +10,17 @@ export function evaluateProgram(spec: ProgramSpec, profile: Profile, today = new
   const met = decided.filter((c) => c.status === 'met').length;
   const unmet = decided.length - met;
   const score = decided.length ? met / decided.length : 0;
+  const toConfirm = checks.filter((c) => c.status === 'unknown' && !c.group).length;
 
+  // Everything checkable met is only "meets all requirements" when nothing is left unjudged.
   // "Within reach": most of the line is already travelled — one gap with at least 60% met, or two gaps with four or more met.
   const eligibility: Eligibility =
-    unmet === 0 && met > 0 ? 'met' : (unmet === 1 && score >= 0.6) || (unmet === 2 && met >= 4) ? 'close' : 'gap';
+    unmet === 0 && met > 0 ? (toConfirm ? 'confirm' : 'met') : (unmet === 1 && score >= 0.6) || (unmet === 2 && met >= 4) ? 'close' : 'gap';
   const expired = !!spec.closesOn && today > spec.closesOn;
   const verdict: Verdict =
-    UNAVAILABLE.has(spec.status) || expired ? 'unavailable' : eligibility === 'met' ? 'eligible' : eligibility;
+    UNAVAILABLE.has(spec.status) || expired ? 'unavailable' : eligibility === 'met' || eligibility === 'confirm' ? 'eligible' : eligibility;
 
-  return { programId: spec.id, verdict, eligibility, checks, score, points: spec.points?.(profile) };
+  return { programId: spec.id, verdict, eligibility, checks, toConfirm, score, points: spec.points?.(profile) };
 }
 
 const VERDICT_RANK: Record<Verdict, number> = { eligible: 0, close: 1, gap: 2, unavailable: 3 };
@@ -47,5 +49,8 @@ export function rankPrograms(specs: ProgramSpec[], profile: Profile, today?: str
   return specs
     .filter((s) => isRelevant(s, profile))
     .map((s) => evaluateProgram(s, profile, today))
-    .sort((a, b) => VERDICT_RANK[a.verdict] - VERDICT_RANK[b.verdict] || b.score - a.score);
+    .sort((a, b) =>
+      VERDICT_RANK[a.verdict] - VERDICT_RANK[b.verdict] ||
+      Number(a.eligibility === 'confirm') - Number(b.eligibility === 'confirm') ||
+      b.score - a.score);
 }

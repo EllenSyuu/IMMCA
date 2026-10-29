@@ -35,8 +35,8 @@ Pour une personne étudiante étrangère, le plus difficile n’est pas une règ
 
 - **Une carte au lieu de quatorze sites.** 56 programmes : Entrée express et toutes les catégories 2026, les projets pilotes atlantique, ruraux et francophones, le PSTQ et le PEQ du Québec, et les programmes des candidats de chaque province et territoire qui en a un.
 - **Une réponse, pas une liste.** On commence par les voies à viser, l’exigence qui bloque la plus proche et les dates qui vous concernent.
-- **Toujours à jour.** Chaque matin, une action GitHub relit le flux des rondes d’IRCC et les 49 pages officielles, puis redéploie le site. Personne n’a rien à pousser.
-- **Honnête sur ses limites.** Chaque règle indique la solidité de ses preuves, et une page officielle modifiée est signalée sur le site le jour même.
+- **Surveillé chaque jour, modifié après relecture.** Chaque matin, une action GitHub récupère les dernières rondes d’IRCC, relit les 49 pages officielles citées et redéploie le site. Une page modifiée est signalée sur le site et ouvre un ticket ; la règle n’est mise à jour qu’après relecture humaine et réussite des tests.
+- **Honnête sur ses limites.** Chaque règle indique la solidité de ses preuves. Une exigence qu’un formulaire ne peut pas juger (recommandation d’une collectivité, permis d’un ordre) est affichée *à confirmer*, jamais comptée comme remplie.
 - **Confidentiel par conception.** Tout se passe dans votre navigateur : ni compte, ni témoin, et rien de ce que vous saisissez n’est envoyé.
 - **Dans votre langue.** English, Français et 中文, au choix en haut de la page, dans l’app et dans les calendriers.
 

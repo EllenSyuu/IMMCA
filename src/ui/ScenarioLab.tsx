@@ -16,7 +16,7 @@ export function ScenarioLab({ scenarios, onShow }: { scenarios: ScenarioResult[]
       <ul>
         {scenarios.map((s) => (
           <li key={s.key}>
-            <span className="scenarios__label">{t(s.key)}</span>
+            <span className="scenarios__label">{t(s.key, s.province ? { prov: t(`prov.${s.province}`) } : undefined)}</span>
             <span className="scenarios__effect">
               {s.crsChange > 0 && <span className="gain">{t('scenario.crs', { n: s.crsChange })}</span>}
               {s.opens.length > 0 ? (
