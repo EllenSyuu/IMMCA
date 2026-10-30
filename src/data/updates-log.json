@@ -1,4 +1,26 @@
 [
-  { "date": "2026-10-27", "rounds": [452], "changed": [] },
-  { "date": "2026-10-28", "rounds": [453], "changed": [] }
+  {
+    "date": "2026-10-27",
+    "rounds": [
+      452
+    ],
+    "changed": []
+  },
+  {
+    "date": "2026-10-28",
+    "rounds": [
+      453
+    ],
+    "changed": []
+  },
+  {
+    "date": "2026-10-30",
+    "rounds": [],
+    "changed": [
+      "https://www.gov.nl.ca/immigration/invitations-to-apply-updates/",
+      "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-experience-quebecoise",
+      "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-selection-travailleurs-qualifies/exigences",
+      "https://www.welcomebc.ca/immigrate-to-b-c/about-the-bc-provincial-nominee-program/invitations-to-apply"
+    ]
+  }
 ]

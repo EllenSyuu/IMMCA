@@ -176,9 +176,10 @@
     },
     "https://www.gov.nl.ca/immigration/invitations-to-apply-updates/": {
       "baseline": "64096a115499ab72",
-      "current": "64096a115499ab72",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "00abf20db17defa1",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-10-30"
     },
     "https://www.immigratenwt.ca/expression-interest": {
       "baseline": "ad42bd5511ae4d65",
@@ -224,15 +225,17 @@
     },
     "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-experience-quebecoise": {
       "baseline": "5cf43225c836238a",
-      "current": "5cf43225c836238a",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "93b95f81d535637c",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-10-30"
     },
     "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-selection-travailleurs-qualifies/exigences": {
       "baseline": "1de2770446518876",
-      "current": "1de2770446518876",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "993084bd9a19bfc0",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-10-30"
     },
     "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-selection-travailleurs-qualifies/invitation/2026": {
       "baseline": "55d611ef06aa622a",
@@ -272,9 +275,10 @@
     },
     "https://www.welcomebc.ca/immigrate-to-b-c/about-the-bc-provincial-nominee-program/invitations-to-apply": {
       "baseline": "e5020f7c501841c0",
-      "current": "e5020f7c501841c0",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "21699812bf796868",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-10-30"
     },
     "https://www.welcomebc.ca/immigrate-to-b-c/about-the-bc-provincial-nominee-program/news": {
       "baseline": "dbeec3c56b0f40f2",
