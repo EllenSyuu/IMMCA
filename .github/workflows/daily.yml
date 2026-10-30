@@ -3,11 +3,14 @@ name: Daily update
 # Every morning (≈ 07:17 Eastern):
 #   1. refresh Express Entry rounds and the CRS pool distribution from IRCC's feed;
 #   2. check every official page a program rule cites, flagging pages that changed;
-#   3. commit real changes (new rounds, changed or unreachable pages, text snapshots);
-#   4. open an issue listing newly changed pages for review;
-#   4b. log the day's changes, which become calendar (iCal) and RSS feed entries;
-#   5. rebuild and redeploy the site and feeds, so the "last checked" date is always current
-#      (skipped with a warning, not a failure, if GitHub Pages is not enabled).
+#   3. open an issue listing newly changed pages right away, before anything else can fail;
+#   4. log the day's changes, which become calendar (iCal) and RSS feed entries;
+#   5. run the tests (they use frozen test data, so new data alone can't fail them);
+#   6. commit: the monitor's state always, so a change is never reported twice or lost;
+#      new rounds and the updates log only if the tests passed;
+#   7. if the tests passed, rebuild and redeploy the site and feeds (skipped with a warning,
+#      not a failure, if GitHub Pages is not enabled); if they failed, open an issue and
+#      end the run red without deploying.
 on:
   schedule:
     - cron: '17 11 * * *'
@@ -44,12 +47,26 @@ jobs:
         run: npm run refresh:draws
 
       - name: Check official sources
+        id: sources
         run: npm run sources:check
+
+      # Straight after the check, so a later failure can never hide a changed page.
+      - name: Report newly changed official pages
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -s monitor/new-changes.md ]; then
+            gh label create source-change --color d93f0b --description "An official page cited by a rule changed" --force
+            gh issue create --title "Official pages changed — $(date -u +%F)" --label source-change --body-file monitor/new-changes.md
+          fi
 
       - name: Record what changed today (for calendar and RSS subscribers)
         run: npm run log:update
 
       - name: Test with the new data
+        id: tests
+        continue-on-error: true
         run: npx vitest run
 
       - name: Collect usage stats for the README
@@ -63,14 +80,25 @@ jobs:
           fi
 
       - name: Commit changes
+        if: always() && steps.sources.outcome == 'success'
+        env:
+          TESTS: ${{ steps.tests.outcome }}
         run: |
-          git add src/data/draws.json src/data/source-status.json src/data/updates-log.json monitor/snapshots stats
+          # The monitor's state is always kept, so a changed page is recorded once and
+          # never re-reported; new rounds and the log go in only with passing tests.
+          git add src/data/source-status.json monitor/snapshots
+          if [ "$TESTS" = "success" ]; then
+            git add src/data/draws.json src/data/updates-log.json stats
+            message="data: daily update $(date -u +%F)"
+          else
+            message="monitor: daily check $(date -u +%F) (tests failed; rounds and log held back)"
+          fi
           if git diff --cached --quiet; then
             echo "No data changes today."
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -m "data: daily update $(date -u +%F)"
+            git commit -m "$message"
             git push
           fi
 
@@ -89,20 +117,27 @@ jobs:
             gh issue comment "$(gh issue list --label stale-data --state open --json number --jq '.[0].number')" --body "$body"
           fi
 
-      - name: Report newly changed official pages
+      - name: Report failing tests
+        if: steps.tests.outcome == 'failure'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if [ -s monitor/new-changes.md ]; then
-            gh label create source-change --color d93f0b --description "An official page cited by a rule changed" --force
-            gh issue create --title "Official pages changed — $(date -u +%F)" --label source-change --body-file monitor/new-changes.md
+          gh label create daily-failure --color b60205 --description "The daily update failed" --force
+          body="The tests failed in the daily update on $(date -u +%F), so the site was not redeployed and new rounds were held back. Changed official pages, if any, were still reported. Run log: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          open=$(gh issue list --label daily-failure --state open --json number --jq '.[0].number // empty')
+          if [ -z "$open" ]; then
+            gh issue create --title "Daily update: tests failed" --label daily-failure --body "$body"
+          else
+            gh issue comment "$open" --body "$body"
           fi
 
-      - run: npm run build
+      - if: steps.tests.outcome == 'success'
+        run: npm run build
         env:
           # Address of the usage counter (repository variable); empty = no counting.
           VITE_COUNTER_URL: ${{ vars.COUNTER_URL }}
       - name: Check that GitHub Pages is enabled
+        if: steps.tests.outcome == 'success'
         id: pages
         env:
           GH_TOKEN: ${{ github.token }}
@@ -120,6 +155,12 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+
+      - name: End red if the tests failed
+        if: steps.tests.outcome == 'failure'
+        run: |
+          echo "::error::Tests failed; the site was not redeployed. See the 'Daily update: tests failed' issue."
+          exit 1
 
   deploy:
     needs: update

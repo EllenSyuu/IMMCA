@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import { sourceFlag } from '../src/data/monitor';
+import { PROGRAMS } from '../src/data/programs';
 import { citedSources, nextState, pageText } from '../scripts/check-sources';
 
 describe('source monitor', () => {
@@ -42,5 +44,21 @@ describe('monitor noise filter', () => {
     expect(page('Interruption de service prévue le 2026-11-02.')).toBe('Minimum score 99 for childcare.');
     expect(page('The intake window is closed.')).toContain('The intake window is closed.');
     expect(page('Applications are temporarily unavailable for the Entry Level stream.')).toContain('temporarily unavailable');
+  });
+});
+
+describe('monitor flags on programs', () => {
+  const url = 'https://example.ca/rule';
+  it('a changed page flags the program for review, whatever the live status file says', () => {
+    expect(sourceFlag([url], { [url]: { status: 'changed', changedOn: '2026-10-29' } })).toEqual({ kind: 'changed', since: '2026-10-29' });
+    expect(sourceFlag([url], { [url]: { status: 'unchanged' } })).toBeUndefined();
+  });
+  it('an unreachable page is flagged only after a week', () => {
+    const since = { [url]: { status: 'unreachable' as const, unreachableSince: '2026-10-20' } };
+    expect(sourceFlag([url], since, Date.parse('2026-10-24T00:00:00Z'))).toBeUndefined();
+    expect(sourceFlag([url], since, Date.parse('2026-10-29T00:00:00Z'))).toEqual({ kind: 'unreachable', since: '2026-10-20' });
+  });
+  it('tests see the frozen status file: no program is under review', () => {
+    for (const p of PROGRAMS) expect(sourceFlag(p.sources.map((s) => s.url))?.kind, p.id).not.toBe('changed');
   });
 });

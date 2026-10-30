@@ -5,7 +5,7 @@
  */
 import status from './source-status.json';
 
-type SourceState = {
+export type SourceState = {
   status: 'unchanged' | 'changed' | 'unreachable';
   changedOn?: string;
   unreachableSince?: string;
@@ -23,16 +23,16 @@ export const LAST_RUN = Object.values(runFiles)[0];
 
 export type SourceFlag = { kind: 'changed'; since: string } | { kind: 'unreachable'; since: string } | undefined;
 
-/** The most important monitor flag across a program's sources. */
-export function sourceFlag(urls: string[]): SourceFlag {
+/** The most important monitor flag across a program's sources (`sources` and `now` are for tests). */
+export function sourceFlag(urls: string[], sources: Record<string, SourceState> = SOURCES, now = Date.now()): SourceFlag {
   let unreachable: string | undefined;
   for (const url of urls) {
-    const s = SOURCES[url];
+    const s = sources[url];
     if (s?.status === 'changed') return { kind: 'changed', since: s.changedOn ?? '' };
     if (s?.status === 'unreachable' && s.unreachableSince) unreachable = s.unreachableSince;
   }
   // A single failed day is usually a hiccup; flag only a week of failures.
-  if (unreachable && Date.now() - new Date(`${unreachable}T00:00:00Z`).getTime() > 7 * 86_400_000) {
+  if (unreachable && now - new Date(`${unreachable}T00:00:00Z`).getTime() > 7 * 86_400_000) {
     return { kind: 'unreachable', since: unreachable };
   }
   return undefined;

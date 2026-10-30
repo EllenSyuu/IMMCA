@@ -1,0 +1,262 @@
+{
+  "source": "https://www.canada.ca/content/dam/ircc/documents/json/ee_rounds_123_en.json",
+  "fetched": "2026-10-28",
+  "rounds": [
+    {
+      "number": 453,
+      "date": "2026-10-28",
+      "type": "Transport Occupations",
+      "invited": 150,
+      "crs": 477
+    },
+    {
+      "number": 452,
+      "date": "2026-10-27",
+      "type": "French-Language proficiency",
+      "invited": 5000,
+      "crs": 407
+    },
+    {
+      "number": 451,
+      "date": "2026-10-26",
+      "type": "Provincial Nominee Program",
+      "invited": 792,
+      "crs": 761
+    },
+    {
+      "number": 450,
+      "date": "2026-10-16",
+      "type": "French-Language proficiency",
+      "invited": 5000,
+      "crs": 435
+    },
+    {
+      "number": 449,
+      "date": "2026-10-15",
+      "type": "Canadian Experience Class",
+      "invited": 2500,
+      "crs": 519
+    },
+    {
+      "number": 448,
+      "date": "2026-10-13",
+      "type": "Provincial Nominee Program",
+      "invited": 752,
+      "crs": 772
+    },
+    {
+      "number": 447,
+      "date": "2026-10-01",
+      "type": "Trades Occupations",
+      "invited": 3500,
+      "crs": 476
+    },
+    {
+      "number": 446,
+      "date": "2026-09-29",
+      "type": "Canadian Experience Class",
+      "invited": 2000,
+      "crs": 518
+    },
+    {
+      "number": 445,
+      "date": "2026-09-28",
+      "type": "Provincial Nominee Program",
+      "invited": 733,
+      "crs": 725
+    },
+    {
+      "number": 444,
+      "date": "2026-09-16",
+      "type": "Senior managers with Canadian Work Experience",
+      "invited": 250,
+      "crs": 389
+    },
+    {
+      "number": 443,
+      "date": "2026-09-15",
+      "type": "Canadian Experience Class",
+      "invited": 2000,
+      "crs": 519
+    },
+    {
+      "number": 442,
+      "date": "2026-09-14",
+      "type": "Provincial Nominee Program",
+      "invited": 576,
+      "crs": 734
+    },
+    {
+      "number": 441,
+      "date": "2026-09-04",
+      "type": "Healthcare and Social Services Occupations",
+      "invited": 3500,
+      "crs": 475
+    },
+    {
+      "number": 440,
+      "date": "2026-09-03",
+      "type": "Physicians with Canadian Work Experience",
+      "invited": 229,
+      "crs": 198
+    },
+    {
+      "number": 439,
+      "date": "2026-09-01",
+      "type": "Canadian Experience Class",
+      "invited": 2000,
+      "crs": 521
+    },
+    {
+      "number": 438,
+      "date": "2026-08-31",
+      "type": "Provincial Nominee Program",
+      "invited": 562,
+      "crs": 697
+    },
+    {
+      "number": 437,
+      "date": "2026-08-19",
+      "type": "French-Language proficiency",
+      "invited": 5000,
+      "crs": 382
+    },
+    {
+      "number": 436,
+      "date": "2026-08-18",
+      "type": "Canadian Experience Class",
+      "invited": 1000,
+      "crs": 523
+    },
+    {
+      "number": 435,
+      "date": "2026-08-17",
+      "type": "Provincial Nominee Program",
+      "invited": 442,
+      "crs": 760
+    },
+    {
+      "number": 434,
+      "date": "2026-08-07",
+      "type": "Transport Occupations",
+      "invited": 300,
+      "crs": 470
+    },
+    {
+      "number": 433,
+      "date": "2026-08-06",
+      "type": "French-Language proficiency",
+      "invited": 5000,
+      "crs": 391
+    },
+    {
+      "number": 432,
+      "date": "2026-08-05",
+      "type": "Canadian Experience Class",
+      "invited": 3000,
+      "crs": 516
+    },
+    {
+      "number": 431,
+      "date": "2026-08-04",
+      "type": "Provincial Nominee Program",
+      "invited": 507,
+      "crs": 768
+    },
+    {
+      "number": 430,
+      "date": "2026-07-23",
+      "type": "Skilled Military Recruits",
+      "invited": 4,
+      "crs": 368
+    },
+    {
+      "number": 429,
+      "date": "2026-07-22",
+      "type": "French-Language proficiency",
+      "invited": 5000,
+      "crs": 399
+    }
+  ],
+  "pool": {
+    "asOf": "2026-10-25",
+    "total": 228724,
+    "bands": [
+      {
+        "min": 601,
+        "max": 1200,
+        "count": 787
+      },
+      {
+        "min": 501,
+        "max": 600,
+        "count": 20535
+      },
+      {
+        "min": 491,
+        "max": 500,
+        "count": 12162
+      },
+      {
+        "min": 481,
+        "max": 490,
+        "count": 12342
+      },
+      {
+        "min": 471,
+        "max": 480,
+        "count": 16330
+      },
+      {
+        "min": 461,
+        "max": 470,
+        "count": 15803
+      },
+      {
+        "min": 451,
+        "max": 460,
+        "count": 14475
+      },
+      {
+        "min": 441,
+        "max": 450,
+        "count": 13159
+      },
+      {
+        "min": 431,
+        "max": 440,
+        "count": 13155
+      },
+      {
+        "min": 421,
+        "max": 430,
+        "count": 12768
+      },
+      {
+        "min": 411,
+        "max": 420,
+        "count": 12543
+      },
+      {
+        "min": 401,
+        "max": 410,
+        "count": 11880
+      },
+      {
+        "min": 351,
+        "max": 400,
+        "count": 47911
+      },
+      {
+        "min": 301,
+        "max": 350,
+        "count": 17247
+      },
+      {
+        "min": 0,
+        "max": 300,
+        "count": 7627
+      }
+    ]
+  }
+}

@@ -4,17 +4,16 @@ import { DRAWS, familyOf, latestCutoff, shareAbove } from '../src/data/draws';
 import { normalize } from '../scripts/refresh-draws.mjs';
 
 describe('Express Entry rounds data', () => {
-  it('has rounds newest first and a pool distribution that adds up', () => {
-    const dates = DRAWS.rounds.map((r) => r.date);
-    expect([...dates].sort().reverse()).toEqual(dates);
-    expect(DRAWS.pool.bands.reduce((s, b) => s + b.count, 0)).toBe(DRAWS.pool.total);
+  it('reads the frozen snapshot, not the live file', () => {
+    // tests/fixtures/data/draws.json, fetched 2026-10-28 (see vitest.config.ts).
+    expect(DRAWS.fetched).toBe('2026-10-28');
   });
 
   it('classifies round types into draw families', () => {
     expect(familyOf('Canadian Experience Class')).toBe('cec');
     expect(familyOf('French language proficiency (2026-Version 2)')).toBe('french');
     expect(familyOf('Healthcare and social services occupations')).toBe('health');
-    expect(latestCutoff('cec')?.crs).toBe(519);
+    expect(latestCutoff('cec')?.crs).toBe(519); // pinned by the snapshot
   });
 
   it('places a score within the pool', () => {
