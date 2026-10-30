@@ -127,6 +127,8 @@ async function main() {
     const target = args[1];
     for (const [url, s] of Object.entries(file.sources)) {
       if (target !== 'all' && url !== target) continue;
+      // "all" means every page currently flagged as changed, not every page.
+      if (target === 'all' && s.status !== 'changed') continue;
       if (s.current) file.sources[url] = { baseline: s.current, current: s.current, status: 'unchanged', acceptedOn: today() };
     }
     save(file);
