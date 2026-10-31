@@ -272,9 +272,10 @@
     },
     "https://www.welcomebc.ca/immigrate-to-b-c/about-the-bc-provincial-nominee-program/invitations-to-apply": {
       "baseline": "21699812bf796868",
-      "current": "21699812bf796868",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-30"
+      "current": "9ecec7599849f9ec",
+      "status": "changed",
+      "acceptedOn": "2026-10-30",
+      "changedOn": "2026-10-31"
     },
     "https://www.welcomebc.ca/immigrate-to-b-c/about-the-bc-provincial-nominee-program/news": {
       "baseline": "dbeec3c56b0f40f2",
