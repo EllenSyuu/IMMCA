@@ -34,5 +34,13 @@
     "date": "2026-11-01",
     "rounds": [],
     "changed": []
+  },
+  {
+    "date": "2026-11-02",
+    "rounds": [],
+    "changed": [
+      "https://www.gov.nl.ca/immigration/invitations-to-apply-updates/",
+      "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-experience-quebecoise"
+    ]
   }
 ]

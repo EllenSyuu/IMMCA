@@ -176,9 +176,10 @@
     },
     "https://www.gov.nl.ca/immigration/invitations-to-apply-updates/": {
       "baseline": "00abf20db17defa1",
-      "current": "00abf20db17defa1",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-30"
+      "current": "3181b44fb6b52572",
+      "status": "changed",
+      "acceptedOn": "2026-10-30",
+      "changedOn": "2026-11-02"
     },
     "https://www.immigratenwt.ca/expression-interest": {
       "baseline": "ad42bd5511ae4d65",
@@ -224,9 +225,10 @@
     },
     "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-experience-quebecoise": {
       "baseline": "93b95f81d535637c",
-      "current": "93b95f81d535637c",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-30"
+      "current": "88d21f2dd9407831",
+      "status": "changed",
+      "acceptedOn": "2026-10-30",
+      "changedOn": "2026-11-02"
     },
     "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-selection-travailleurs-qualifies/exigences": {
       "baseline": "993084bd9a19bfc0",
