@@ -116,9 +116,10 @@
     },
     "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/who-can-apply/federal-skilled-workers.html": {
       "baseline": "0f327d79ad715223",
-      "current": "0f327d79ad715223",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "1508aa8a0083beda",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-11-03"
     },
     "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/rural-franco-pilots/franco-immigration/eligibility.html": {
       "baseline": "710e255375576e13",

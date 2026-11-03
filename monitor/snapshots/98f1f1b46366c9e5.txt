@@ -182,54 +182,28 @@ Under 18
 47 and older
 0
 Arranged employment in Canada (maximum 10 points)
-You can get points if you have a job offer of at least 1 year from a Canadian employer. You
-must get the job offer before you apply to come to Canada as a Federal Skilled Worker.
-A valid
-job offer has to be:
-for continuous, paid, full-time work (minimum of 30 hours/week) that is:
+You can get points if you have a job offer of at least 1 year from a single Canadian employer. You must get the job offer before you apply to come to Canada as a federal skilled worker.
+A valid job offer has to be
+for continuous, paid, full-time work (minimum of 30 hours per week) that is
 not seasonal
 for at least 1 year
 in an occupation listed in TEER category 0, 1, 2 or 3 of the NOC
-We must be convinced that:
-you’re able to do the job offered to you
-you’ll be able to become licensed or certified when in Canada (if the occupation is regulated in Canada)
-To get 10 points for a valid job offer, one of these situations must also apply.
-Situation 1
-You currently work in Canada on a work permit and you meet all of the following conditions:
-Your work permit is valid both when you apply and when the permanent resident visa is issued (or you’re
-allowed to work in Canada without a work permit when your visa is issued).
-We issued your work permit based on a positive labour market impact assessment (LMIA) from Employment
-and Social Development Canada in an occupation listed in TEER category 0, 1, 2 or 3 of the NOC.
-You’re working for an employer named on your work permit.
-That employer has made a valid job offer based on you being accepted as a skilled worker.
-Situation 2
-You currently work in Canada in a job that is exempt from the LMIA requirement because of 1 of the following:
-an international agreement (such as, the North American Free Trade Agreement) or
-significant benefit to Canadian interests or
-a federal-provincial agreement
-You must also meet all of the following conditions:
-Your work permit is valid both when you apply and when the permanent resident visa is issued (or you’re
-allowed to work in Canada without a permit when your permanent resident visa is issued).
-Your current employer has made a valid job offer based on you being accepted as a skilled worker.
-You are currently working for the employer specified on your work permit.
-You have been working for that employer for at least 1 year, continuous full-time or part-time
-equivalent.
-Situation 3
-You must meet all of the following conditions:
-You currently don’t have a work permit, or don’t plan to work in Canada before you get a permanent
-resident visa.
-An employer has a LMIA .
-That employer has made you a valid job offer based on that LMIA and on you being accepted as a skilled
-worker.
-Situation 4
-You must meet all of the following conditions:
-You have a valid work permit or are allowed to work in Canada without a work permit.
-You’re currently working in Canada in a job that is exempt from a LMIA, but it is not
-under an international, federal-provincial agreement or because of significant benefit to Canadian
-interests.
-An employer other than the one you are currently working for:
-has a LMIA
-has made you a valid job offer based on that LMIA and on you being accepted as a skilled worker.
+New As of November 3, 2026, we’ve changed how we assess job offers under Express Entry:
+you don’t need a Labour Market Impact assessment (LMIA) for a job offer to qualify
+having an LMIA will not give a candidate more Comprehensive Ranking System (CRS) points or give their profile priority
+job offers may be for an existing or a new position
+job offers may be with an existing or a new employer
+An officer will assess your job offer once you apply and must be satisfied that it’s genuine.
+This includes whether
+the employer:
+is active in the business
+can fulfill the terms of their offer
+made an offer that meets their needs
+is following employment and recruitment laws
+you:
+are qualified and able to perform the work
+will be able to become licensed or certified when in Canada (if the occupation is regulated in Canada)
+are likely to accept the offer and carry out the job
 Adaptability (maximum 10 points)
 You and your spouse or common-law partner who will immigrate with you to Canada can earn points for adaptability.
 You and your spouse can earn a maximum of 10 points by combining any of the elements below. These elements assess
@@ -311,4 +285,4 @@ You’ll have to include proof and expect officers to check anything you provide
 When you fill out your profile, we’ll ask you where you plan to live in Canada.
 If you’re a Provincial Nominee, you must settle in the province or territory that nominated you.
 Page details
-2026-10-16
+2026-11-03
