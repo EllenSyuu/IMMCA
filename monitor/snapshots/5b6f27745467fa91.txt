@@ -132,7 +132,7 @@ Immigrate to B.C.
 About the BC Provincial Nominee Program
 Invitations to apply
 Invitations to apply
-Last updated: October 29 , 2026
+Last updated: November 3 , 2026
 Periodically, the BC PNP invites candidates in its registration pool to apply to the program. Candidates that are deemed most likely to meet B.C.’s economic and labour market needs are selected based on their registration information.
 Invitations to apply (ITA) are issued to both Skills Immigration and Entrepreneur Immigration registrants. To find out if you received an ITA, please log into your BC PNP Online User Profile .
 Expand All
@@ -311,21 +311,21 @@ Future high economic impact invitations to apply may be based on different facto
 Please note : Invitations to apply are issued to qualified registrations received before the date of the draw.
 To see previous invitations to apply, please visit the Archives page.
 Skills Immigration registration pool
-The table below shows the break down of registrations by score range that are in the Skills Immigration registration pool as of October 6, 2026:
+The table below shows the break down of registrations by score range that are in the Skills Immigration registration pool as of November 3, 2026:
 Score range Number of registrations
-150+ 9
-140 - 149 23
-130 - 139 171
-120 - 129 854
-110 - 119 1,189
-100 - 109 1,426
-90 - 99 1,444
-80 - 89 1,281
-70 - 79 718
-60 - 69 364
-0 - 59 216
+150+ 2
+140 - 149 13
+130 - 139 104
+120 - 129 746
+110 - 119 1,085
+100 - 109 1,351
+90 - 99 1,435
+80 - 89 1,234
+70 - 79 693
+60 - 69 360
+0 - 59 212
 Total:
-7,695
+7,235
 Entrepreneur Immigration invitations
 Date Stream Minimum Score Number of Invitations
 October 20, 2026
