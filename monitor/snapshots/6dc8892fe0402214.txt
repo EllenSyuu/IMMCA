@@ -18,12 +18,12 @@ Overview
 This page provides information on nominations issued and available, applications to be processed, estimated processing times, processing order and priorities and draws.
 All information about nominations issued, nomination allocation distribution, spaces remaining and applications to be processed are subject to change without notice. AAIP reserves the right to redistribute allocations to other streams or pathways at any time.
 In 2026, the Alberta Advantage Immigration Program (AAIP) will prioritize draws and nominations within its worker streams for occupations in key sectors such as health care, technology, construction, manufacturing, aviation, agriculture, and communities designated under the Rural Renewal Stream. While these sectors represent the program’s primary focus areas for the year, they are not an exhaustive list. This guidance is intended to help manage expectations and highlight AAIP’s highest priorities for 2026.
-Last updated: October 21, 2026
+Last updated: November 4, 2026
 Processing summary totals
 2026 summary
 Table 1. Process summary totals for 2026
 2026 nomination allocation 2026 nominations issued 2026 nomination spaces remaining Applications to be processed
-6,603 5,831 772 856
+6,603 6,108 495 756
 Additional federal spaces
 Additional federal immigration spaces for physicians or Francophones
 Up to 10,000 federal immigration spaces are available across all provincial nominee programs for provinces and territories to nominate practice‑ready physicians or Francophones (in Canada or abroad).
@@ -40,49 +40,49 @@ Francophones 12
 Alberta Opportunity Stream
 Table 3. Alberta Opportunity Stream nomination numbers for 2026
 2026 nomination allocation 2026 nominations issued 2026 nomination spaces remaining Applications to be processed Currently assessing applications received on or before:
-3,562 3,273 289 218 July 16, 2026
+3,562 3,386 176 113 August 2, 2026
 Rural Renewal Stream
 Processing information provided below is an estimate. The processing times for Rural Renewal Stream applications may vary based on several factors, including the consideration of application volumes from Designated Communities.
 Table 4. Rural Renewal Stream nomination numbers for 2026
 2026 nomination allocation 2026 nominations issued 2026 nomination spaces remaining Applications to be processed Currently assessing applications received on or before:
-1,057 813 244 39 September 4, 2026
+1,057 866 191 20 October 9, 2026
 Tourism and Hospitality Stream
 Table 5. Tourism and Hospitality Stream nomination numbers for 2026
 2026 nomination allocation 2026 nominations issued 2026 nomination spaces remaining Applications to be processed Currently assessing applications received on or before:
-156 141 15 Less than 10 October 21, 2026
+156 146 10 Less than 10 November 2, 2026
 Dedicated Health Care Pathways
 Table 6. Dedicated Health Care Pathways (Express Entry and non-Express Entry nomination numbers for 2026
 2026 nomination allocation 2026 nominations issued 2026 nomination spaces remaining Applications to be processed Currently assessing applications received on or before:
-518 351 167 29 August 29, 2026
+518 365 153 33 September 25, 2026
 Alberta Express Entry Stream
 Table 7. Alberta Express Entry Stream nomination numbers for 2026
 Nomination allocations may be exceeded under a small Express Entry administrative overage provided by the Government of Canada.
 Pathway or initiative 2026 nomination allocation 2026 nominations issued 2026 nomination spaces remaining Applications to be processed Currently assessing applications received on or before:
-Accelerated Tech Pathway (eligible list of occupations includes jobs that support data centre needs in Alberta) 619 558 61 129 July 1, 2026
+Accelerated Tech Pathway (eligible list of occupations includes jobs that support data centre needs in Alberta) 619 596 23 83 July 8, 2026
 Law Enforcement Pathway 12 Less than 10 Not applicable Less than 10 September 24, 2026
-Priority sector draws and other initiatives (construction, manufacturing, agriculture, aviation, and including skilled trades linked to each sector, etc.) 619 651 Less than 10 213 July 6, 2026
+Priority sector draws and other initiatives (construction, manufacturing, agriculture, aviation, and including skilled trades linked to each sector, etc.) 619 703 See overage note 292 July 24, 2026
 Entrepreneur Streams
 Table 8. Entrepreneur Streams nomination numbers for 2026
 2026 nomination allocation 2026 nominations issued 2026 nomination spaces remaining Applications in process (varying stages of processing) Currently assessing applications received on or before:
-60 37 23 213 Business applications are evaluated upon receipt
+60 39 21 211 Business applications are evaluated upon receipt
 Timelines for Entrepreneur stream applications vary as each file moves through several stages of review and require comprehensive documentation and verification. Entrepreneur stream applicants have frequent contact with AAIP staff responsible for assessing eligibility for business application approval and nomination.
 Worker expression of interest
 The table below is broken down by the streams or pathways and includes the current number of expressions of interest that are eligible for selection draws.
 Candidates may be invited to apply to a stream or pathway other than the one that they submitted their expression of interest to.
 Table 9. Expression of interest pool
 Stream or pathway of interest identified Number of expressions of interest currently in the selection pool
-Alberta Opportunity Stream 21,150
-Dedicated Health Care Pathways (Express Entry and Non-Express Entry) 1,069
-Rural Renewal Stream 1,527
-Tourism and Hospitality Stream 2,991
+Alberta Opportunity Stream 20,603
+Dedicated Health Care Pathways (Express Entry and Non-Express Entry) 976
+Rural Renewal Stream 1,283
+Tourism and Hospitality Stream 2,846
 Alberta Express Entry Stream:
 Accelerated Tech Pathway
-1,945
+1,883
 Law Enforcement Pathway
-43
+39
 Priority sector draws and other initiatives
-4,566
-Total: 33,291
+4,581
+Total: 32,211
 Draw information
 Information will be updated as draws are conducted. AAIP draws are not regularly scheduled. They are done as needed to address sector needs and provincial priorities.
 EOI score is not the only factor AAIP uses to select candidates for invitation. AAIP considers a variety of factors provided in Worker EOIs to meet program priorities. To protect program integrity AAIP does not disclose recent draw parameters. For general information on Alberta’s labour market, consult the Government of Alberta’s Labour Market Information website .
@@ -90,6 +90,11 @@ Draw information for 2025 is provided in the Alberta Advantage Immigration Progr
 Draw information for 2026 is provided below.
 Table 10. Draw information
 Draw date Worker stream, pathway, initiative or other focus and selection parameters Minimum score of invited candidates Number of invitations
+November 2, 2026 Rural Renewal Stream 51 173
+October 30, 2026 Alberta Opportunity Stream 59 132
+October 29, 2026 Dedicated Health Care Pathway – non-Express Entry 50 64
+October 27, 2026 Dedicated Health Care Pathway – Express Entry 60 19
+October 23, 2026 Rural Renewal Stream 51 37
 October 20, 2026 Alberta Express Entry Stream – Priority Sectors (General) 60 386
 October 16, 2026 Alberta Express Entry Stream – Law Enforcement Pathway 49 Less than 10
 October 14, 2026 Tourism and Hospitality Stream 73 25

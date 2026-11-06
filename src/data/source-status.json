@@ -14,9 +14,10 @@
     },
     "https://immigratemanitoba.com/draws/": {
       "baseline": "28c324244d717e46",
-      "current": "28c324244d717e46",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "67a0d680aafb51ae",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-11-06"
     },
     "https://immigratemanitoba.com/immigrate/ies/graduate-internship/eligibility/": {
       "baseline": "0559fca390fd1558",
@@ -62,9 +63,10 @@
     },
     "https://www.alberta.ca/aaip-processing-information": {
       "baseline": "693c077eaca3e613",
-      "current": "693c077eaca3e613",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "6e8655e7f24f3000",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-11-06"
     },
     "https://www.alberta.ca/aaip-rural-renewal-stream-eligibility": {
       "baseline": "dce484cba73c2bfc",
