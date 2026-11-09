@@ -36,6 +36,14 @@ describe('four dimensions', () => {
     expect(dimsOf('ee-fsw').competitiveness).toBe('nodraw'); // exact CRS, but no recent FSW round
   });
 
+  it('after the CRS reform, does not rate a new-rules score against an old-rules cutoff', () => {
+    const after = '2026-11-09';
+    const r = rankPrograms(PROGRAMS, graduate(), after).find((x) => x.programId === 'ee-cec')!;
+    expect(r.points?.benchmark).toBeUndefined();
+    expect(r.points?.noRoundUnderRules).toBe(true);
+    expect(dimensions(PROGRAM_BY_ID.get('ee-cec')!, r, after).competitiveness).toBe('nodraw');
+  });
+
   it('shows approximated or unconfirmed rules in the evidence dimension', () => {
     expect(dimsOf('sk-tech-talent').evidence).toBe('approximate');
     expect(dimsOf('qc-peq-workers').evidence).toBe('unconfirmed');

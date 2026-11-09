@@ -328,6 +328,7 @@ export const en: Record<string, string> = {
   'form.sumOffer': 'Job offer in {where} (TEER {teer})',
   'form.sumNoOffer': 'No job offer',
   'form.sumFamily': 'Family of {n} · ${funds}',
+  'dim.comp.newRules': 'CRS {value} · no round yet under the 3 November rules',
   'dim.comp.nodraw': 'CRS {value} · no recent draw for this program',
   'feed.round': 'Express Entry #{n} · {type} · {invited} invited · CRS {crs}',
   'feed.roundBody': 'Minimum CRS score: {cutoff}. Invitations issued: {invited}. Check where your score sits on IMMCA.',

@@ -321,6 +321,7 @@ export const fr: Record<string, string> = {
   'form.sumOffer': 'Offre d’emploi : {where} (FEER {teer})',
   'form.sumNoOffer': 'Pas d’offre d’emploi',
   'form.sumFamily': 'Famille de {n} · {funds} $',
+  'dim.comp.newRules': 'SCG {value} · aucune ronde encore selon les règles du 3 novembre',
   'dim.comp.nodraw': 'SCG {value} · aucune ronde récente pour ce programme',
   'feed.round': 'Entrée express no {n} · {type} · {invited} invitations · SCG {crs}',
   'feed.roundBody': 'Score SCG minimum : {cutoff}. Invitations émises : {invited}. Voyez où se situe votre score sur IMMCA.',

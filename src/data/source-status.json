@@ -13,11 +13,10 @@
       "acceptedOn": "2026-10-28"
     },
     "https://immigratemanitoba.com/draws/": {
-      "baseline": "28c324244d717e46",
+      "baseline": "67a0d680aafb51ae",
       "current": "67a0d680aafb51ae",
-      "status": "changed",
-      "acceptedOn": "2026-10-28",
-      "changedOn": "2026-11-06"
+      "status": "unchanged",
+      "acceptedOn": "2026-11-09"
     },
     "https://immigratemanitoba.com/immigrate/ies/graduate-internship/eligibility/": {
       "baseline": "0559fca390fd1558",
@@ -62,11 +61,10 @@
       "acceptedOn": "2026-10-28"
     },
     "https://www.alberta.ca/aaip-processing-information": {
-      "baseline": "693c077eaca3e613",
+      "baseline": "6e8655e7f24f3000",
       "current": "6e8655e7f24f3000",
-      "status": "changed",
-      "acceptedOn": "2026-10-28",
-      "changedOn": "2026-11-06"
+      "status": "unchanged",
+      "acceptedOn": "2026-11-09"
     },
     "https://www.alberta.ca/aaip-rural-renewal-stream-eligibility": {
       "baseline": "dce484cba73c2bfc",
@@ -117,11 +115,10 @@
       "acceptedOn": "2026-10-28"
     },
     "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/who-can-apply/federal-skilled-workers.html": {
-      "baseline": "0f327d79ad715223",
+      "baseline": "1508aa8a0083beda",
       "current": "1508aa8a0083beda",
-      "status": "changed",
-      "acceptedOn": "2026-10-28",
-      "changedOn": "2026-11-03"
+      "status": "unchanged",
+      "acceptedOn": "2026-11-09"
     },
     "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/rural-franco-pilots/franco-immigration/eligibility.html": {
       "baseline": "710e255375576e13",
@@ -178,11 +175,10 @@
       "acceptedOn": "2026-10-28"
     },
     "https://www.gov.nl.ca/immigration/invitations-to-apply-updates/": {
-      "baseline": "00abf20db17defa1",
+      "baseline": "f15094bedc3a2cdb",
       "current": "f15094bedc3a2cdb",
-      "status": "changed",
-      "acceptedOn": "2026-10-30",
-      "changedOn": "2026-11-02"
+      "status": "unchanged",
+      "acceptedOn": "2026-11-09"
     },
     "https://www.immigratenwt.ca/expression-interest": {
       "baseline": "ad42bd5511ae4d65",
@@ -227,11 +223,10 @@
       "acceptedOn": "2026-10-28"
     },
     "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-experience-quebecoise": {
-      "baseline": "93b95f81d535637c",
+      "baseline": "88d21f2dd9407831",
       "current": "88d21f2dd9407831",
-      "status": "changed",
-      "acceptedOn": "2026-10-30",
-      "changedOn": "2026-11-02"
+      "status": "unchanged",
+      "acceptedOn": "2026-11-09"
     },
     "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-selection-travailleurs-qualifies/exigences": {
       "baseline": "993084bd9a19bfc0",
@@ -276,11 +271,10 @@
       "unreachableSince": "2026-10-27"
     },
     "https://www.welcomebc.ca/immigrate-to-b-c/about-the-bc-provincial-nominee-program/invitations-to-apply": {
-      "baseline": "21699812bf796868",
+      "baseline": "a2df19aece76620b",
       "current": "a2df19aece76620b",
-      "status": "changed",
-      "acceptedOn": "2026-10-30",
-      "changedOn": "2026-10-31"
+      "status": "unchanged",
+      "acceptedOn": "2026-11-09"
     },
     "https://www.welcomebc.ca/immigrate-to-b-c/about-the-bc-provincial-nominee-program/news": {
       "baseline": "dbeec3c56b0f40f2",

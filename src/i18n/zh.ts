@@ -321,6 +321,7 @@ export const zh: Record<string, string> = {
   'form.sumOffer': '在{where}有工作邀请（TEER {teer}）',
   'form.sumNoOffer': '没有工作邀请',
   'form.sumFamily': '{n} 口之家 · {funds} 加元',
+  'dim.comp.newRules': 'CRS {value} · 11 月 3 日新规则下还没有抽签',
   'dim.comp.nodraw': 'CRS {value} · 该项目近期没有抽签',
   'feed.round': '快速通道第 {n} 轮 · {type} · 邀请 {invited} 人 · CRS {crs}',
   'feed.roundBody': '最低 CRS 分数：{cutoff}。邀请人数：{invited}。可在 IMMCA 查看你的分数位置。',

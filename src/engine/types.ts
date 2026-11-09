@@ -169,7 +169,11 @@ export interface ProgramResult {
   /** Fraction of determinable checks that are met (0–1). */
   score: number;
   /** Program-specific numeric score, e.g. CRS. */
-  points?: { label: string; value: number; benchmark?: number };
+  /**
+   * `noRoundUnderRules`: the score uses rules no round has been held under yet
+   * (e.g. just after the 3 November 2026 CRS reform), so there is no cutoff to compare.
+   */
+  points?: { label: string; value: number; benchmark?: number; noRoundUnderRules?: boolean };
 }
 
 export interface Criterion {
@@ -208,5 +212,5 @@ export interface ProgramSpec {
   /** Express Entry-linked provincial streams add 600 CRS points. */
   enhanced?: boolean;
   /** Optional numeric scoring (e.g. CRS) shown with the result. */
-  points?: (profile: Profile) => ProgramResult['points'];
+  points?: (profile: Profile, today: string) => ProgramResult['points'];
 }

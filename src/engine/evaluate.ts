@@ -20,7 +20,7 @@ export function evaluateProgram(spec: ProgramSpec, profile: Profile, today = new
   const verdict: Verdict =
     UNAVAILABLE.has(spec.status) || expired ? 'unavailable' : eligibility === 'met' || eligibility === 'confirm' ? 'eligible' : eligibility;
 
-  return { programId: spec.id, verdict, eligibility, checks, toConfirm, score, points: spec.points?.(profile) };
+  return { programId: spec.id, verdict, eligibility, checks, toConfirm, score, points: spec.points?.(profile, today) };
 }
 
 const VERDICT_RANK: Record<Verdict, number> = { eligible: 0, close: 1, gap: 2, unavailable: 3 };

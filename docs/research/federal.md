@@ -42,7 +42,7 @@
   - **Location and admissibility:** Must intend to live outside Quebec. Must be admissible.
   - **Job offer:** Not required. It is worth 10 grid points (arranged employment).
 - **Change on 2026-11-03:** Under a temporary public policy, candidates invited on or after 2026-11-03 are exempt from LMIA and LMIA-exemption requirements for job offers used to establish FSW or FST eligibility. For FSW and FST, qualifying offers can be in any TEER 0–3 job; they do **not** have to be high-wage.
-  - The FSW page itself (modified 2026-10-16) still shows the old 4 "situations" based on LMIAs. Sources: the news release and the changes page.
+  - The FSW page was updated on 2026-11-03 to match (checked 2026-11-09): no LMIA is needed, an LMIA gives no extra points or priority, the offer may be for an existing or new position with an existing or new employer, and an officer assesses whether it is genuine. The offer must still be for at least 1 year from a single employer, full time (30+ h/week). Sources: the FSW page, the news release and the changes page.
 
 #### FSW 67-point selection grid (max 100)
 
@@ -116,7 +116,7 @@ It must also fit one of these LMIA-related situations:
 - **S3:** No permit, but the employer has an LMIA.
 - **S4:** In an LMIA-exempt job not covered by S2, and a different employer has an LMIA.
 
-*From 2026-11-03 the LMIA conditions are lifted by public policy (see above). The grid page has not been updated yet.*
+*From 2026-11-03 the LMIA conditions are lifted by public policy (see above); the FSW page now says so (updated 2026-11-03, checked 2026-11-09). The four situations above are historical.*
 
 **Adaptability (max 10 combined)**
 
@@ -136,7 +136,6 @@ It must also fit one of these LMIA-related situations:
   - https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/who-can-apply/federal-skilled-workers.html
   - https://laws-lois.justice.gc.ca/eng/regulations/SOR-2002-227/section-78.html
 - **Uncertainties:**
-  - The FSW grid page has not yet been updated for the LMIA removal on 2026-11-03.
   - Self-employment under the FSW minimum is not explicit.
 
 ### 1.2 Canadian Experience Class (CEC)

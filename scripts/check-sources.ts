@@ -97,15 +97,21 @@ async function fetchText(url: string): Promise<string | null> {
       signal: AbortSignal.timeout(TIMEOUT_MS),
       headers: { 'user-agent': 'IMMCA source monitor (+https://github.com/EllenSyuu/IMMCA)', 'accept-language': 'en-CA,en;q=0.9,fr-CA;q=0.8' },
     });
-    if (!res.ok) return null;
+    if (!res.ok) {
+      console.warn(`unreachable: HTTP ${res.status} ${url}`);
+      return null;
+    }
     const type = res.headers.get('content-type') ?? '';
     if (type.includes('pdf') || url.toLowerCase().endsWith('.pdf')) {
       const buf = Buffer.from(await res.arrayBuffer());
       return `[pdf ${buf.length} bytes sha256:${hash(buf)}]`;
     }
     const text = pageText(await res.text());
-    return text.length > 200 ? text : null; // an empty shell usually means a block page
-  } catch {
+    if (text.length > 200) return text;
+    console.warn(`unreachable: only ${text.length} characters of text (likely a block page) ${url}`);
+    return null;
+  } catch (e) {
+    console.warn(`unreachable: ${(e as Error).name}: ${(e as Error).message} ${url}`);
     return null;
   }
 }

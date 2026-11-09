@@ -55,3 +55,11 @@ describe('round names', () => {
     expect(normalize({ rounds: [{ ...base, drawName: 'Transport Occupations,' }] }, 'x').rounds[0].type).toBe('Transport Occupations');
   });
 });
+
+describe('cutoffs across the 3 November 2026 CRS reform', () => {
+  it('compares a score only with rounds held under the same rules', () => {
+    expect(latestCutoff('cec', '2026-10-28')?.crs).toBe(519);
+    // Every round in the snapshot predates the reform, so none counts after it.
+    expect(latestCutoff('cec', '2026-11-09')).toBeUndefined();
+  });
+});

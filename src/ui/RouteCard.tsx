@@ -34,6 +34,8 @@ function competitivenessPill(dims: Dimensions, result: ProgramResult, t: (k: str
     tone: `comp-${dims.competitiveness}`,
     text: p.benchmark !== undefined
       ? t(`dim.comp.${dims.competitiveness}`, { value: p.value, cutoff: p.benchmark })
+      : p.noRoundUnderRules
+      ? t('dim.comp.newRules', { value: p.value })
       : t(`dim.comp.${dims.competitiveness}`, { value: p.value, label: t(p.label) }),
   };
 }

@@ -6,6 +6,8 @@ const fixture = (name: string) => fileURLToPath(new URL(`./tests/fixtures/data/$
 export default defineConfig({
   test: {
     include: ['tests/**/*.test.ts'],
+    // Every test runs on a fixed day unless it says otherwise (see tests/setup/clock.ts).
+    setupFiles: ['tests/setup/clock.ts'],
     coverage: { include: ['src/engine/**', 'src/data/**'] },
     // The daily workflow rewrites these files; behaviour tests use frozen copies so
     // new rounds or a changed official page can't break them (see tests/fixtures/data/).

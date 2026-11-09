@@ -15,12 +15,19 @@ import { FUNDS_TABLE, L, VERIFIED, cecLanguageOk, expressEntryEligible, fswGridS
 const ircc = 'https://www.canada.ca/en/immigration-refugees-citizenship/services';
 const ee = `${ircc}/immigrate-canada/express-entry`;
 
-/** CRS with the latest cutoff for the matching draw family as benchmark. */
-const crsPoints = (family: DrawFamily) => (p: Profile) => ({
-  label: 'points.crs',
-  value: computeCrs(p).total,
-  benchmark: latestCutoff(family)?.crs,
-});
+/**
+ * CRS on that day's rules, with the latest cutoff for the matching draw family
+ * held under the same rules as benchmark.
+ */
+const crsPoints = (family: DrawFamily) => (p: Profile, today: string) => {
+  const sameRules = latestCutoff(family, today);
+  return {
+    label: 'points.crs',
+    value: computeCrs(p, today).total,
+    benchmark: sameRules?.crs,
+    noRoundUnderRules: !sameRules && !!latestCutoff(family),
+  };
+};
 
 /** FSW/FST funds are waived for people already authorised to work in Canada who hold a valid offer. */
 const authorisedWithOffer = (p: Profile) => (p.status === 'worker' || p.status === 'graduate-pgwp') && !!p.jobOffer;

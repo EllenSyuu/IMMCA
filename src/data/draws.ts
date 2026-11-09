@@ -2,6 +2,7 @@
  * Recent Express Entry rounds. `draws.json` is refreshed daily from IRCC's
  * public JSON feed by `.github/workflows/daily.yml`.
  */
+import { crsRulesFor } from '../engine/crs';
 import raw from './draws.json';
 
 export interface Round {
@@ -61,7 +62,11 @@ export function familyOf(type: string): DrawFamily | undefined {
   return FAMILY_PATTERNS.find(([, re]) => re.test(type))?.[0];
 }
 
-/** Most recent cutoff for a draw family, if one appears in the feed. */
-export function latestCutoff(family: DrawFamily): Round | undefined {
-  return DRAWS.rounds.find((r) => familyOf(r.type) === family);
+/**
+ * Most recent cutoff for a draw family, if one appears in the feed. With `rulesOf`,
+ * only rounds held under the same CRS rules as that day count: a score under the
+ * 3 November 2026 grid can't be compared with a cutoff set under the old one.
+ */
+export function latestCutoff(family: DrawFamily, rulesOf?: string): Round | undefined {
+  return DRAWS.rounds.find((r) => familyOf(r.type) === family && (!rulesOf || crsRulesFor(r.date) === crsRulesFor(rulesOf)));
 }
