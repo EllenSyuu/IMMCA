@@ -42,5 +42,12 @@
       "https://www.gov.nl.ca/immigration/invitations-to-apply-updates/",
       "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-experience-quebecoise"
     ]
+  },
+  {
+    "date": "2026-11-09",
+    "rounds": [],
+    "changed": [
+      "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/rural-franco-pilots/rural-immigration/eligibility.html"
+    ]
   }
 ]

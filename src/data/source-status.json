@@ -128,9 +128,10 @@
     },
     "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/rural-franco-pilots/rural-immigration/eligibility.html": {
       "baseline": "82e63a6e17e55021",
-      "current": "82e63a6e17e55021",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "16397b58593e18f1",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-11-09"
     },
     "https://www.canada.ca/en/immigration-refugees-citizenship/services/study-canada/work/after-graduation/eligibility.html": {
       "baseline": "e64625cc1a679427",
