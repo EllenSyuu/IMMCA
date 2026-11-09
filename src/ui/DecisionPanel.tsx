@@ -3,7 +3,6 @@ import type { ProgramKind } from '../engine/types';
 import type { Decision } from '../data/insights';
 import { PROGRAM_BY_ID } from '../data/programs';
 import { useI18n } from '../i18n';
-import { LINE_COLOR } from './colors';
 import { DimensionPills } from './RouteCard';
 import { useDate } from './format';
 
@@ -24,7 +23,7 @@ function LeadRoute({ entry, onShow }: { entry: Entry; onShow: (id: string) => vo
   const { spec, result, dims } = entry;
   const unjudged = result.checks.find((c) => c.status === 'unknown' && !c.group);
   return (
-    <div className="lead" style={{ ['--line' as string]: LINE_COLOR[spec.jurisdiction] }}>
+    <div className="lead">
       <button type="button" className="lead__route" onClick={() => onShow(spec.id)}>
         <span className="lead__name">{spec.name[locale]}</span>
         <DimensionPills dims={dims} result={result} compact />
@@ -59,7 +58,7 @@ export function DecisionPanel({ decision, onShow }: { decision: Decision; onShow
               <h4 className="decision__also">{t('decision.also')}</h4>
               <ol className="decision__best">
                 {best.slice(1).map(({ spec, result, dims }) => (
-                  <li key={spec.id} style={{ ['--line' as string]: LINE_COLOR[spec.jurisdiction] }}>
+                  <li key={spec.id}>
                     <button type="button" className="decision__route" onClick={() => onShow(spec.id)}>
                       <span className="decision__name">{spec.name[locale]}</span>
                       <DimensionPills dims={dims} result={result} compact />

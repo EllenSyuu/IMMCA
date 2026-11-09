@@ -227,6 +227,7 @@ export function ProfileForm({ state, set }: { state: FormState; set: Set }) {
 }
 
 const LEVELS = [4, 5, 6, 7, 8, 9, 10];
+const capitalise = (s: string) => s.charAt(0).toLocaleUpperCase() + s.slice(1);
 const WORK_BUCKETS = [0, 6, 12, 24, 36];
 
 /**
@@ -261,6 +262,7 @@ export function QuickForm({ state, set }: { state: FormState; set: Set }) {
             options={(['student', 'graduate-pgwp', 'worker', 'outside'] as const).map((s) => ({ value: s, label: t(`status.${s}`) }))}
             onChange={(status) => set({ status, ...(status === 'outside' ? { currentProvince: 'outside' as const } : {}) })}
           />
+          <div className="grid-3 span-2">
           <NumberField label={t('form.age')} value={state.age} min={16} max={70} onChange={(age) => set({ age })} />
           <SelectField
             label={t('form.currentProvince')}
@@ -269,17 +271,17 @@ export function QuickForm({ state, set }: { state: FormState; set: Set }) {
             onChange={(currentProvince) => set({ currentProvince })}
           />
           <SelectField
-            wide
             label={t('form.intendedProvince')}
             value={state.intendedProvince}
             options={[{ value: 'any' as const, label: t('form.anywhere') }, ...provinceOptions]}
             onChange={(intendedProvince) => set({ intendedProvince })}
           />
+          </div>
           <SelectField
             wide
             label={t('form.education')}
             value={state.education}
-            options={EDUCATION_ORDER.map((e) => ({ value: e, label: t(`edu.${e}`) }))}
+            options={EDUCATION_ORDER.map((e) => ({ value: e, label: capitalise(t(`edu.${e}`)) }))}
             onChange={(education) => set({ education, study: { ...state.study, level: education === 'none' || education === 'secondary' ? state.study.level : education } })}
           />
           <div className="span-2">
@@ -289,8 +291,8 @@ export function QuickForm({ state, set }: { state: FormState; set: Set }) {
               onChange={(studied) => set({ studied, study: { ...state.study, province: state.currentProvince !== 'outside' ? state.currentProvince : state.study.province } })}
             />
           </div>
-          <SelectField label={t('form.quick.english')} value={snap(level(profile.english))} options={langOptions('CLB')} onChange={(n) => set({ english: toLang(n) })} />
-          <SelectField label={t('form.quick.french')} value={snap(level(profile.french))} options={langOptions('NCLC')} onChange={(n) => set({ french: toLang(n) })} />
+          <SelectField variant="chips" label={t('form.quick.english')} value={snap(level(profile.english))} options={langOptions('CLB')} onChange={(n) => set({ english: toLang(n) })} />
+          <SelectField variant="chips" label={t('form.quick.french')} value={snap(level(profile.french))} options={langOptions('NCLC')} onChange={(n) => set({ french: toLang(n) })} />
           <SelectField
             wide
             label={t('form.quick.work')}

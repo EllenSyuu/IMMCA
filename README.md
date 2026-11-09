@@ -3,7 +3,7 @@
 <a href="https://ellensyuu.github.io/IMMCA/">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/brand/cover-dark.png">
-    <img src="docs/brand/cover-light.png" alt="IMMCA: every route to Canadian permanent residence, on one map. Coloured transit lines for Federal, Québec, Ontario, British Columbia, Alberta and Atlantic programs converge on a PR terminus." width="100%">
+    <img src="docs/brand/cover-light.png" alt="IMMCA: find the routes to Canadian permanent residence that are open to you. Beside the headline, the app's Where to focus card names the strongest route and its next step." width="100%">
   </picture>
 </a>
 
@@ -45,9 +45,9 @@
 
 For an international student, the hardest part of planning permanent residence is not any single rule. It is that the rules are spread across **fourteen governments** and change every few months. Between 2024 and 2026 alone, job-offer points left Express Entry and come back in a new form on **3 November 2026**; Ontario closed all eight of its nominee streams and replaced them with one; British Columbia, Manitoba and Saskatchewan closed or narrowed their graduate streams; Québec abolished the PEQ, then reopened it for a four-month window ending **31 October 2026**.
 
-- **One map instead of fourteen websites.** 56 programs: Express Entry and every 2026 category, the Atlantic, rural and francophone pilots, Québec's PSTQ and PEQ, and the nominee streams of every province and territory that runs one.
+- **One place instead of fourteen websites.** 57 programs: Express Entry and every 2026 category, the Atlantic, rural and francophone pilots, Québec's PSTQ and PEQ, and the nominee streams of every province and territory that runs one.
 - **An answer, not a checklist.** It starts with where to focus, the one requirement blocking your nearest route, and the dates that matter to you.
-- **Monitored every day, changed by review.** Each morning a GitHub Action pulls IRCC's latest rounds, re-reads all 49 official pages the rules cite, and redeploys the site. A changed page is flagged on the site and opened as an issue; the rule itself is only updated after a person has read the change and the tests pass.
+- **Monitored every day, changed by review.** Each morning a GitHub Action pulls IRCC's latest rounds, re-reads all 51 official pages the rules cite, and redeploys the site. A changed page is flagged on the site and opened as an issue; the rule itself is only updated after a person has read the change and the tests pass.
 - **Honest about what it doesn't know.** Every rule says how solid its evidence is. A requirement a form can't judge (a community recommendation, a regulator's licence) is shown as *to confirm*, never counted as met.
 - **Private by design.** It runs entirely in your browser: no accounts, no cookies, and nothing you type is sent anywhere.
 - **In your language.** English, Français and 中文, switchable at the top of the page, in the app and in the calendar feeds.
@@ -55,7 +55,7 @@ For an international student, the hardest part of planning permanent residence i
 ## See it in action
 
 <div align="center">
-<img src="docs/images/demo.gif" alt="Walkthrough: choosing an example profile updates the results; opening a route shows each requirement as a station with its official sources; the page switches to Chinese and French; then the Stay updated section with calendar buttons" width="100%">
+<img src="docs/images/demo.gif" alt="Walkthrough: tapping answers in the quick check updates the results; opening the strongest route shows each requirement with its official sources; the page switches to Chinese and French; then the Stay updated section with calendar buttons" width="100%">
 </div>
 
 ## Anatomy of a result
@@ -79,14 +79,14 @@ For an international student, the hardest part of planning permanent residence i
 2. **What would change things.** One change at a time (NCLC 7 in French, another year of Canadian work, a job offer, a nomination), showing both the CRS gain *and* the routes it would open.
 3. **Your score in the real pool.** Your CRS under today's grid and under the 3 November 2026 rules, placed in IRCC's published distribution of 228,724 candidates.
 4. **Four answers per route,** kept apart instead of blurred into one green light: do you *meet the rules*, is the program *open* (or are its 2026 spaces nearly gone), how *competitive* are you where an official cutoff exists, and how *solid is the evidence*.
-5. **Every requirement, with its source.** Each program is a transit line and each requirement a station: filled when you meet it, hollow when you don't, dashed when a form can't judge it. Open it to see how to close each gap and the official pages it was checked against.
+5. **Every requirement, with its source.** A checklist per route: met, not met, or to confirm when a form can't judge it. Open a route to see how to close each gap and the official pages it was checked against.
 
 ## Features
 
 | | |
 |---|---|
-| **Quick check or full profile** | Nine questions for a first answer, with its assumptions stated; the full profile takes exact test scores, every job, offers and family |
-| **Eligibility screener** | 56 federal, Québec and provincial programs, ranked into open / within reach / closed |
+| **Quick check or full profile** | Nine taps for a first answer, with its assumptions stated; the full profile takes exact test scores, every job, offers and family |
+| **Eligibility screener** | 57 federal, Québec and provincial programs, ranked into open / within reach / closed |
 | **CRS calculator** | Both rule sets, switched by date, including the Labour Market Integration factor and its 186 high-wage occupations |
 | **Arrima estimate** | Québec PSTQ score from the ministry's 1,400-point grid |
 | **Test-score conversion** | IELTS, CELPIP, PTE Core, TEF Canada (both scales) and TCF Canada to CLB/NCLC, so you type what is on your result sheet |
@@ -106,7 +106,7 @@ flowchart LR
   subgraph Browser
     F[Profile form<br/>raw test scores] -->|toProfile| P[Profile]
     P --> E{{Rules engine}}
-    R[(Program registry<br/>56 specs · 49 official sources)] --> E
+    R[(Program registry<br/>57 specs · 51 official sources)] --> E
     E --> V[Results<br/>eligibility · availability ·<br/>competitiveness · evidence]
     V --> S[Decision summary<br/>+ scenario lab]
     M[(source-status.json)] --> V
@@ -115,7 +115,7 @@ flowchart LR
     D[(draws.json<br/>rounds + pool distribution)] --> C
   end
   I[IRCC rounds feed] -->|daily GitHub Action<br/>validated refresh| D
-  G[49 official pages] -->|daily GitHub Action<br/>text diff| M
+  G[51 official pages] -->|daily GitHub Action<br/>text diff| M
   D --> FE[Calendar & RSS feeds<br/>rebuilt daily]
   M --> FE
   FE --> CW[[Counter worker<br/>anonymous counts]]

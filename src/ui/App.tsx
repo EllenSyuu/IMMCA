@@ -10,7 +10,7 @@ import { Logo } from './Logo';
 import { DecisionPanel } from './DecisionPanel';
 import { ProfileForm, QuickForm } from './ProfileForm';
 import { RouteCard } from './RouteCard';
-import { RouteMap } from './RouteMap';
+import { NewsPanel } from './NewsPanel';
 import { ScenarioLab } from './ScenarioLab';
 import { ScorePanel } from './ScorePanel';
 import { StayUpdated } from './StayUpdated';
@@ -122,61 +122,53 @@ export function App() {
       </header>
 
       <main>
-        <section className="hero">
-          <div className="hero__inner">
-            <div className="hero__text">
-              <p className="live">
-                <span className="live__dot" aria-hidden="true" />
-                {LAST_RUN
-                  ? t('hero.live', { n: LAST_RUN.total, date: fmt(LAST_RUN.checkedAt) })
-                  : t('hero.live', { n: SOURCE_COUNT, date: fmt(VERIFIED) })}
-              </p>
-              <h1>{t('hero.title')}</h1>
-              <p className="hero__body">{t('hero.body', { count: PROGRAMS.length })}</p>
-              <div className="hero__actions">
-                <a className="primary-button primary-button--large" href="#form-title">
-                  {t('hero.start')} <ArrowDown size={18} aria-hidden="true" />
-                </a>
-                <p className="hero__privacy"><Lock size={14} aria-hidden="true" /> {t('hero.privacy')}</p>
-              </div>
-              <div className="hero__samples">
-                <span className="hero__samples-label">{t('hero.samples')}</span>
-                {(Object.keys(SAMPLES) as (keyof typeof SAMPLES)[]).map((k) => (
-                  <button key={k} type="button" className="chip" onClick={() => setState(SAMPLES[k])}>{t(`sample.${k}`)}</button>
-                ))}
-                <button type="button" className="chip chip--plain" onClick={() => setState(EMPTY)}>{t('sample.clear')}</button>
-              </div>
-            </div>
-            <div className="hero__map">
-              <RouteMap />
-            </div>
+        <section className="hero" aria-labelledby="hero-title">
+          <div className="hero__intro">
+            <p className="live">
+              <span className="live__dot" aria-hidden="true" />
+              {LAST_RUN
+                ? t('hero.live', { n: LAST_RUN.total, date: fmt(LAST_RUN.checkedAt) })
+                : t('hero.live', { n: SOURCE_COUNT, date: fmt(VERIFIED) })}
+            </p>
+            <h1 id="hero-title">{t('hero.title')}</h1>
+            <p className="hero__body">{t('hero.body', { count: PROGRAMS.length })}</p>
           </div>
-        </section>
 
-        <div className="workspace">
-          <section className="workspace__form" aria-labelledby="form-title">
-            <div className="form__head">
+          <section className="planner" id="planner" aria-labelledby="form-title">
+            <div className="planner__head">
               <h2 id="form-title">{t('form.title')}</h2>
-              <div className="segmented" role="group" aria-label={t('form.title')}>
+              <div className="tabs" role="tablist" aria-label={t('form.title')}>
                 {(['quick', 'full'] as Mode[]).map((m) => (
-                  <button key={m} type="button" aria-pressed={mode === m} onClick={() => setMode(m)}>{t(`form.mode.${m}`)}</button>
+                  <button key={m} type="button" role="tab" aria-selected={mode === m} onClick={() => setMode(m)}>{t(`form.mode.${m}`)}</button>
                 ))}
               </div>
             </div>
             {mode === 'quick' ? <QuickForm state={state} set={set} /> : <ProfileForm state={state} set={set} />}
-            <a className="form__see" href="#results">{t('form.seeResults')}</a>
+            <div className="planner__foot">
+              <a className="primary-button" href="#results">{t('form.seeResults')} <ArrowDown size={18} aria-hidden="true" /></a>
+              <div className="planner__samples">
+                <span>{t('hero.samples')}</span>
+                {(Object.keys(SAMPLES) as (keyof typeof SAMPLES)[]).map((k) => (
+                  <button key={k} type="button" className="text-button" onClick={() => setState(SAMPLES[k])}>{t(`sample.${k}`)}</button>
+                ))}
+                <button type="button" className="text-button text-button--quiet" onClick={() => setState(EMPTY)}>{t('sample.clear')}</button>
+              </div>
+            </div>
+            <p className="planner__privacy"><Lock size={14} aria-hidden="true" /> {t('hero.privacy')}</p>
           </section>
+        </section>
 
-          <section className="workspace__results" id="results" aria-labelledby="results-title">
+        <div className="results-layout" id="results">
+          <section className="results-main" aria-labelledby="results-title">
             <div className="results__head">
-              <h2 id="results-title">{t('results.title')}</h2>
-              <p className="results__count" aria-live="polite">{t('results.count', counts)}</p>
-              <a className="results__edit secondary-button" href="#form-title">{t('results.edit')}</a>
+              <div>
+                <h2 id="results-title">{t('results.title')}</h2>
+                <p className="results__count" aria-live="polite">{t('results.count', counts)}</p>
+              </div>
+              <a className="text-button" href="#planner">{t('results.edit')}</a>
             </div>
 
             <DecisionPanel decision={decision} onShow={show} />
-            <ScenarioLab scenarios={scenarios} onShow={show} />
-            {showScore && <ScorePanel profile={profile} />}
 
             <div className="routes__head">
               <h3>{t('results.allRoutes')}</h3>
@@ -209,6 +201,12 @@ export function App() {
             )}
             <p className="disclaimer">{t('results.disclaimer')}</p>
           </section>
+
+          <aside className="results-aside">
+            {showScore && <ScorePanel profile={profile} />}
+            <ScenarioLab scenarios={scenarios} onShow={show} />
+            <NewsPanel />
+          </aside>
         </div>
         <StayUpdated />
       </main>
