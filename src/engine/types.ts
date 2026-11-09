@@ -201,6 +201,8 @@ export interface ProgramSpec {
   notes?: L10n[];
   /** Last day applications are accepted (ISO date); after it the program counts as closed. */
   closesOn?: string;
+  /** First day applications can be made, for a program announced but not yet taking them (YYYY-MM-DD). */
+  opensOn?: string;
   /** Allocation pressure: invitations continue but space is scarce or used up for the year. */
   capacity?: { level: 'limited' | 'exhausted'; note: L10n };
   /**

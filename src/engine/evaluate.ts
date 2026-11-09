@@ -17,8 +17,9 @@ export function evaluateProgram(spec: ProgramSpec, profile: Profile, today = new
   const eligibility: Eligibility =
     unmet === 0 && met > 0 ? (toConfirm ? 'confirm' : 'met') : (unmet === 1 && score >= 0.6) || (unmet === 2 && met >= 4) ? 'close' : 'gap';
   const expired = !!spec.closesOn && today > spec.closesOn;
+  const notYet = !!spec.opensOn && today < spec.opensOn;
   const verdict: Verdict =
-    UNAVAILABLE.has(spec.status) || expired ? 'unavailable' : eligibility === 'met' || eligibility === 'confirm' ? 'eligible' : eligibility;
+    UNAVAILABLE.has(spec.status) || expired || notYet ? 'unavailable' : eligibility === 'met' || eligibility === 'confirm' ? 'eligible' : eligibility;
 
   return { programId: spec.id, verdict, eligibility, checks, toConfirm, score, points: spec.points?.(profile, today) };
 }

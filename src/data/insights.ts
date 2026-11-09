@@ -13,7 +13,7 @@ import type { Check, Eligibility, Profile, ProgramResult, ProgramSpec } from '..
 import { sourceFlag, type SourceFlag } from './monitor';
 import { PROGRAM_BY_ID, PROGRAMS } from './programs';
 
-export type Availability = 'open' | 'invitation' | 'windows' | 'limited' | 'exhausted' | 'closed';
+export type Availability = 'open' | 'invitation' | 'windows' | 'limited' | 'exhausted' | 'upcoming' | 'closed';
 export type Competitiveness = 'above' | 'near' | 'below' | 'nodraw' | 'indicative' | 'none';
 export type Evidence = 'verified' | 'approximate' | 'unconfirmed' | 'review';
 
@@ -23,6 +23,8 @@ export interface Dimensions {
   competitiveness: Competitiveness;
   evidence: Evidence;
   flag: SourceFlag;
+  /** When an announced program starts taking applications. */
+  opensOn?: string;
 }
 
 /** How far below an official cutoff still counts as "near" (CRS points). */
@@ -32,6 +34,8 @@ export function dimensions(spec: ProgramSpec, r: ProgramResult, today = new Date
   const closed = spec.status === 'closed' || spec.status === 'paused' || (!!spec.closesOn && today > spec.closesOn);
   const availability: Availability = closed
     ? 'closed'
+    : spec.opensOn && today < spec.opensOn
+      ? 'upcoming'
     : spec.capacity?.level === 'exhausted'
       ? 'exhausted'
       : spec.capacity?.level === 'limited'
@@ -52,7 +56,7 @@ export function dimensions(spec: ProgramSpec, r: ProgramResult, today = new Date
 
   const flag = sourceFlag(spec.sources.map((s) => s.url));
   const evidence: Evidence = flag?.kind === 'changed' ? 'review' : spec.confidence?.level ?? 'verified';
-  return { eligibility: r.eligibility, availability, competitiveness, evidence, flag };
+  return { eligibility: r.eligibility, availability, competitiveness, evidence, flag, opensOn: spec.opensOn };
 }
 
 // ---------------------------------------------------------------- decision summary
@@ -65,7 +69,7 @@ export interface Decision {
   deadlines: { key: string; date: string; programId?: string }[];
 }
 
-const AVAIL_RANK: Record<Availability, number> = { open: 0, invitation: 1, windows: 2, limited: 3, exhausted: 4, closed: 5 };
+const AVAIL_RANK: Record<Availability, number> = { open: 0, invitation: 1, windows: 2, limited: 3, exhausted: 4, upcoming: 5, closed: 6 };
 const COMP_RANK: Record<Competitiveness, number> = { above: 0, near: 1, none: 2, indicative: 2, nodraw: 3, below: 4 };
 
 export function decide(results: ProgramResult[], today = new Date().toISOString().slice(0, 10)): Decision {
@@ -75,7 +79,7 @@ export function decide(results: ProgramResult[], today = new Date().toISOString(
   });
 
   const best = enriched
-    .filter((e) => (e.dims.eligibility === 'met' || e.dims.eligibility === 'confirm') && e.dims.availability !== 'closed' && e.spec.kind !== 'temporary')
+    .filter((e) => (e.dims.eligibility === 'met' || e.dims.eligibility === 'confirm') && e.dims.availability !== 'closed' && e.dims.availability !== 'upcoming' && e.spec.kind !== 'temporary')
     .sort((a, b) =>
       Number(a.dims.eligibility === 'confirm') - Number(b.dims.eligibility === 'confirm') ||
       COMP_RANK[a.dims.competitiveness] - COMP_RANK[b.dims.competitiveness] ||
@@ -84,7 +88,7 @@ export function decide(results: ProgramResult[], today = new Date().toISOString(
     .slice(0, 3);
 
   const near = enriched
-    .filter((e) => e.dims.eligibility === 'close' && e.dims.availability !== 'closed' && e.dims.availability !== 'exhausted')
+    .filter((e) => e.dims.eligibility === 'close' && e.dims.availability !== 'closed' && e.dims.availability !== 'upcoming' && e.dims.availability !== 'exhausted')
     .sort((a, b) => b.result.score - a.result.score)[0];
   const blockerCheck = near?.result.checks.find((c) => c.status === 'unmet' && !c.group);
 

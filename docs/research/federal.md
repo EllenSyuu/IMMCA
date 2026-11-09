@@ -1048,3 +1048,20 @@ The economic share is about 63–64%.
 - Goal: the temporary resident population below 5% of the total population by the end of 2027.
 
 **Uncertainty:** The supplementary page does not show separate "Federal Economic Priorities" or "In-Canada Focus" lines. The 2025–2027 plan had those labels; the 2026–2028 plan uses "Federal High Skilled".
+
+## Update 2026-11-09: rural program, levels plan, Express Entry pause
+
+Checked against official sources on 2026-11-09.
+
+**Rural Community Immigration Program (permanent).** SOR/2026-217, registered 2026-10-22, published in Canada Gazette Part II on 2026-11-04 (https://gazette.gc.ca/rp-pr/p2/2026/2026-11-04/html/sor-dors217-eng.html).
+- Communities finalise pilot recommendations until 2026-12-31; the pilot's Ministerial Instructions stay in force until 2027-06-30; a pilot certificate can't be used for the new class.
+- From 2027-01-01 communities receive allocations and may issue program recommendations (valid one year).
+- Requirements in the regulation: intent to live in a designated rural community outside Québec; community recommendation; full-time, non-seasonal, indeterminate job offer in a priority sector or occupation at or above the Job Bank wage range; one year of full-time work (or part-time equivalent) in the three years before applying; Canadian credential or foreign credential at least equal to secondary school with an ECA under five years old; language at the threshold the Minister fixes (not yet published); settlement funds of half the rural LICO unless already working in Canada.
+- Not yet published: the designated communities, language thresholds and fund amounts. Modelled as `rcip-program` with `opensOn: 2027-01-01` and `unconfirmed` evidence; the pilot (`rcip`) closes on 2026-12-31.
+
+**2027–2029 Immigration Levels Plan** (supplementary information, 2026-11-05: https://www.canada.ca/en/immigration-refugees-citizenship/corporate/immigration-system/levels/supplementary-immigration-levels-2027-2029.html).
+- 380,000 permanent residents a year; Federal High Skilled 100,000; PNP 95,000; Rural Community Immigration Program 5,500 / 6,000 / 6,500; AIP 6,000; Federal Economic Pilots 7,900 in 2027; Québec to table its own plan.
+- A time-limited 2027 measure for up to 200,000 people already in Canada: workers through larger PNP allocations (provinces may identify people who already applied to select federal programs) and a humanitarian cohort of up to 100,000 (news release, 2026-11-05). Eligibility not yet published, so no program is modelled; it is listed under "Policy changes" in the app.
+- New international students: up to 150,000 a year.
+
+**Express Entry rounds.** IRCC paused rounds for up to two weeks from 2026-11-03 while profiles are recalculated under the new CRS (changes page). No round under the new rules had been published by 2026-11-09; the app therefore compares a new-rules score only with rounds held under the same rules.

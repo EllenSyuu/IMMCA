@@ -250,6 +250,8 @@ export const federalPrograms: ProgramSpec[] = [
     jurisdiction: 'federal',
     kind: 'federal-pathway',
     status: 'open',
+    // Communities finalise pilot recommendations until 2026-12-31 (SOR/2026-217, implementation).
+    closesOn: '2026-12-31',
     name: L('Rural Community Immigration Pilot', 'Projet pilote d’immigration dans les communautés rurales', '乡村社区移民试点 (RCIP)'),
     summary: L(
       'A permanent job offer from a designated employer in one of 14 rural communities, plus that community’s recommendation.',
@@ -266,11 +268,57 @@ export const federalPrograms: ProgramSpec[] = [
       languageForTeer({ 0: 6, 1: 6, 2: 5, 3: 5, 4: 4, 5: 4 }),
     ],
     notes: [L(
+      'The pilot is being replaced by the permanent Rural Community Immigration Program. Communities can issue pilot recommendations until 31 December 2026; if you have one, apply for permanent residence before it expires. A pilot recommendation can’t be used for the new program.',
+      'Le projet pilote est remplacé par le Programme d’immigration dans les communautés rurales, permanent. Les communautés peuvent délivrer des recommandations du projet pilote jusqu’au 31 décembre 2026 ; si vous en avez une, présentez votre demande de résidence permanente avant son expiration. Une recommandation du projet pilote ne peut pas servir pour le nouveau programme.',
+      '该试点将由永久性的乡村社区移民项目取代。社区可在 2026 年 12 月 31 日前发出试点推荐信；已有推荐信的，须在推荐信到期前申请永居。试点推荐信不能用于新项目。',
+    ), L(
       'Communities: Pictou County NS; North Bay, Sudbury, Timmins, Sault Ste. Marie, Thunder Bay ON; Steinbach, Altona/Rhineland, Brandon MB; Moose Jaw SK; Claresholm AB; West Kootenay, North Okanagan Shuswap, Peace Liard BC.',
       'Communautés : comté de Pictou (N.-É.) ; North Bay, Sudbury, Timmins, Sault Ste. Marie, Thunder Bay (Ont.) ; Steinbach, Altona/Rhineland, Brandon (Man.) ; Moose Jaw (Sask.) ; Claresholm (Alb.) ; West Kootenay, North Okanagan Shuswap, Peace Liard (C.-B.).',
       '参与社区：新斯科舍 Pictou County；安省 North Bay、Sudbury、Timmins、Sault Ste. Marie、Thunder Bay；曼省 Steinbach、Altona/Rhineland、Brandon；萨省 Moose Jaw；阿省 Claresholm；卑诗省 West Kootenay、North Okanagan Shuswap、Peace Liard。',
     )],
-    sources: [{ url: `${ircc}/immigrate-canada/rural-franco-pilots/rural-immigration/eligibility.html`, verified: VERIFIED }],
+    sources: [
+      { url: `${ircc}/immigrate-canada/rural-franco-pilots/rural-immigration/eligibility.html`, verified: '2026-11-09' },
+      { url: 'https://gazette.gc.ca/rp-pr/p2/2026/2026-11-04/html/sor-dors217-eng.html', verified: '2026-11-09' },
+    ],
+  },
+  {
+    id: 'rcip-program',
+    jurisdiction: 'federal',
+    kind: 'federal-pathway',
+    status: 'open',
+    // In force since 2026-10-22; communities may start issuing program recommendations on 2027-01-01.
+    opensOn: '2027-01-01',
+    confidence: {
+      level: 'unconfirmed',
+      note: L(
+        'The regulations are published, but IRCC has not yet named the designated communities or published the language levels and fund amounts.',
+        'Le règlement est publié, mais IRCC n’a pas encore nommé les communautés désignées ni publié les niveaux de langue et les montants des fonds.',
+        '法规已公布，但 IRCC 尚未公布指定社区名单、语言要求和资金金额。',
+      ),
+    },
+    name: L('Rural Community Immigration Program', 'Programme d’immigration dans les communautés rurales', '乡村社区移民项目（永久）'),
+    summary: L(
+      'The permanent successor to the rural pilot: a full-time, indefinite job offer in a designated rural community outside Québec, plus that community’s recommendation.',
+      'Le successeur permanent du projet pilote rural : une offre d’emploi à temps plein et d’une durée indéterminée dans une communauté rurale désignée hors Québec, avec la recommandation de la communauté.',
+      '乡村试点的永久版：在魁北克以外的指定乡村社区获得全职、无固定期限的工作邀请，并取得社区推荐。',
+    ),
+    criteria: [
+      jobOffer({ permanent: true, fullTime: true }),
+      note('check.communityRecommendation'),
+      workExperience({ months: 12, withinMonths: 36 }),
+      minEducation('secondary', { requireEcaIfForeign: true }),
+      note('check.languageTbd'),
+      note('check.fundsTbd'),
+    ],
+    notes: [L(
+      'Communities can start issuing recommendations on 1 January 2027; a recommendation is valid for one year. IRCC plans 5,500 admissions in 2027, 6,000 in 2028 and 6,500 in 2029.',
+      'Les communautés peuvent commencer à délivrer des recommandations le 1er janvier 2027 ; une recommandation est valide un an. IRCC prévoit 5 500 admissions en 2027, 6 000 en 2028 et 6 500 en 2029.',
+      '社区可从 2027 年 1 月 1 日起发出推荐信，推荐信有效期一年。IRCC 计划 2027 年接收 5,500 人，2028 年 6,000 人，2029 年 6,500 人。',
+    )],
+    sources: [
+      { url: 'https://gazette.gc.ca/rp-pr/p2/2026/2026-11-04/html/sor-dors217-eng.html', verified: '2026-11-09' },
+      { url: 'https://www.canada.ca/en/immigration-refugees-citizenship/corporate/immigration-system/levels/supplementary-immigration-levels-2027-2029.html', verified: '2026-11-09' },
+    ],
   },
   {
     id: 'fcip',

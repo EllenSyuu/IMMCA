@@ -140,3 +140,16 @@ describe('requirements a form cannot judge', () => {
     }
   });
 });
+
+describe('the rural pilot becomes a permanent program', () => {
+  const pilot = PROGRAM_BY_ID.get('rcip')!;
+  const program = PROGRAM_BY_ID.get('rcip-program')!;
+  it('the new program is announced but takes no applications before 2027', () => {
+    expect(evaluateProgram(program, graduate(), '2026-11-09').verdict).toBe('unavailable');
+    expect(evaluateProgram(program, graduate(), '2027-01-01').verdict).not.toBe('unavailable');
+  });
+  it('the pilot stops after 31 December 2026', () => {
+    expect(evaluateProgram(pilot, graduate(), '2026-12-31').verdict).not.toBe('unavailable');
+    expect(evaluateProgram(pilot, graduate(), '2027-01-01').verdict).toBe('unavailable');
+  });
+});
