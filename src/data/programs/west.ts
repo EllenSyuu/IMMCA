@@ -344,7 +344,8 @@ export const westPrograms: ProgramSpec[] = [
       'La Saskatchewan admet 32 professions technologiques ; ce filtre les approxime par la grande catégorie 2 de la CNP (sciences naturelles et appliquées). Vérifiez votre CNP sur la page officielle.',
       '萨省列出 32 个合格科技职业，本工具以 NOC 大类 2（自然与应用科学）近似，请在官方页面核对你的 NOC。',
     )],
-    sources: [{ url: `${sinp}/browse-sinp-programs/sinp-innovation-tech-talent-pathway`, verified: VERIFIED }],
+    // Moved under applicants-international-skilled-workers/ (old URL 404 since at least 2026-11-09).
+    sources: [{ url: `${sinp}/browse-sinp-programs/applicants-international-skilled-workers/sinp-innovation-tech-talent-pathway`, verified: VERIFIED }],
   },
   {
     id: 'sk-health-talent',
@@ -364,7 +365,8 @@ export const westPrograms: ProgramSpec[] = [
         [workExperience({ months: 6, province: 'SK' })],
         [workExperience({ months: 12, withinMonths: 60 })]),
     ],
-    sources: [{ url: `${sinp}/browse-sinp-programs/health-talent-pathway`, verified: VERIFIED }],
+    // Moved to by-immigrating/sinp-healthcare/ (old URL 404 since at least 2026-11-09); requirements unchanged.
+    sources: [{ url: 'https://www.saskatchewan.ca/residents/moving-to-saskatchewan/live-in-saskatchewan/by-immigrating/sinp-healthcare/health-talent-pathway', verified: '2026-11-09' }],
   },
   {
     id: 'sk-occupation-in-demand',
