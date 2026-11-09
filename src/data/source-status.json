@@ -12,6 +12,11 @@
       "status": "unchanged",
       "acceptedOn": "2026-10-28"
     },
+    "https://gazette.gc.ca/rp-pr/p2/2026/2026-11-04/html/sor-dors217-eng.html": {
+      "baseline": "9ca631aef2e9c563",
+      "current": "9ca631aef2e9c563",
+      "status": "unchanged"
+    },
     "https://immigratemanitoba.com/draws/": {
       "baseline": "67a0d680aafb51ae",
       "current": "67a0d680aafb51ae",
@@ -77,6 +82,11 @@
       "current": "8e19d3e85b2bb20a",
       "status": "unchanged",
       "acceptedOn": "2026-10-28"
+    },
+    "https://www.canada.ca/en/immigration-refugees-citizenship/corporate/immigration-system/levels/supplementary-immigration-levels-2027-2029.html": {
+      "baseline": "cdd268f7d0cbf753",
+      "current": "cdd268f7d0cbf753",
+      "status": "unchanged"
     },
     "https://www.canada.ca/en/immigration-refugees-citizenship/news/notices/pausing-home-care-worker-immigration-pilots-application-intake.html": {
       "baseline": "addef921a62e925c",
@@ -188,9 +198,10 @@
     },
     "https://www.ontario.ca/page/2026-ontario-immigrant-nominee-program-updates": {
       "baseline": "645a25d200a5487d",
-      "current": "645a25d200a5487d",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "5ca24daa4abee966",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-11-09"
     },
     "https://www.ontario.ca/page/ontario-workforce-priority-stream": {
       "baseline": "2cd11ba2d6aa2dd9",
