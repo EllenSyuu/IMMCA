@@ -115,4 +115,7 @@ NLPNP 50
 November 4, 2026
 25
 NLPNP 24, AIP 1
-Updated: Nov. 4, 2026
+November 9, 2026
+57
+NLPNP 35, AIP 22
+Updated: Nov. 10, 2026

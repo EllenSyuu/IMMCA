@@ -74,14 +74,16 @@
     "https://www.alberta.ca/aaip-rural-renewal-stream-eligibility": {
       "baseline": "dce484cba73c2bfc",
       "current": "dce484cba73c2bfc",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "status": "unreachable",
+      "acceptedOn": "2026-10-28",
+      "unreachableSince": "2026-11-10"
     },
     "https://www.alberta.ca/dedicated-health-care-pathway": {
       "baseline": "8e19d3e85b2bb20a",
       "current": "8e19d3e85b2bb20a",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "status": "unreachable",
+      "acceptedOn": "2026-10-28",
+      "unreachableSince": "2026-11-10"
     },
     "https://www.canada.ca/en/immigration-refugees-citizenship/corporate/immigration-system/levels/supplementary-immigration-levels-2027-2029.html": {
       "baseline": "cdd268f7d0cbf753",
@@ -186,15 +188,17 @@
     },
     "https://www.gov.nl.ca/immigration/invitations-to-apply-updates/": {
       "baseline": "f15094bedc3a2cdb",
-      "current": "f15094bedc3a2cdb",
-      "status": "unchanged",
-      "acceptedOn": "2026-11-09"
+      "current": "427efe525d96c86a",
+      "status": "changed",
+      "acceptedOn": "2026-11-09",
+      "changedOn": "2026-11-10"
     },
     "https://www.immigratenwt.ca/expression-interest": {
       "baseline": "ad42bd5511ae4d65",
       "current": "ad42bd5511ae4d65",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "status": "unreachable",
+      "acceptedOn": "2026-10-28",
+      "unreachableSince": "2026-11-10"
     },
     "https://www.ontario.ca/page/2026-ontario-immigrant-nominee-program-updates": {
       "baseline": "645a25d200a5487d",
