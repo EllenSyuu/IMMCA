@@ -74,16 +74,14 @@
     "https://www.alberta.ca/aaip-rural-renewal-stream-eligibility": {
       "baseline": "dce484cba73c2bfc",
       "current": "dce484cba73c2bfc",
-      "status": "unreachable",
-      "acceptedOn": "2026-10-28",
-      "unreachableSince": "2026-11-10"
+      "status": "unchanged",
+      "acceptedOn": "2026-10-28"
     },
     "https://www.alberta.ca/dedicated-health-care-pathway": {
       "baseline": "8e19d3e85b2bb20a",
       "current": "8e19d3e85b2bb20a",
-      "status": "unreachable",
-      "acceptedOn": "2026-10-28",
-      "unreachableSince": "2026-11-10"
+      "status": "unchanged",
+      "acceptedOn": "2026-10-28"
     },
     "https://www.canada.ca/en/immigration-refugees-citizenship/corporate/immigration-system/levels/supplementary-immigration-levels-2027-2029.html": {
       "baseline": "cdd268f7d0cbf753",
@@ -245,9 +243,10 @@
     },
     "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-selection-travailleurs-qualifies/exigences": {
       "baseline": "993084bd9a19bfc0",
-      "current": "993084bd9a19bfc0",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-30"
+      "current": "83d72e73337dee1b",
+      "status": "changed",
+      "acceptedOn": "2026-10-30",
+      "changedOn": "2026-11-11"
     },
     "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-selection-travailleurs-qualifies/invitation/2026": {
       "baseline": "55d611ef06aa622a",
