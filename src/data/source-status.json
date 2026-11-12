@@ -67,9 +67,10 @@
     },
     "https://www.alberta.ca/aaip-processing-information": {
       "baseline": "6e8655e7f24f3000",
-      "current": "6e8655e7f24f3000",
-      "status": "unchanged",
-      "acceptedOn": "2026-11-09"
+      "current": "3542b2ba26583c67",
+      "status": "changed",
+      "acceptedOn": "2026-11-09",
+      "changedOn": "2026-11-12"
     },
     "https://www.alberta.ca/aaip-rural-renewal-stream-eligibility": {
       "baseline": "dce484cba73c2bfc",
@@ -194,9 +195,8 @@
     "https://www.immigratenwt.ca/expression-interest": {
       "baseline": "ad42bd5511ae4d65",
       "current": "ad42bd5511ae4d65",
-      "status": "unreachable",
-      "acceptedOn": "2026-10-28",
-      "unreachableSince": "2026-11-10"
+      "status": "unchanged",
+      "acceptedOn": "2026-10-28"
     },
     "https://www.ontario.ca/page/2026-ontario-immigrant-nominee-program-updates": {
       "baseline": "645a25d200a5487d",
@@ -231,9 +231,10 @@
     },
     "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/intelligence-artificielle": {
       "baseline": "09b8502d13f36955",
-      "current": "09b8502d13f36955",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "57332b3e2b1e93c0",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-11-12"
     },
     "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-experience-quebecoise": {
       "baseline": "88d21f2dd9407831",
