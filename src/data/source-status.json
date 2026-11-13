@@ -257,31 +257,36 @@
     },
     "https://www.saskatchewan.ca/residents/moving-to-saskatchewan/live-in-saskatchewan/by-immigrating/saskatchewan-immigrant-nominee-program/browse-sinp-programs/applicants-international-skilled-workers/international-skilled-worker-occupations-in-demand": {
       "baseline": "30a2044422df59b5",
-      "current": "30a2044422df59b5",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "c343f43d0de70cc6",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-11-13"
     },
     "https://www.saskatchewan.ca/residents/moving-to-saskatchewan/live-in-saskatchewan/by-immigrating/saskatchewan-immigrant-nominee-program/browse-sinp-programs/applicants-international-skilled-workers/international-skilled-worker-with-employment-offer": {
       "baseline": "4bc9621972e49a72",
-      "current": "4bc9621972e49a72",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "49b7ebfa292b59ed",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-11-13"
     },
     "https://www.saskatchewan.ca/residents/moving-to-saskatchewan/live-in-saskatchewan/by-immigrating/saskatchewan-immigrant-nominee-program/browse-sinp-programs/applicants-international-skilled-workers/sinp-innovation-tech-talent-pathway": {
       "baseline": "c0110819067270fe",
-      "current": "c0110819067270fe",
-      "status": "unchanged"
+      "current": "c43f8aed6dea37a4",
+      "status": "changed",
+      "changedOn": "2026-11-13"
     },
     "https://www.saskatchewan.ca/residents/moving-to-saskatchewan/live-in-saskatchewan/by-immigrating/saskatchewan-immigrant-nominee-program/browse-sinp-programs/applicants-with-saskatchewan-experience/students": {
       "baseline": "5551368a962df895",
-      "current": "5551368a962df895",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "2ff6d27e6cf42e39",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-11-13"
     },
     "https://www.saskatchewan.ca/residents/moving-to-saskatchewan/live-in-saskatchewan/by-immigrating/sinp-healthcare/health-talent-pathway": {
       "baseline": "e5b5415922dcd431",
-      "current": "e5b5415922dcd431",
-      "status": "unchanged"
+      "current": "f85d52d540382178",
+      "status": "changed",
+      "changedOn": "2026-11-13"
     },
     "https://www.welcomebc.ca/immigrate-to-b-c/about-the-bc-provincial-nominee-program/invitations-to-apply": {
       "baseline": "a2df19aece76620b",
