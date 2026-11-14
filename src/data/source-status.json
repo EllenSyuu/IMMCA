@@ -187,7 +187,7 @@
     },
     "https://www.gov.nl.ca/immigration/invitations-to-apply-updates/": {
       "baseline": "f15094bedc3a2cdb",
-      "current": "427efe525d96c86a",
+      "current": "20f776b4b7cafcf3",
       "status": "changed",
       "acceptedOn": "2026-11-09",
       "changedOn": "2026-11-10"
@@ -290,9 +290,10 @@
     },
     "https://www.welcomebc.ca/immigrate-to-b-c/about-the-bc-provincial-nominee-program/invitations-to-apply": {
       "baseline": "a2df19aece76620b",
-      "current": "a2df19aece76620b",
-      "status": "unchanged",
-      "acceptedOn": "2026-11-09"
+      "current": "6bbc74fbd0cfdfd3",
+      "status": "changed",
+      "acceptedOn": "2026-11-09",
+      "changedOn": "2026-11-14"
     },
     "https://www.welcomebc.ca/immigrate-to-b-c/about-the-bc-provincial-nominee-program/news": {
       "baseline": "dbeec3c56b0f40f2",

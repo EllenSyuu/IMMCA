@@ -132,7 +132,7 @@ Immigrate to B.C.
 About the BC Provincial Nominee Program
 Invitations to apply
 Invitations to apply
-Last updated: November 3 , 2026
+Last updated: November 13 , 2026
 Periodically, the BC PNP invites candidates in its registration pool to apply to the program. Candidates that are deemed most likely to meet B.C.’s economic and labour market needs are selected based on their registration information.
 Invitations to apply (ITA) are issued to both Skills Immigration and Entrepreneur Immigration registrants. To find out if you received an ITA, please log into your BC PNP Online User Profile .
 Expand All
@@ -143,6 +143,19 @@ ITA type
 Selection factors
 Minimum score
 Number of invitations
+November 13, 2026 Care: Childcare
+Early childhood educators only *
+95 153
+Care: Health
+All priority health care occupations *
+72 103
+Care: Veterinary Care All priority veterinary care occupations
+100
+5
+Animal health technologists and veterinary technicians (NOC 32104) with valid professional designation
+Build: Construction Trades
+All priority construction occupations *
+94 128
 October 29, 2026
 Innovate: High Economic Impact
 Minimum wage of $49/hour and $99,000/year, and NOC 0, 1, 2, or 3
