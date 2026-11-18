@@ -40,6 +40,20 @@ be paid work (you must have been paid wages or earned commission—volunteer wor
 unpaid internships don’t count)
 be at least 1 year of continuous work or 1,560 hours total (30 hours
 per week)
+University professors and lecturers work experience
+Updated: November 18, 2026
+University professors and lecturers can now count other forms of paid work.
+As many researchers receive non-wage compensation, we now let Canadian work experience in NOC 41200 (University professors and lecturers) that has been paid by a Canadian entity through a stipend or other forms of funding (including grants, bursaries and scholarships), count as work.
+Part-time work experience
+For part-time work, you can work more or less than 15 hours/week as long as it adds up to 1,560 hours. You can
+work more than 1 part-time job to get the hours you need to apply.
+We don’t count any hours you work above 30 hours/week.
+Student work experience
+Work experience gained while you were studying may count towards your minimum requirements if
+the work:
+was paid by wages or commissions
+was continuous (no gaps in employment), and
+meets all the other requirements of the Program
 Your skilled work experience must meet all the above requirements to be eligible.
 Choose the NOC that most closely aligns with your work experience. This will:
 avoid processing delays
@@ -54,16 +68,6 @@ equal amount in part-time work : for example, 15 hours/week for 24 months = 1 ye
 You can work as many part-time jobs as you need to meet this requirement.
 full time at more than 1 job : 30 hours/week for 12 months at more than 1 job = 1 year full
 time (1,560 hours)
-Part-time work experience
-For part-time work, you can work more or less than 15 hours/week as long as it adds up to 1,560 hours. You can
-work more than 1 part-time job to get the hours you need to apply.
-We don’t count any hours you work above 30 hours/week.
-Student work experience
-Work experience gained while you were studying may count towards your minimum requirements if
-the work:
-was paid by wages or commissions
-was continuous (no gaps in employment), and
-meets all the other requirements of the Program
 Language ability
 You must:
 take
@@ -285,4 +289,4 @@ You’ll have to include proof and expect officers to check anything you provide
 When you fill out your profile, we’ll ask you where you plan to live in Canada.
 If you’re a Provincial Nominee, you must settle in the province or territory that nominated you.
 Page details
-2026-11-03
+2026-11-18

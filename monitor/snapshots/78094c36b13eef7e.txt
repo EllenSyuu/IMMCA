@@ -408,18 +408,10 @@ Senior managers - construction, transportation, production and utilities
 0
 Who’s eligible for the researchers with Canadian work experience category
 To be eligible, you must:
-have accumulated, within the past 3 years, at least 12 months of full-time work experience (or an equal amount of part-time experience) — this experience does not need to be continuous
-in a single occupation listed in the table below (no matter your primary occupation)
-in Canada
+have accumulated, within the past 3 years, at least 12 months of full-time work experience in Canada (or an equal amount of part-time experience) — this experience does not need to be continuous
+in National Occupational Classification 41200 (University professors and lecturers)
 meet all requirements in the instructions for that round
 Full details will be included in the instructions for each round.
-Occupation 2021 NOC code 2021 TEER category
-University professors and lecturers
-41200
-1
-Post-secondary teaching and research assistants
-41201
-1
 Who’s eligible for the skilled military recruits category
 Learn how to apply to the Canadian Armed Forces as a foreign skilled military applicant .
 To be eligible, you must:
@@ -451,4 +443,4 @@ Operations Members of the Canadian Armed Forces
 43204
 3
 Page details
-2026-10-16
+2026-11-18

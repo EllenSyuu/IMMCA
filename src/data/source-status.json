@@ -103,33 +103,38 @@
     },
     "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/changes.html": {
       "baseline": "812312fadb357de3",
-      "current": "812312fadb357de3",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "3e8cd982b4c9bafc",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-11-18"
     },
     "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/rounds-invitations/category-based-selection.html": {
       "baseline": "23212ab5d0019854",
-      "current": "23212ab5d0019854",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "f9adb2b1c2ecddf7",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-11-18"
     },
     "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/who-can-apply/canadian-experience-class.html": {
       "baseline": "a3c69b8a0dec18e5",
-      "current": "a3c69b8a0dec18e5",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "ad78800a014d7ac0",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-11-18"
     },
     "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/who-can-apply/federal-skilled-trades.html": {
       "baseline": "3019cb072f15ca0b",
-      "current": "3019cb072f15ca0b",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "b659e1d77432602e",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-11-18"
     },
     "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/who-can-apply/federal-skilled-workers.html": {
       "baseline": "1508aa8a0083beda",
-      "current": "1508aa8a0083beda",
-      "status": "unchanged",
-      "acceptedOn": "2026-11-09"
+      "current": "d408f5006283a337",
+      "status": "changed",
+      "acceptedOn": "2026-11-09",
+      "changedOn": "2026-11-18"
     },
     "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/rural-franco-pilots/franco-immigration/eligibility.html": {
       "baseline": "710e255375576e13",
@@ -263,29 +268,33 @@
     },
     "https://www.saskatchewan.ca/residents/moving-to-saskatchewan/live-in-saskatchewan/by-immigrating/saskatchewan-immigrant-nominee-program/browse-sinp-programs/applicants-international-skilled-workers/international-skilled-worker-with-employment-offer": {
       "baseline": "4bc9621972e49a72",
-      "current": "4bc9621972e49a72",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "795c5976d1c68348",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-11-18"
     },
     "https://www.saskatchewan.ca/residents/moving-to-saskatchewan/live-in-saskatchewan/by-immigrating/saskatchewan-immigrant-nominee-program/browse-sinp-programs/applicants-international-skilled-workers/sinp-innovation-tech-talent-pathway": {
       "baseline": "c0110819067270fe",
-      "current": "c0110819067270fe",
-      "status": "unchanged"
+      "current": "6d8b86b0fb85b258",
+      "status": "changed",
+      "changedOn": "2026-11-18"
     },
     "https://www.saskatchewan.ca/residents/moving-to-saskatchewan/live-in-saskatchewan/by-immigrating/saskatchewan-immigrant-nominee-program/browse-sinp-programs/applicants-with-saskatchewan-experience/students": {
       "baseline": "5551368a962df895",
-      "current": "5551368a962df895",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "868e7a3949f2497c",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-11-18"
     },
     "https://www.saskatchewan.ca/residents/moving-to-saskatchewan/live-in-saskatchewan/by-immigrating/sinp-healthcare/health-talent-pathway": {
       "baseline": "e5b5415922dcd431",
-      "current": "e5b5415922dcd431",
-      "status": "unchanged"
+      "current": "dd42d7f2bc7c6bf3",
+      "status": "changed",
+      "changedOn": "2026-11-18"
     },
     "https://www.welcomebc.ca/immigrate-to-b-c/about-the-bc-provincial-nominee-program/invitations-to-apply": {
       "baseline": "a2df19aece76620b",
-      "current": "6bbc74fbd0cfdfd3",
+      "current": "f8794b0279ccb167",
       "status": "changed",
       "acceptedOn": "2026-11-09",
       "changedOn": "2026-11-14"
