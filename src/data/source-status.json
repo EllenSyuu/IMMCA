@@ -19,24 +19,22 @@
     },
     "https://immigratemanitoba.com/draws/": {
       "baseline": "67a0d680aafb51ae",
-      "current": "67a0d680aafb51ae",
-      "status": "unreachable",
+      "current": "2be885548dceeb4f",
+      "status": "changed",
       "acceptedOn": "2026-11-09",
-      "unreachableSince": "2026-11-19"
+      "changedOn": "2026-11-20"
     },
     "https://immigratemanitoba.com/immigrate/ies/graduate-internship/eligibility/": {
       "baseline": "0559fca390fd1558",
       "current": "0559fca390fd1558",
-      "status": "unreachable",
-      "acceptedOn": "2026-10-28",
-      "unreachableSince": "2026-11-19"
+      "status": "unchanged",
+      "acceptedOn": "2026-10-28"
     },
     "https://immigratemanitoba.com/mpnp/skilled-worker/swm/eligibility/": {
       "baseline": "90301a71ab114344",
       "current": "90301a71ab114344",
-      "status": "unreachable",
-      "acceptedOn": "2026-10-28",
-      "unreachableSince": "2026-11-19"
+      "status": "unchanged",
+      "acceptedOn": "2026-10-28"
     },
     "https://liveinnovascotia.com/express-entry": {
       "baseline": "e2559b16bf8ef81c",
@@ -70,7 +68,7 @@
     },
     "https://www.alberta.ca/aaip-processing-information": {
       "baseline": "6e8655e7f24f3000",
-      "current": "3542b2ba26583c67",
+      "current": "242cba0371b5250e",
       "status": "changed",
       "acceptedOn": "2026-11-09",
       "changedOn": "2026-11-12"
@@ -202,9 +200,10 @@
     },
     "https://www.immigratenwt.ca/expression-interest": {
       "baseline": "ad42bd5511ae4d65",
-      "current": "ad42bd5511ae4d65",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "0ef29aee01de9bd9",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-11-20"
     },
     "https://www.ontario.ca/page/2026-ontario-immigrant-nominee-program-updates": {
       "baseline": "645a25d200a5487d",
@@ -272,7 +271,7 @@
     },
     "https://www.saskatchewan.ca/residents/moving-to-saskatchewan/live-in-saskatchewan/by-immigrating/saskatchewan-immigrant-nominee-program/browse-sinp-programs/applicants-international-skilled-workers/international-skilled-worker-with-employment-offer": {
       "baseline": "4bc9621972e49a72",
-      "current": "795c5976d1c68348",
+      "current": "c2606d98b7e8673b",
       "status": "changed",
       "acceptedOn": "2026-10-28",
       "changedOn": "2026-11-18"
