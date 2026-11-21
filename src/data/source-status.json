@@ -201,9 +201,10 @@
     "https://www.immigratenwt.ca/expression-interest": {
       "baseline": "ad42bd5511ae4d65",
       "current": "0ef29aee01de9bd9",
-      "status": "changed",
+      "status": "unreachable",
       "acceptedOn": "2026-10-28",
-      "changedOn": "2026-11-20"
+      "changedOn": "2026-11-20",
+      "unreachableSince": "2026-11-21"
     },
     "https://www.ontario.ca/page/2026-ontario-immigrant-nominee-program-updates": {
       "baseline": "645a25d200a5487d",
