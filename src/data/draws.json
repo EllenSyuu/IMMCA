@@ -1,7 +1,14 @@
 {
   "source": "https://www.canada.ca/content/dam/ircc/documents/json/ee_rounds_123_en.json",
-  "fetched": "2026-11-23",
+  "fetched": "2026-11-25",
   "rounds": [
+    {
+      "number": 455,
+      "date": "2026-11-25",
+      "type": "French-Language proficiency",
+      "invited": 6000,
+      "crs": 401
+    },
     {
       "number": 454,
       "date": "2026-11-23",
@@ -169,13 +176,6 @@
       "type": "Provincial Nominee Program",
       "invited": 507,
       "crs": 768
-    },
-    {
-      "number": 430,
-      "date": "2026-07-23",
-      "type": "Skilled Military Recruits",
-      "invited": 4,
-      "crs": 368
     }
   ],
   "pool": {
