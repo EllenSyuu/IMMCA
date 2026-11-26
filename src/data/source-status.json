@@ -193,7 +193,7 @@
     },
     "https://www.gov.nl.ca/immigration/invitations-to-apply-updates/": {
       "baseline": "f15094bedc3a2cdb",
-      "current": "cba4956c87d32438",
+      "current": "194b27188efa3eff",
       "status": "changed",
       "acceptedOn": "2026-11-09",
       "changedOn": "2026-11-10"
@@ -214,9 +214,10 @@
     },
     "https://www.ontario.ca/page/ontario-workforce-priority-stream": {
       "baseline": "2cd11ba2d6aa2dd9",
-      "current": "2cd11ba2d6aa2dd9",
-      "status": "unchanged",
-      "acceptedOn": "2026-10-28"
+      "current": "15ce53662b37f90b",
+      "status": "changed",
+      "acceptedOn": "2026-10-28",
+      "changedOn": "2026-11-26"
     },
     "https://www.princeedwardisland.ca/en/information/office-of-immigration/international-graduates": {
       "baseline": "",
@@ -251,7 +252,7 @@
     },
     "https://www.quebec.ca/immigration/permanente/travailleurs-qualifies/programme-selection-travailleurs-qualifies/exigences": {
       "baseline": "993084bd9a19bfc0",
-      "current": "f33eb42de9883aeb",
+      "current": "9154263ef87608cb",
       "status": "changed",
       "acceptedOn": "2026-10-30",
       "changedOn": "2026-11-11"
